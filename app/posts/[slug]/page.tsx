@@ -18,7 +18,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PostPageProps) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  console.log(post);
 
   if (!post) {
     return {
@@ -63,6 +62,14 @@ export default async function PostPage({ params }: PostPageProps) {
           </p>
           <div className="mt-6 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
             <span>작성자: {post.author.name}</span>
+          </div>
+          <div className="flex gap-2">
+            {post.tag &&
+              post.tag.map((item, index) => (
+                <span key={`${item}-${index}`} className="tag-style">
+                  {item}
+                </span>
+              ))}
           </div>
         </header>
 

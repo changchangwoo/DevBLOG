@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind CSS v4: dark mode를 class 기반으로 설정 */
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -12,11 +15,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
@@ -137,41 +138,39 @@ body {
 }
 
 /* Dark mode prose styles */
-@media (prefers-color-scheme: dark) {
-  .prose :where(code):not(:where([class~="not-prose"] *)) {
-    background-color: #27272a;
-  }
+.dark .prose :where(code):not(:where([class~="not-prose"] *)) {
+  background-color: #27272a;
+}
 
-  .prose :where(a):not(:where([class~="not-prose"] *)) {
-    color: #60a5fa;
-  }
+.dark .prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: #60a5fa;
+}
 
-  .prose :where(a):not(:where([class~="not-prose"] *)):hover {
-    color: #93c5fd;
-  }
+.dark .prose :where(a):not(:where([class~="not-prose"] *)):hover {
+  color: #93c5fd;
+}
 
-  .prose :where(blockquote):not(:where([class~="not-prose"] *)) {
-    border-left-color: #3f3f46;
-  }
+.dark .prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  border-left-color: #3f3f46;
+}
 
-  /* 다크 모드에서 코드 블록 배경색 조정 */
-  .prose :where(pre):not(:where([class~="not-prose"] *)) {
-    background-color: #1e1e1e !important;
-  }
+/* 다크 모드에서 코드 블록 배경색 조정 */
+.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
+  background-color: #1e1e1e !important;
+}
 
-  /* 다크 모드 테이블 스타일 */
-  .prose :where(table):not(:where([class~="not-prose"] *)) {
-    border-color: #3f3f46;
-  }
+/* 다크 모드 테이블 스타일 */
+.dark .prose :where(table):not(:where([class~="not-prose"] *)) {
+  border-color: #3f3f46;
+}
 
-  .prose :where(th):not(:where([class~="not-prose"] *)) {
-    border-color: #3f3f46;
-    background-color: #27272a;
-  }
+.dark .prose :where(th):not(:where([class~="not-prose"] *)) {
+  border-color: #3f3f46;
+  background-color: #27272a;
+}
 
-  .prose :where(td):not(:where([class~="not-prose"] *)) {
-    border-color: #3f3f46;
-  }
+.dark .prose :where(td):not(:where([class~="not-prose"] *)) {
+  border-color: #3f3f46;
 }
 
 /* GitHub Flavored Markdown - 테이블 스타일 */
@@ -206,10 +205,10 @@ body {
   background-color: #fafafa;
 }
 
-@media (prefers-color-scheme: dark) {
-  .prose :where(tbody tr):not(:where([class~="not-prose"] *)):nth-child(even) {
-    background-color: #18181b;
-  }
+.dark
+  .prose
+  :where(tbody tr):not(:where([class~="not-prose"] *)):nth-child(even) {
+  background-color: #18181b;
 }
 
 /* GitHub Flavored Markdown - 체크박스 스타일 */
@@ -238,10 +237,8 @@ body {
   color: #3b82f6;
 }
 
-@media (prefers-color-scheme: dark) {
-  .prose :where(.heading-link):not(:where([class~="not-prose"] *)):hover {
-    color: #60a5fa;
-  }
+.dark .prose :where(.heading-link):not(:where([class~="not-prose"] *)):hover {
+  color: #60a5fa;
 }
 
 /* 코드 블록 개선 - 스크롤 가능 */
@@ -262,45 +259,43 @@ body {
 }
 
 /* 다크 모드용 highlight.js 오버라이드 */
-@media (prefers-color-scheme: dark) {
-  .hljs {
-    background: #1e1e1e !important;
-    color: #d4d4d4 !important;
-  }
+.dark .hljs {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+}
 
-  .hljs-keyword,
-  .hljs-selector-tag,
-  .hljs-literal,
-  .hljs-section,
-  .hljs-link {
-    color: #569cd6 !important;
-  }
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-literal,
+.dark .hljs-section,
+.dark .hljs-link {
+  color: #569cd6 !important;
+}
 
-  .hljs-string {
-    color: #ce9178 !important;
-  }
+.dark .hljs-string {
+  color: #ce9178 !important;
+}
 
-  .hljs-comment,
-  .hljs-quote {
-    color: #6a9955 !important;
-  }
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #6a9955 !important;
+}
 
-  .hljs-number,
-  .hljs-regexp,
-  .hljs-type {
-    color: #b5cea8 !important;
-  }
+.dark .hljs-number,
+.dark .hljs-regexp,
+.dark .hljs-type {
+  color: #b5cea8 !important;
+}
 
-  .hljs-function,
-  .hljs-title {
-    color: #dcdcaa !important;
-  }
+.dark .hljs-function,
+.dark .hljs-title {
+  color: #dcdcaa !important;
+}
 
-  .hljs-params {
-    color: #9cdcfe !important;
-  }
+.dark .hljs-params {
+  color: #9cdcfe !important;
+}
 
-  .hljs-built_in {
-    color: #4ec9b0 !important;
-  }
+.dark .hljs-built_in {
+  color: #4ec9b0 !important;
 }

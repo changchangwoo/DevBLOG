@@ -18,6 +18,7 @@ export interface PostMetadata {
   author: {
     name: string;
   };
+  tag: string[];
   coverImage?: string;
 }
 
@@ -68,6 +69,7 @@ export function getAllPosts(): PostPreview[] {
         slug: post.slug,
         title: post.title,
         excerpt: post.excerpt,
+        tag: post.tag,
         date: post.date,
         author: post.author,
         coverImage: post.coverImage,

@@ -4,7 +4,8 @@
       "WebFetch(domain:github.com)",
       "Bash(pnpm add:*)",
       "Bash(pnpm build)",
-      "Bash(pnpm remove:*)"
+      "Bash(pnpm remove:*)",
+      "Bash(dir:*)"
     ]
   }
 }

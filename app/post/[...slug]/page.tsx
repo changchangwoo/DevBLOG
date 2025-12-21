@@ -6,20 +6,21 @@ import TableOfContents from "@/app/components/TableOfContents";
 
 interface PostPageProps {
   params: Promise<{
-    slug: string;
+    slug: string[];
   }>;
 }
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: post.slug.split("/"),
   }));
 }
 
 export async function generateMetadata({ params }: PostPageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const slugString = slug.join("/");
+  const post = getPostBySlug(slugString);
 
   if (!post) {
     return {
@@ -35,10 +36,11 @@ export async function generateMetadata({ params }: PostPageProps) {
 
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
+  const slugString = slug.join("/");
 
   let post;
   try {
-    post = getPostBySlug(slug);
+    post = getPostBySlug(slugString);
   } catch (error) {
     notFound();
   }
@@ -52,13 +54,18 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="relative">
           <article className="flex-1 min-w-0 max-w-3xl">
             <header className="mb-12 mt-8">
-              <time className="text-sm text-zinc-500 dark:text-zinc-400">
-                {new Date(post.date).toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
+              <div className="flex items-center gap-3">
+                <time className="text-sm text-zinc-500 dark:text-zinc-400">
+                  {new Date(post.date).toLocaleDateString("ko-KR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+                <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                  {post.category}
+                </span>
+              </div>
               <h1 className="mt-2 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
                 {post.title}
               </h1>
@@ -66,7 +73,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 {post.excerpt}
               </p>
               <div className="mt-6 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                <span>작성자: {post.author.name}</span>
+                <span>{post.author.name}</span>
               </div>
               <div className="flex gap-2">
                 {post.tag &&
@@ -80,6 +87,8 @@ export default async function PostPage({ params }: PostPageProps) {
             <div
               className="
               prose max-w-none
+              prose-img:w-full
+              prose-img:h-auto
               prose-img:rounded-2xl
               prose-img:border
               prose-img:border-zinc-200
@@ -112,11 +121,10 @@ export default async function PostPage({ params }: PostPageProps) {
             </footer>
           </article>
           <aside className="hidden xl:block absolute left-full top-16 h-full">
-            {/* h-full을 주어야 sticky가 따라올 수 있는 '길'이 생깁니다 */}
             <div className="sticky top-24 w-64">
               <TableOfContents headings={headings} />
             </div>
-          </aside>{" "}
+          </aside>
         </div>
       </div>
     </div>

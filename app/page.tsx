@@ -28,13 +28,18 @@ export default function Home() {
               >
                 <Link href={`/posts/${post.slug}`}>
                   <div className="flex flex-col gap-2">
-                    <time className="text-sm text-zinc-500 dark:text-zinc-400">
-                      {new Date(post.date).toLocaleDateString("ko-KR", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </time>
+                    <div className="flex items-center gap-3">
+                      <time className="text-sm text-zinc-500 dark:text-zinc-400">
+                        {new Date(post.date).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </time>
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                        {post.category}
+                      </span>
+                    </div>
                     <h3 className="text-2xl font-semibold tracking-tight text-zinc-900  group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
                       {post.title}
                     </h3>

@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50  duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 ${
         isScrolled
           ? "bg-white/95 dark:bg-zinc-900/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"
@@ -62,7 +62,7 @@ export default function Header() {
               포스트
             </Link>
             <Link
-              href="/#"
+              href="/about"
               className={`text-sm font-medium  hover:text-blue-600 dark:hover:text-blue-400 ${
                 isScrolled
                   ? "text-zinc-700 dark:text-zinc-300"

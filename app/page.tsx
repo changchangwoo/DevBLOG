@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
+import PostCard from "./components/PostCard";
 
 export default function Home() {
   const posts = getAllPosts();
@@ -22,42 +22,7 @@ export default function Home() {
           </h2>
           <div className="space-y-12">
             {posts.map((post) => (
-              <article
-                key={post.slug}
-                className="group relative rounded-lg border border-zinc-200 bg-white p-6 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
-              >
-                <Link href={`/post/${post.slug}`}>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-3">
-                      <time className="text-sm text-zinc-500 dark:text-zinc-400">
-                        {new Date(post.date).toLocaleDateString("ko-KR", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </time>
-                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                        {post.category}
-                      </span>
-                    </div>
-                    <h3 className="text-2xl font-semibold tracking-tight text-zinc-900  group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-zinc-700 dark:text-zinc-300">
-                      {post.excerpt}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400"></div>
-                    <div className="flex gap-2">
-                      {post.tag &&
-                        post.tag.map((item, index) => (
-                          <span key={`${item}-${index}`} className="tag-style">
-                            {item}
-                          </span>
-                        ))}
-                    </div>
-                  </div>
-                </Link>
-              </article>
+              <PostCard key={post.slug} post={post} showCategory={true} />
             ))}
           </div>
         </section>

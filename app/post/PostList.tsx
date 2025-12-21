@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useMemo } from "react";
 import type { PostPreview } from "@/lib/posts";
+import PostCard from "@/app/components/PostCard";
 
 interface PostListProps {
   posts: PostPreview[];
@@ -93,44 +93,7 @@ export default function PostList({ posts, tags }: PostListProps) {
       <div className="space-y-12">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
-            <article
-              key={post.slug}
-              className="group relative rounded-lg border border-zinc-200 bg-white p-6  hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
-            >
-              <Link href={`/post/${post.slug}`}>
-                <div className="flex flex-col gap-2">
-                  <time className="text-sm text-zinc-500 dark:text-zinc-400">
-                    {new Date(post.date).toLocaleDateString("ko-KR", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </time>
-                  <h3 className="text-2xl font-semibold tracking-tight text-zinc-900  group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 text-zinc-700 dark:text-zinc-300">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    {post.tag.length > 0 && (
-                      <>
-                        <div className="flex flex-wrap gap-2">
-                          {post.tag.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                            >
-                              #{tag}
-                            </span>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            </article>
+            <PostCard key={post.slug} post={post} showCategory={true} />
           ))
         ) : (
           <p className="text-center text-zinc-500 dark:text-zinc-400">

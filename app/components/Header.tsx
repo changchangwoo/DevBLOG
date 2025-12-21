@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50  duration-300 ${
         isScrolled
           ? "bg-white/95 dark:bg-zinc-900/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"
@@ -41,7 +41,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className={`text-xl font-bold transition-colors ${
+            className={`text-xl font-bold  ${
               isScrolled
                 ? "text-zinc-900 dark:text-zinc-50"
                 : "text-zinc-900 dark:text-zinc-50"
@@ -52,18 +52,18 @@ export default function Header() {
 
           <div className="flex items-center gap-6">
             <Link
-              href="/"
-              className={`text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 ${
+              href="/posts"
+              className={`text-sm font-medium  hover:text-blue-600 dark:hover:text-blue-400 ${
                 isScrolled
                   ? "text-zinc-700 dark:text-zinc-300"
                   : "text-zinc-700 dark:text-zinc-300"
               }`}
             >
-              블로그
+              포스트
             </Link>
             <Link
               href="/#"
-              className={`text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-400 ${
+              className={`text-sm font-medium  hover:text-blue-600 dark:hover:text-blue-400 ${
                 isScrolled
                   ? "text-zinc-700 dark:text-zinc-300"
                   : "text-zinc-700 dark:text-zinc-300"
@@ -75,7 +75,7 @@ export default function Header() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className={`rounded-lg p-2 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
+                className={`rounded-lg p-2  hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
                   isScrolled
                     ? "text-zinc-700 dark:text-zinc-300"
                     : "text-zinc-700 dark:text-zinc-300"

@@ -50,7 +50,6 @@ export default async function PostPage({ params }: PostPageProps) {
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="mx-auto max-w-4xl px-6 py-16">
         <div className="relative">
-          {/* 메인 콘텐츠 */}
           <article className="flex-1 min-w-0 max-w-3xl">
             <header className="mb-12 mt-8">
               <time className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -80,20 +79,20 @@ export default async function PostPage({ params }: PostPageProps) {
             </header>
             <div
               className="
-    prose max-w-none
-    prose-img:rounded-2xl
-    prose-img:border
-    prose-img:border-zinc-200
-    dark:prose-img:border-zinc-800
-    dark:prose-invert
-  "
+              prose max-w-none
+              prose-img:rounded-2xl
+              prose-img:border
+              prose-img:border-zinc-200
+              dark:prose-img:border-zinc-800
+              dark:prose-invert
+              "
               dangerouslySetInnerHTML={{ __html: content }}
             />
 
             <footer className="mt-16 border-t border-zinc-200 pt-8 dark:border-zinc-800">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 text-sm text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
+                className="inline-flex items-center gap-2 text-sm text-zinc-600  hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
               >
                 <svg
                   className="h-4 w-4"
@@ -112,10 +111,13 @@ export default async function PostPage({ params }: PostPageProps) {
               </Link>
             </footer>
           </article>
+          <aside className="hidden xl:block absolute left-full top-16 h-full">
+            {/* h-full을 주어야 sticky가 따라올 수 있는 '길'이 생깁니다 */}
+            <div className="sticky top-24 w-64">
+              <TableOfContents headings={headings} />
+            </div>
+          </aside>{" "}
         </div>
-        <aside className="hidden xl:block w-64 sticky top-20 self-start">
-          <TableOfContents headings={headings} />
-        </aside>
       </div>
     </div>
   );

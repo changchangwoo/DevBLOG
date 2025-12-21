@@ -21,7 +21,7 @@ export default function Post() {
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="group relative rounded-lg border border-zinc-200 bg-white p-6 transition-all hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                className="group relative rounded-lg border border-zinc-200 bg-white p-6  hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
               >
                 <Link href={`/posts/${post.slug}`}>
                   <div className="flex flex-col gap-2">
@@ -32,7 +32,7 @@ export default function Post() {
                         day: "numeric",
                       })}
                     </time>
-                    <h3 className="text-2xl font-semibold tracking-tight text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
+                    <h3 className="text-2xl font-semibold tracking-tight text-zinc-900  group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
                       {post.title}
                     </h3>
                     <p className="mt-2 text-zinc-700 dark:text-zinc-300">

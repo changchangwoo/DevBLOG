@@ -9,14 +9,12 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  // 클라이언트 사이드에서만 렌더링 (hydration 불일치 방지)
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      // 20px 이상 스크롤하면 색상 변경
       if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
@@ -24,10 +22,8 @@ export default function Header() {
       }
     };
 
-    // 스크롤 이벤트 리스너 등록
     window.addEventListener("scroll", handleScroll);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -76,7 +72,6 @@ export default function Header() {
               소개
             </Link>
 
-            {/* 다크모드 토글 버튼 */}
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

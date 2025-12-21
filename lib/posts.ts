@@ -74,7 +74,8 @@ export function getPostBySlug(slug: string): Post {
 
   // 슬러그에서 카테고리 추출 (예: "javascript/arrays" -> "javascript")
   const slugParts = realSlug.split("/");
-  const categoryFromPath = slugParts.length > 1 ? slugParts[0] : "uncategorized";
+  const categoryFromPath =
+    slugParts.length > 1 ? slugParts[0] : "uncategorized";
 
   const metadata = data as PostMetadata;
 
@@ -108,6 +109,25 @@ export function getAllPosts(): PostPreview[] {
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
 
   return posts;
+}
+
+export function getRecentTag(): string[] {
+  const posts = getAllPosts();
+
+  // 태그 빈도수를 계산
+  const tagFrequency = new Map<string, number>();
+
+  for (const post of posts) {
+    for (const tag of post.tag) {
+      tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1);
+    }
+  }
+
+  // 빈도순으로 정렬하고 상위 20개만 반환
+  return Array.from(tagFrequency.entries())
+    .sort((a, b) => b[1] - a[1]) // 빈도 내림차순
+    .slice(0, 20)
+    .map(([tag]) => tag);
 }
 
 export async function markdownToHtml(markdown: string): Promise<string> {

@@ -26,7 +26,7 @@ export default function Home() {
                 key={post.slug}
                 className="group relative rounded-lg border border-zinc-200 bg-white p-6 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
               >
-                <Link href={`/posts/${post.slug}`}>
+                <Link href={`/post/${post.slug}`}>
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-3">
                       <time className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -46,9 +46,7 @@ export default function Home() {
                     <p className="mt-2 text-zinc-700 dark:text-zinc-300">
                       {post.excerpt}
                     </p>
-                    <div className="mt-4 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                      <span>작성자: {post.author.name}</span>
-                    </div>
+                    <div className="mt-4 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400"></div>
                     <div className="flex gap-2">
                       {post.tag &&
                         post.tag.map((item, index) => (

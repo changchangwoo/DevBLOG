@@ -52,7 +52,7 @@ export default function Header() {
 
           <div className="flex items-center gap-6">
             <Link
-              href="/posts"
+              href="/post"
               className={`text-sm font-medium  hover:text-blue-600 dark:hover:text-blue-400 ${
                 isScrolled
                   ? "text-zinc-700 dark:text-zinc-300"

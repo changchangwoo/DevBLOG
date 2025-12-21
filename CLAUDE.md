@@ -75,7 +75,14 @@ DevBLOG/
 - **Tailwind CSS 4** (`@tailwindcss/postcss`)
 - **pnpm** (패키지 매니저)
 - **gray-matter** (Front Matter 파싱)
-- **remark / remark-html** (Markdown → HTML 변환)
+- **Markdown 처리**:
+  - `remark` - Markdown 파서
+  - `remark-gfm` - GitHub Flavored Markdown (테이블, 체크박스, 취소선)
+  - `remark-rehype` - Markdown → HTML AST 변환
+  - `rehype-highlight` - 코드 신택스 하이라이팅
+  - `rehype-slug` - 헤딩 자동 ID 생성
+  - `rehype-autolink-headings` - 헤딩 자동 링크
+  - `highlight.js` - 코드 하이라이팅 테마
 
 ---
 
@@ -112,7 +119,10 @@ Markdown 파일 읽기 및 파싱을 담당하는 유틸리티 모듈:
 - `getPostSlugs()` - 모든 포스트의 슬러그 목록 반환
 - `getPostBySlug(slug)` - 특정 포스트의 메타데이터 + 콘텐츠 반환
 - `getAllPosts()` - 모든 포스트의 메타데이터 반환 (날짜 내림차순 정렬)
-- `markdownToHtml(markdown)` - Markdown → HTML 변환
+- `markdownToHtml(markdown)` - 향상된 Markdown → HTML 변환
+  - GitHub Flavored Markdown 지원 (테이블, 체크박스, 취소선)
+  - 코드 블록 자동 신택스 하이라이팅
+  - 헤딩에 자동 ID 및 앵커 링크 생성
 
 **중요**: 이 파일은 Node.js 파일 시스템 API(`fs`, `path`)를 사용하므로 Server Component에서만 호출 가능.
 
@@ -195,6 +205,46 @@ Markdown 파일 읽기 및 파싱을 담당하는 유틸리티 모듈:
 4. `pnpm build` 실행 → 자동으로 정적 페이지 생성됨
 5. Git commit 후 배포
 
+### 5. 마크다운 작성 가이드
+
+이 블로그는 **GitHub Flavored Markdown (GFM)**을 완전히 지원합니다.
+
+#### 지원하는 기능
+
+**코드 블록 (자동 신택스 하이라이팅)**
+```markdown
+```javascript
+const hello = "world";
+```
+```
+
+**테이블**
+```markdown
+| 헤더1 | 헤더2 |
+|------|------|
+| 내용1 | 내용2 |
+```
+
+**체크박스**
+```markdown
+- [x] 완료된 작업
+- [ ] 진행 중인 작업
+```
+
+**취소선**
+```markdown
+~~삭제된 텍스트~~
+```
+
+**헤딩 자동 링크**
+- 모든 헤딩(`#`, `##`, `###`)에 자동으로 ID와 앵커 링크가 생성됨
+- 헤딩을 클릭하면 해당 섹션으로 직접 링크 가능
+
+**인라인 코드**
+```markdown
+`코드`는 백틱으로 감싸서 표시
+```
+
 ---
 
 ## 참고사항
@@ -203,5 +253,11 @@ Markdown 파일 읽기 및 파싱을 담당하는 유틸리티 모듈:
 - **ESLint**: Next.js의 `core-web-vitals` + `typescript` 설정 사용
 - **이미지**: `next/image` 컴포넌트 사용, `public/` 디렉토리에 저장
 - **다크 모드**: `prefers-color-scheme` 미디어 쿼리로 자동 전환
+- **코드 하이라이팅**:
+  - `highlight.js`의 GitHub 테마 사용 (라이트 모드)
+  - 다크 모드에서는 VS Code 스타일로 자동 전환
+  - JavaScript, TypeScript, Python, Bash, Go, Rust 등 주요 언어 지원
+- **커스텀 Prose 스타일**: `app/globals.css`에 수동으로 정의
+  - Tailwind CSS 4와의 호환성을 위해 `@tailwindcss/typography` 미사용
 
 ---

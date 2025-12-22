@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 ${
+      className={`fixed top-0 left-0 right-0 z-50 max-h-[3.4rem] ${
         isScrolled
           ? "bg-white/95 dark:bg-zinc-900/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"

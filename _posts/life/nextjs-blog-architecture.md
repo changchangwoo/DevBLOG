@@ -4,7 +4,7 @@ excerpt: "정적 사이트 생성과 AWS 서비스를 활용한 저비용 블로
 date: "2024-01-20"
 author:
   name: "ChangWoo"
-coverImage: ""
+coverImage: "/images/posts/life/nextjs-blog-architecture/cover.png"
 ---
 
 # Next.js 블로그 아키텍처

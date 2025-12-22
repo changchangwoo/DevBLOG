@@ -1,11 +1,11 @@
 ---
-title: "마크다운 기능 테스트"
-excerpt: "GitHub Flavored Markdown의 다양한 기능들을 테스트합니다. 코드 하이라이팅, 테이블, 체크박스 등을 확인해보세요."
+title: "2025 로우코드 개발 공모전 회고"
+excerpt: "멋쟁이 사자처럼 플렉스튜디오 공모전 회고록"
 date: "2024-01-30"
 author:
   name: "ChangWoo"
-coverImage: ""
-tag: ["마크다운", "마인크래프트 다운", "마크 헌트", "마크 정식"]
+coverImage: "/images/posts/activities/markdown-features/cover.png"
+tag: ["마크다운", "마크 헌트", "마크 정식"]
 ---
 
 - **2025년 10월은 말 그대로 내 인생에서 가장 극적인 시간이었다.**

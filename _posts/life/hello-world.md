@@ -4,7 +4,7 @@ excerpt: "Next.js와 Markdown을 활용한 개발 블로그의 첫 번째 포스
 date: "2024-01-15"
 author:
   name: "ChangWoo"
-coverImage: ""
+coverImage: "/images/posts/life/hello-world/cover.jpg"
 ---
 
 # 안녕하세요!

@@ -4,7 +4,7 @@ excerpt: "실무에서 유용한 TypeScript 타입 활용법과 베스트 프랙
 date: "2024-01-25"
 author:
   name: "ChangWoo"
-coverImage: ""
+coverImage: "/images/posts/project/typescript-tips/cover.jpg"
 ---
 
 # TypeScript 개발 팁

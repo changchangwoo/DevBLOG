@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`pt-16`}>
+      <body>
         <ThemeProvider>
           <Header />
           {children}

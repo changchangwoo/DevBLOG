@@ -5,7 +5,7 @@ date: "2024-01-30"
 author:
   name: "ChangWoo"
 coverImage: "/images/posts/activities/markdown-features/cover.png"
-tag: ["마크다운", "마크 헌트", "마크 정식"]
+tag: ["공모전", "멋쟁이 사자처럼", "플렉스튜디오"]
 ---
 
 - **2025년 10월은 말 그대로 내 인생에서 가장 극적인 시간이었다.**

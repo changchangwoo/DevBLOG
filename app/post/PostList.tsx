@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import type { PostPreview } from "@/lib/posts";
-import PostCard from "@/app/components/PostCard";
+import PostCard from "@/components/PostCard";
 
 interface PostListProps {
   posts: PostPreview[];

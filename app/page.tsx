@@ -1,9 +1,9 @@
 import { getAllPosts } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
-import PostCard from "./components/PostCard";
-import Badge from "./components/Badge";
 import Link from "next/link";
-import Divider from "./components/Divider";
+import Badge from "@/components/Badge";
+import Divider from "@/components/Divider";
+import PostCard from "@/components/PostCard";
 
 export default function Home() {
   const posts = getAllPosts();

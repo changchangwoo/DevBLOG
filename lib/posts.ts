@@ -50,10 +50,8 @@ export function getPostSlugs(): string[] {
       const fullPath = path.join(dir, file.name);
 
       if (file.isDirectory()) {
-        // 재귀적으로 하위 폴더 탐색
         scanDirectory(fullPath, prefix ? `${prefix}/${file.name}` : file.name);
       } else if (file.name.endsWith(".md")) {
-        // .md 파일이면 슬러그 배열에 추가
         const slug = prefix
           ? `${prefix}/${file.name.replace(/\.md$/, "")}`
           : file.name.replace(/\.md$/, "");

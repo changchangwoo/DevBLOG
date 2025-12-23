@@ -18,6 +18,7 @@ tag: ["공모전", "멋쟁이 사자처럼", "플렉스튜디오"]
 ### 새로운 사람들과 함께 새로운 도전
 
 ![](https://velog.velcdn.com/images/changwoo/post/3ed183d9-f495-4336-ab18-c74bab7c7cf0/image.png)
+
 ![](https://velog.velcdn.com/images/changwoo/post/76f91299-efc4-440f-b06c-738a6d0938ec/image.png)
 
 - 팀은 링커리어를 통해 구했다.

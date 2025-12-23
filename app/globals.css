@@ -46,7 +46,7 @@
   --color-category-project: #059669;
   --color-dot: var(--dot);
   --color-theme: #00204B;
-  --color-quote: var(--quote-bg)
+  --color-quote: var(--quote-bg);
 
 }
 
@@ -238,7 +238,7 @@ body {
   border-left-width: 0.3rem;
   border-left-color: var(--color-dot);
   padding: 1rem 1rem 1rem 2rem;
-  background: var(--color-quote);
+  background: var(--color-boundary);
   border-radius: 0px 4px 4px 0px;
 }
 
@@ -281,4 +281,12 @@ body {
 .prose td {
   border-bottom: 1px solid var(--boundary);
   padding: 0.5em 1em;
+}
+
+
+.color-box-border-info {
+    border-color: none;
+}
+.color-bg-default, .color-bg-primary {
+    background-color: var(--color-dot);
 }

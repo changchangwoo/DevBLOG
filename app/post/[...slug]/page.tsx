@@ -7,6 +7,7 @@ import TableOfContents from "@/components/TableOfContents";
 import Badge from "@/components/Badge";
 import Image from "next/image";
 import Divider from "@/components/Divider";
+import Giscus from "@/components/Giscus";
 
 interface PostPageProps {
   params: Promise<{
@@ -55,7 +56,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-4xl">
+      <div className="relative mx-auto max-w-4xl pb-[3rem]">
             {post.coverImage && (
                 <Image
                   src={post.coverImage}
@@ -111,7 +112,7 @@ export default async function PostPage({ params }: PostPageProps) {
               dangerouslySetInnerHTML={{ __html: content }}
             />
           </article>
-          <div className="px-[2rem] flex flex-col gap-[2rem]">
+          <div className="px-[1rem] md:px-[2rem] flex flex-col gap-[2rem]">
           <Divider spacing="none" />
           <div className="p-[2rem] rounded-[8px] bg-boundary flex flex-col gap-[1rem]">
             <div className="flex gap-[1rem]">
@@ -169,8 +170,9 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
           <div className="text-center">
-                  <h1 className="body1 text-descript">반응을 주시면 정말 큰 힘이 될 것 같아요!</h1>
+                  <h1 className="caption text-descript">반응을 주시면 정말 큰 힘이 될 것 같아요!</h1>
           </div>
+          <Giscus/>
           </div>
           {/* PC버전 테이블 */}
           <aside className="hidden xl:block absolute left-full top-16 h-full">

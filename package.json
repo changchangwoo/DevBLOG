@@ -11,6 +11,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "@types/hast": "^3.0.4",
+    "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "next": "16.1.0",
@@ -23,7 +24,8 @@
     "rehype-stringify": "^10.0.1",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-rehype": "^11.1.2"
+    "remark-rehype": "^11.1.2",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -3,6 +3,7 @@ import { getCategoryInfo } from "@/lib/category";
 import PostCard from "./components/PostCard";
 import Badge from "./components/Badge";
 import Link from "next/link";
+import Divider from "./components/Divider";
 
 export default function Home() {
   const posts = getAllPosts();
@@ -26,7 +27,7 @@ export default function Home() {
                 <h1 className="body text-primary body2 whitespace-nowrap">
                   새로운 아티클
                 </h1>
-                <div className="w-full h-[0.5px] bg-boundary"></div>
+                <Divider />
               </div>
               {latestPost && (
                 <Link href={`/post/${latestPost.slug}`}>
@@ -73,7 +74,7 @@ export default function Home() {
                 <h1 className="body text-primary body2 whitespace-nowrap">
                   최신 아티클
                 </h1>
-                <div className="w-full h-[0.5px] bg-boundary"></div>
+                <Divider />
               </div>
               {posts.map((post) => (
                 <PostCard key={post.slug} post={post} showCategory={true} />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { PostPreview } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Badge from "./Badge";
+import Divider from "./Divider";
 
 interface PostCardProps {
   post: PostPreview;
@@ -38,7 +39,7 @@ export default function PostCard({ post, showCategory = true }: PostCardProps) {
           </div>
         </div>
       </Link>
-      <div className="w-full h-[0.5px] bg-boundary my-[2rem]"></div>
+      <Divider spacing="lg" />
     </article>
   );
 }

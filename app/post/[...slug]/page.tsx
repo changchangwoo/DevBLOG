@@ -6,6 +6,7 @@ import { getCategoryInfo } from "@/lib/category";
 import TableOfContents from "@/app/components/TableOfContents";
 import Badge from "@/app/components/Badge";
 import Image from "next/image";
+import Divider from "@/app/components/Divider";
 
 interface PostPageProps {
   params: Promise<{
@@ -94,7 +95,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   ))}
               </div>
             </header>
-                            <div className="w-full h-[0.5px] bg-boundary my-[2rem]"></div>
+            <Divider spacing="lg" />
 
             <div
               className="
@@ -110,27 +111,7 @@ export default async function PostPage({ params }: PostPageProps) {
               dangerouslySetInnerHTML={{ __html: content }}
             />
 
-            <footer className="mt-16 border-t border-zinc-200 pt-8 dark:border-zinc-800">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-zinc-600  hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
-              >
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                  />
-                </svg>
-                홈으로 돌아가기
-              </Link>
-            </footer>
+
           </article>
           <aside className="hidden xl:block absolute left-full top-16 h-full">
             <div className="sticky top-24 w-64">

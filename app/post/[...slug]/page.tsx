@@ -2,7 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, markdownToHtml } from "@/lib/posts";
 import { extractHeadings } from "@/lib/toc";
+import { getCategoryInfo } from "@/lib/category";
 import TableOfContents from "@/app/components/TableOfContents";
+import Badge from "@/app/components/Badge";
+import Image from "next/image";
 
 interface PostPageProps {
   params: Promise<{
@@ -47,43 +50,52 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const content = await markdownToHtml(post.content);
   const headings = extractHeadings(post.content);
+  const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <div className="relative">
-          <article className="flex-1 min-w-0 max-w-3xl">
-            <header className="mb-12 mt-8">
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-4xl">
+            {post.coverImage && (
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  width={2400}
+                  height={180}
+                  className="w-full min-h-[18rem] border object-cover"
+                />
+              )}
+          <article className="flex-1 min-w-0 p-[2rem]">
+            <header className="flex flex-col gap-[1rem]">
               <div className="flex items-center gap-3">
-                <time className="text-sm text-zinc-500 dark:text-zinc-400">
+                <time className="body3 text-descript ">
                   {new Date(post.date).toLocaleDateString("ko-KR", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}
                 </time>
-                <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                  {post.category}
-                </span>
               </div>
-              <h1 className="mt-2 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
+
+              <h1 className="title3 text-primary">
                 {post.title}
               </h1>
-              <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
+              <p className="body1 text-descript">
                 {post.excerpt}
               </p>
-              <div className="mt-6 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                <span>{post.author.name}</span>
-              </div>
-              <div className="flex gap-2">
+                            <div className="flex gap-[0.5rem]">
+                {categoryInfo && (
+                  <Badge variant="category" colorClass={categoryInfo.colorClass}>
+                    {categoryInfo.label}
+                  </Badge>
+                )}
                 {post.tag &&
-                  post.tag.map((item, index) => (
-                    <span key={`${item}-${index}`} className="tag-style">
-                      {item}
-                    </span>
+                  post.tag.map((tag) => (
+                    <Badge key={`${post.slug}-${tag}`}>{tag}</Badge>
                   ))}
               </div>
             </header>
+                            <div className="w-full h-[0.5px] bg-boundary my-[2rem]"></div>
+
             <div
               className="
               prose max-w-none
@@ -127,6 +139,5 @@ export default async function PostPage({ params }: PostPageProps) {
           </aside>
         </div>
       </div>
-    </div>
   );
 }

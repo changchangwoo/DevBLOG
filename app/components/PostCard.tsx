@@ -27,7 +27,7 @@ export default function PostCard({ post, showCategory = true }: PostCardProps) {
             ))}
           </div>
           <p className="body1 text-descript">{post.excerpt}</p>
-          <div className="flex items-center ">
+          <div className="flex items-center justify-end">
             <time className="caption text-descript">
               {new Date(post.date).toLocaleDateString("ko-KR", {
                 year: "numeric",

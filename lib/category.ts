@@ -5,8 +5,9 @@ export interface CategoryInfo {
 
 const categoryMap: Record<string, CategoryInfo> = {
   activities: { label: "활동", colorClass: "bg-category-activity" },
-  life: { label: "일상", colorClass: "bg-category-essay" },
-  project: { label: "프로젝트", colorClass: "bg-category-tech" },
+  life: { label: "일상", colorClass: "bg-category-life" },
+  project: { label: "프로젝트", colorClass: "bg-category-project" },
+  tech: { label: "기술", colorClass: "bg-category-tech" },
 };
 
 export function getCategoryInfo(category: string): CategoryInfo {

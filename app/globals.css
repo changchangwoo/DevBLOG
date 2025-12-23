@@ -13,18 +13,25 @@
     Roboto, "Helvetica Neue", Arial, sans-serif;
 
   /* 라이트 테마, 수정필요 */
+  --primary: #ffffff;
   --background: #1d1b20;
   --secondary: #262626;
-  --descript: #e1e1e1;
+  --descript: #ACAEB4;
+  --dot: #787888;
   --boundary: #303030;
+  --quote-bg: #2a2830;
+
 }
 
 .dark {
   --primary: #ffffff;
   --background: #1d1b20;
   --secondary: #262626;
-  --descript: #e1e1e1;
+  --descript: #ACAEB4;
+  --dot: #787888;
   --boundary: #303030;
+  --quote-bg: #2a2830;
+
 }
 
 @theme {
@@ -35,8 +42,12 @@
   --color-boundary: var(--boundary);
   --color-category-activity: #e5533d;
   --color-category-tech: #2563eb;
-  --color-category-essay: #7c3aed;
-  --color-category-review: #059669;
+  --color-category-life: #7c3aed;
+  --color-category-project: #059669;
+  --color-dot: var(--dot);
+  --color-theme: #00204B;
+  --color-quote: var(--quote-bg)
+
 }
 
 @layer utilities {
@@ -44,13 +55,20 @@
   .title1 {
     font-size: 32px;
     font-weight: bold;
-    line-height: var(--lh);
+    line-height: 36px;
   }
   .title2 {
     font-size: 18px;
     font-weight: bold;
     line-height: var(--lh);
   }
+  .title3 {
+      font-size: 24px;
+    font-weight: bold;
+    line-height: 28px;
+
+  }
+
   .body1 {
     font-size: 16px;
     font-weight: 500;
@@ -60,6 +78,12 @@
     font-size: 16px;
     font-weight: bold;
     line-height: var(--lh);
+  }
+  .body3 {
+        font-size: 14px;
+    font-weight: 500;
+    line-height: var(--lh);
+
   }
   .caption {
     font-size: 12px;
@@ -77,4 +101,184 @@ body {
   scroll-behavior: smooth;
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
   scrollbar-width: none;
+}
+
+/* ===== Prose (Markdown Content) ===== */
+
+.prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+.prose {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-descript);
+}
+
+.prose p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose h1 {
+  font-size: 2.25em;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.1111111;
+}
+
+.prose h2 {
+  font-size: 1.875em;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.3333333;
+}
+
+.prose h3 {
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose h4 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* 인라인 코드 */
+.prose :not(pre) > code {
+  font-size: 0.875em;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #e5533d;
+  padding: 0.125em 0.375em;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .prose :not(pre) > code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fb7185;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* 코드 블록 */
+.prose pre {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  background-color: #f6f8fa;
+  border: 1px solid var(--color-boundary);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dark .prose pre {
+  background-color: #161b22;
+  border: 1px solid var(--color-boundary);
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  font-weight: 400;
+  font-size: 1em;
+  color: inherit;
+  border: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-inline-start: 1rem;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-inline-start: 0;
+  
+}
+
+.prose :where(ul > li):not(:where([class~="not-prose"], [class~="not-prose"] *))::marker {
+    color: var(--color-dot);
+}
+.prose :where(blockquote p:last-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *)):after,
+.prose :where(blockquote p:last-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *)):before {
+    content: none;
+}
+
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):before, .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):after {
+    content: none;
+}
+
+.dark .prose :not(pre) > code {
+    color: #fb7185;
+    background-color: var(--color-quote);
+}
+.prose blockquote {
+  font-weight: 500;
+  font-style: italic;
+  border-left-width: 0.3rem;
+  border-left-color: var(--color-dot);
+  padding: 1rem 1rem 1rem 2rem;
+  background: var(--color-quote);
+  border-radius: 0px 4px 4px 0px;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    color: var(--tw-prose-quotes);
+    border-inline-start-color: var(--tw-prose-quote-borders);
+    padding-inline-start: 1em;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose a:hover {
+  color: #1d4ed8;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose table {
+  width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-collapse: collapse;
+}
+
+.prose th {
+  font-weight: 600;
+  border-bottom: 1px solid var(--boundary);
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+.prose td {
+  border-bottom: 1px solid var(--boundary);
+  padding: 0.5em 1em;
 }

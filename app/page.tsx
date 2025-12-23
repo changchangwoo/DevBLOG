@@ -31,15 +31,15 @@ export default function Home() {
               {latestPost && (
                 <Link href={`/post/${latestPost.slug}`}>
                   <div
-                    className="w-full min-h-[20rem] rounded-lg bg-cover bg-center relative overflow-hidden cursor-pointer group"
+                    className="w-full min-h-[20rem] rounded-[8px] bg-cover bg-center relative overflow-hidden cursor-pointer group border border-boundary"
                     style={{
                       backgroundImage: latestPost.coverImage
                         ? `url(${latestPost.coverImage})`
                         : "url(/images/common/main_bg.png)",
                     }}
                   >
-                    <div className="absolute inset-0 bg-black/80 group-hover:bg-black/70 transition-colors"></div>
-                    <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem]">
+                    <div className="absolute inset-0 bg-black/70 group-hover:bg-black/70 transition-colors "></div>
+                    <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] border border-boundary">
                       <div className="flex gap-[0.5rem]">
                         {categoryInfo && (
                           <Badge

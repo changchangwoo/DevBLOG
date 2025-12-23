@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "highlight.js/styles/github.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "울창한 숲",

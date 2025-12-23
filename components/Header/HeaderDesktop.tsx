@@ -1,37 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+interface HeaderDesktopProps {
+  isScrolled: boolean;
+  mounted: boolean;
+  theme: string | undefined;
+  setTheme: (theme: string) => void;
+}
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+export default function HeaderDesktop({
+  isScrolled,
+  mounted,
+  theme,
+  setTheme,
+}: HeaderDesktopProps) {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 max-h-[3.4rem] ${
+      className={`fixed top-0 left-0 right-0 z-50 max-h-[3.4rem] hidden xl:block ${
         isScrolled
           ? "bg-white/95 dark:bg-zinc-900/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"
@@ -41,13 +28,19 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className={`text-xl font-bold  ${
+            className={`flex items-center gap-2 ${
               isScrolled
                 ? "text-zinc-900 dark:text-zinc-50"
                 : "text-zinc-900 dark:text-zinc-50"
             }`}
           >
-            ChangWoo.DEV
+            <Image
+              src="/images/common/logo.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              className="transition-opacity hover:opacity-80"
+            />
           </Link>
 
           <div className="flex items-center gap-6">

@@ -6,11 +6,11 @@ export default function Post() {
   const tags = getRecentTag();
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <main className="mx-auto max-w-4xl px-6 py-16">
-        <header className="mb-16">
+    <div className="min-h-screen bg-background pt-[46px]">
+      <main className="mx-auto max-w-4xl px-6 pt-[4rem]">
+        <header className="mb-[2rem]">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
-            아티클
+            포스트 
           </h1>
         </header>
 

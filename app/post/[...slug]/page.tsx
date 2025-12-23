@@ -55,7 +55,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-[46px]">
       <div className="relative mx-auto max-w-4xl pb-[3rem]">
             {post.coverImage && (
                 <Image

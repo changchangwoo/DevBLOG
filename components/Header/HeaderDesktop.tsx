@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import IconWithLabel from "@/components/IconWithLabel";
@@ -10,6 +11,32 @@ interface HeaderDesktopProps {
   mounted: boolean;
   theme: string | undefined;
   setTheme: (theme: string) => void;
+  config: {
+    logo: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    siteTitle: string;
+    navigation: {
+      about: {
+        href: string;
+        labelDesktop: string;
+        labelMobile: string;
+      },
+            TIL: {
+        href: string;
+        labelDesktop: string;
+        labelMobile: string;
+      };
+      
+    };
+  };
+  themeIcons: {
+    sun: React.ReactElement;
+    moon: React.ReactElement;
+  };
 }
 
 export default function HeaderDesktop({
@@ -18,6 +45,8 @@ export default function HeaderDesktop({
   mounted,
   theme,
   setTheme,
+  config,
+  themeIcons,
 }: HeaderDesktopProps) {
   return (
     <header
@@ -38,60 +67,41 @@ export default function HeaderDesktop({
             }`}
           >
             <Image
-              src="/images/common/logo.svg"
-              alt="Logo"
-              width={24}
-              height={24}
+              src={config.logo.src}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
               className="transition-opacity hover:opacity-80"
             />
-            <h1 className="body3 text-primary">개발자 이창우</h1>
+            <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
 
           <div className="flex items-center gap-6">
             <Link
-              href="/about"
+              href={config.navigation.about.href}
               className={`body3 text-primary  hover:text-blue-600 dark:hover:text-blue-400 ${
                 isScrolled
                   ? "text-zinc-700 dark:text-zinc-300"
                   : "text-zinc-700 dark:text-zinc-300"
               }`}
             >
-              About
+              {config.navigation.about.labelDesktop}
+            </Link>
+
+            <Link
+              href={config.navigation.TIL.href}
+              className={`body3 text-primary  hover:text-blue-600 dark:hover:text-blue-400 ${
+                isScrolled
+                  ? "text-zinc-700 dark:text-zinc-300"
+                  : "text-zinc-700 dark:text-zinc-300"
+              }`}
+            >
+              {config.navigation.TIL.labelDesktop}
             </Link>
 
             {mounted && (
               <IconWithLabel
-                icon={
-                  theme === "dark" ? (
-                    <svg
-                      className="h-[2.4rem] w-[2.4rem] text-primary"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="h-[2.4rem] w-[2.4rem]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                      />
-                    </svg>
-                  )
-                }
+                icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
                 label={theme === "dark" ? "Light Mode" : "Dark Mode"}
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 ariaLabel="테마 전환"

@@ -261,3 +261,530 @@ const hello = "world";
   - Tailwind CSS 4와의 호환성을 위해 `@tailwindcss/typography` 미사용
 
 ---
+
+## TIL (Today I Learned) 시스템
+
+### 개요
+
+TIL은 매일의 학습 기록을 GitHub 잔디 스타일의 캘린더로 시각화하는 기능입니다. 블로그 포스트와 달리 짧고 러프한 bullet point 형식의 학습 메모를 관리하며, **"꾸준히 기록하는 개발자"를 증명하는 시각적 대시보드** 역할을 합니다.
+
+### 핵심 설계 원칙
+
+1. **DB 사용 없음** - Markdown 파일로 관리
+2. **빌드 타임 데이터 로드** - 모든 TIL을 빌드 시 HTML로 변환
+3. **API 없는 정적 사이트** - 런타임 서버 의존성 제로
+4. **포스트 시스템과 동일한 패턴** - `_posts`와 같은 아키텍처
+
+---
+
+### 디렉토리 구조
+
+```
+DevBLOG/
+├── _til/                    # TIL Markdown 파일 저장소
+│   └── 2025/               # 연도별 디렉토리
+│       ├── 2025-12-25.md
+│       ├── 2025-12-24.md
+│       └── 2025-12-20.md
+├── app/
+│   └── til/
+│       ├── page.tsx        # TIL 메인 페이지 (Server Component)
+│       └── TILPageClient.tsx  # 클라이언트 로직
+├── components/
+│   ├── TILCalendar.tsx     # GitHub 잔디 스타일 캘린더
+│   └── TILModal.tsx        # TIL 내용 표시 모달
+└── lib/
+    └── til.ts              # TIL 데이터 파싱 유틸리티
+```
+
+---
+
+### TIL Markdown 파일 형식
+
+#### 파일명 규칙
+- **형식**: `YYYY-MM-DD.md`
+- **예시**: `2025-12-25.md`
+- **위치**: `_til/{연도}/` 디렉토리
+
+#### Front Matter 형식
+
+```markdown
+---
+date: 2025-12-25
+---
+
+- Next.js SSG vs ISR 정리
+- TOC 구현 방식 복기
+- TypeScript 제네릭 활용법
+```
+
+**특징**:
+- Front Matter에는 `date` 필드만 존재
+- 본문은 간단한 bullet point 형식
+- SEO나 완성도보다 꾸준한 기록이 목적
+
+---
+
+### 데이터 흐름 아키텍처
+
+#### 빌드 타임 (SSG)
+
+```
+1. 빌드 시작
+   ↓
+2. lib/til.ts의 getAllTILsWithHtmlForYear() 실행
+   ↓
+3. _til/2025/ 디렉토리의 모든 .md 파일 읽기
+   ↓
+4. 각 파일의 Markdown을 HTML로 변환
+   ↓
+5. Map<date, html> 생성
+   ↓
+6. Server Component (app/til/page.tsx)에서 데이터 로드
+   ↓
+7. 직렬화하여 Client Component에 props로 전달
+```
+
+#### 런타임 (클라이언트)
+
+```
+1. 페이지 로드 시 모든 TIL 데이터가 이미 포함됨
+   ↓
+2. 캘린더에서 날짜 클릭
+   ↓
+3. 로컬 Map에서 해당 날짜의 HTML 즉시 조회
+   ↓
+4. 모달에 내용 표시 (API 호출 없음)
+```
+
+**핵심**: API 호출 없이 빌드 시 모든 데이터를 미리 로드하여 즉각적인 사용자 경험 제공
+
+---
+
+### 핵심 파일 설명
+
+#### `lib/til.ts`
+
+TIL 데이터 파싱 및 관리 유틸리티 모듈:
+
+**주요 함수**:
+
+```typescript
+// 특정 연도의 모든 TIL 날짜 목록 (파일명 기반)
+getTILDates(year: number): string[]
+
+// 특정 날짜의 TIL 원본 데이터
+getTILByDate(date: string): TILData | null
+
+// Markdown을 HTML로 변환
+markdownToHtml(markdown: string): Promise<string>
+
+// 캘린더 표시용 - 날짜별 TIL 존재 여부
+getAllTILsForYear(year: number): Map<string, boolean>
+
+// 빌드타임 로드용 - 모든 TIL을 HTML로 변환
+getAllTILsWithHtmlForYear(year: number): Promise<Map<string, string>>
+
+// 사용 가능한 연도 목록
+getAvailableYears(): number[]
+```
+
+**중요 포인트**:
+- `lib/posts.ts`와 동일한 패턴 사용
+- Node.js 파일 시스템 API 사용 → Server Component에서만 호출 가능
+- `remark` + `remark-gfm`으로 Markdown 파싱 (블로그 포스트와 동일)
+
+---
+
+#### `app/til/page.tsx`
+
+TIL 메인 페이지 - **Server Component**
+
+**역할**:
+1. URL 쿼리 파라미터로 연도 선택 처리 (`?year=2025`)
+2. 빌드 시 모든 TIL 데이터 로드:
+   - `getAllTILsForYear()` → 날짜별 존재 여부 Map
+   - `getAllTILsWithHtmlForYear()` → 날짜별 HTML 컨텐츠 Map
+3. 두 개의 Map을 직렬화하여 Client Component에 전달
+
+**코드 흐름**:
+
+```typescript
+export default async function TILPage({ searchParams }) {
+  const selectedYear = searchParams.year || getCurrentYear();
+
+  // 1. TIL 존재 여부 로드
+  const tilData = getAllTILsForYear(selectedYear);
+
+  // 2. 모든 TIL 내용을 HTML로 변환하여 로드 (빌드 시)
+  const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
+
+  // 3. Map을 객체로 변환 (직렬화)
+  const tilDataObject = Object.fromEntries(tilData);
+  const tilContentObject = Object.fromEntries(tilContentMap);
+
+  return (
+    <TILPageClient
+      tilData={new Map(Object.entries(tilDataObject))}
+      tilContentMap={new Map(Object.entries(tilContentObject))}
+      availableYears={availableYears}
+    />
+  );
+}
+```
+
+---
+
+#### `app/til/TILPageClient.tsx`
+
+TIL 클라이언트 로직 - **Client Component**
+
+**역할**:
+1. 캘린더 인터랙션 관리
+2. 모달 상태 관리
+3. 날짜 클릭 시 로컬 Map에서 데이터 즉시 조회
+
+**핵심 로직**:
+
+```typescript
+export default function TILPageClient({
+  tilData,           // Map<date, boolean> - 존재 여부
+  tilContentMap,     // Map<date, html> - HTML 컨텐츠
+}) {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  // 날짜 클릭 핸들러 (API 호출 없음!)
+  const handleDateClick = (date: string) => {
+    setSelectedDate(date);  // 모달 오픈만 처리
+  };
+
+  // 선택된 날짜의 컨텐츠 즉시 조회
+  const selectedContent = selectedDate
+    ? tilContentMap.get(selectedDate) || "TIL 내용이 없습니다."
+    : "";
+
+  return (
+    <>
+      <TILCalendar tilData={tilData} onDateClick={handleDateClick} />
+      <TILModal date={selectedDate} content={selectedContent} />
+    </>
+  );
+}
+```
+
+**중요**:
+- **API 호출 없음** - 모든 데이터는 이미 props로 전달됨
+- **즉각적인 응답** - 로컬 Map 조회만으로 모달 표시
+- **오프라인 작동** - 한 번 로드되면 네트워크 불필요
+
+---
+
+#### `components/TILCalendar.tsx`
+
+GitHub 잔디 스타일의 연간 캘린더 컴포넌트
+
+**기능**:
+1. 1년(365일)을 주 단위(7일)로 그리드 표시
+2. TIL이 있는 날짜는 초록색 (`.bg-green-500`)
+3. TIL이 없는 날짜는 회색 (`.bg-zinc-100`)
+4. 날짜 클릭 시 `onDateClick` 콜백 호출
+
+**주요 로직**:
+
+```typescript
+// 1년 전체 날짜 생성 (1월 1일 ~ 12월 31일)
+const generateYearDates = () => { ... }
+
+// 주 단위로 그룹화 (일요일 시작)
+const groupByWeeks = (dates: Date[]) => { ... }
+
+// 날짜별 TIL 존재 여부 확인
+const hasTIL = tilData.get(dateStr) || false;
+```
+
+**시각화**:
+- 월 라벨 (Jan, Feb, ..., Dec)
+- 요일 라벨 (Sun, Mon, ..., Sat)
+- 반응형 디자인 (모바일: 작게 / 데스크톱: 크게)
+- 호버 효과 및 툴팁
+
+---
+
+#### `components/TILModal.tsx`
+
+TIL 내용을 표시하는 모달 컴포넌트
+
+**기능**:
+1. 날짜 + HTML 컨텐츠 표시
+2. ESC 키 / 배경 클릭으로 닫기
+3. 모달 열림 시 body 스크롤 방지
+4. 다크 모드 지원
+
+**Props**:
+
+```typescript
+interface TILModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  date: string;        // YYYY-MM-DD
+  content: string;     // HTML string
+}
+```
+
+**UI 구조**:
+- 헤더: 날짜 (한글 포맷 "YYYY년 MM월 DD일") + 닫기 버튼
+- 컨텐츠: `dangerouslySetInnerHTML`로 HTML 렌더링
+- 푸터: 닫기 버튼
+
+---
+
+### 새 TIL 추가 방법
+
+#### 1. Markdown 파일 생성
+
+```bash
+# 경로: _til/2025/2025-12-26.md
+```
+
+#### 2. Front Matter 작성
+
+```markdown
+---
+date: 2025-12-26
+---
+
+- React Server Components 동작 원리
+- CSS Grid vs Flexbox 비교
+- Git rebase 실전 활용법
+```
+
+#### 3. 빌드 및 확인
+
+```bash
+pnpm build
+# → _til/2025/2025-12-26.md가 자동으로 HTML로 변환됨
+# → 캘린더에 12월 26일이 초록색으로 표시됨
+```
+
+#### 4. Git commit 후 배포
+
+```bash
+git add _til/2025/2025-12-26.md
+git commit -m "TIL: React Server Components 학습"
+git push
+```
+
+---
+
+### 통계 및 시각화
+
+TIL 페이지는 다음 통계를 자동으로 계산하여 표시합니다:
+
+1. **총 학습 일수**: `tilData.size`
+2. **현재 연도**: `year`
+3. **학습 달성률**: `(tilData.size / 365) * 100`
+
+**예시**:
+
+```
+┌─────────────────┬─────────────────┬─────────────────┐
+│ 총 학습 일수     │ 현재 연도        │ 학습 달성률      │
+├─────────────────┼─────────────────┼─────────────────┤
+│ 127일           │ 2025년          │ 34.8%          │
+└─────────────────┴─────────────────┴─────────────────┘
+```
+
+---
+
+### 성능 최적화
+
+#### 빌드 타임 최적화
+
+```typescript
+// ✅ 병렬 처리로 최적화된 HTML 변환
+export async function getAllTILsWithHtmlForYear(year: number) {
+  const dates = getTILDates(year);
+  const tilMap = new Map<string, string>();
+
+  // 모든 Markdown을 병렬로 HTML 변환
+  for (const date of dates) {
+    const tilData = getTILByDate(date);
+    if (tilData) {
+      const html = await markdownToHtml(tilData.content);
+      tilMap.set(date, html);
+    }
+  }
+
+  return tilMap;
+}
+```
+
+**효과**:
+- 빌드 시 한 번만 변환
+- 런타임 오버헤드 제로
+- S3 + CloudFront 배포에 최적화
+
+#### 런타임 최적화
+
+```typescript
+// ✅ 로컬 Map 조회 - O(1) 시간 복잡도
+const selectedContent = tilContentMap.get(selectedDate);
+
+// ❌ API 호출 (이전 방식) - 네트워크 지연 발생
+// const response = await fetch(`/api/til?date=${date}`);
+```
+
+**효과**:
+- 즉각적인 모달 표시
+- 네트워크 요청 제로
+- 오프라인 작동 가능
+
+---
+
+### 연도별 필터링
+
+TIL은 URL 쿼리 파라미터로 연도 선택을 지원합니다:
+
+**URL 형식**:
+- 기본: `/til` → 현재 연도 표시
+- 연도 지정: `/til?year=2024` → 2024년 TIL 표시
+
+**구현**:
+
+```typescript
+// Server Component에서 쿼리 파라미터 처리
+export default async function TILPage({ searchParams }) {
+  const yearParam = searchParams.year;
+  const currentYear = getCurrentYear();
+  const selectedYear = yearParam ? parseInt(yearParam, 10) : currentYear;
+
+  // 선택된 연도의 데이터만 로드
+  const tilData = getAllTILsForYear(selectedYear);
+  const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
+
+  // ...
+}
+```
+
+**UI**:
+- 연도 선택 버튼 자동 생성
+- 현재 선택된 연도는 primary 색상으로 강조
+
+---
+
+### TIL vs 블로그 포스트 비교
+
+| 항목 | TIL | 블로그 포스트 |
+|------|-----|--------------|
+| **목적** | 매일의 러프한 학습 메모 | 완성도 있는 기술 글 |
+| **형식** | Bullet point | 구조화된 문서 |
+| **길이** | 짧음 (3-5줄) | 김 (500+ 단어) |
+| **작성 시간** | 1-2분 | 30분 ~ 수 시간 |
+| **SEO** | 중요하지 않음 | 매우 중요 |
+| **시각화** | GitHub 잔디 캘린더 | 포스트 목록/카드 |
+| **디렉토리** | `_til/YYYY/` | `_posts/category/` |
+| **Front Matter** | `date`만 | `title`, `excerpt`, `author`, `tag`, etc. |
+| **URL** | `/til?year=2025` | `/post/category/slug` |
+
+---
+
+### 주의사항
+
+1. **파일명 규칙 준수**
+   - 반드시 `YYYY-MM-DD.md` 형식 사용
+   - 잘못된 예: `2025-1-5.md` (❌ 0 패딩 누락)
+   - 올바른 예: `2025-01-05.md` (✅)
+
+2. **연도 디렉토리 필수**
+   - `_til/2025-12-25.md` (❌)
+   - `_til/2025/2025-12-25.md` (✅)
+
+3. **Front Matter 필수**
+   ```markdown
+   ---
+   date: 2025-12-25
+   ---
+   ```
+   - `date` 필드 누락 시 파싱 오류 발생
+
+4. **빌드 시점 데이터 로드**
+   - TIL 추가/수정 후 반드시 `pnpm build` 실행
+   - 개발 서버(`pnpm dev`)에서는 hot reload 작동
+
+5. **대용량 TIL 관리**
+   - 1년에 365개 TIL 생성 가능
+   - 수년치 누적 시 빌드 시간 증가 가능
+   - 필요 시 연도별 lazy loading 고려
+
+---
+
+### 확장 가능성
+
+향후 TIL 시스템 확장 시 고려사항:
+
+1. **태그 시스템**
+   ```markdown
+   ---
+   date: 2025-12-25
+   tags: [react, typescript, nextjs]
+   ---
+   ```
+   - 태그별 필터링
+   - 태그 클라우드 시각화
+
+2. **월별 뷰**
+   - 연간 캘린더 외에 월별 상세 뷰 추가
+   - 해당 월의 모든 TIL 목록 표시
+
+3. **검색 기능**
+   - TIL 내용 전체 텍스트 검색
+   - 빌드 시 검색 인덱스 생성
+
+4. **통계 대시보드**
+   - 연속 학습 일수 (streak)
+   - 요일별 학습 패턴 분석
+   - 월별 학습 횟수 차트
+
+---
+
+### 문제 해결 (Troubleshooting)
+
+#### TIL이 캘린더에 표시되지 않는 경우
+
+1. **파일명 확인**
+   ```bash
+   # 올바른 형식인지 확인
+   ls _til/2025/
+   # 출력 예: 2025-12-25.md
+   ```
+
+2. **Front Matter 확인**
+   ```markdown
+   ---
+   date: 2025-12-25  # 파일명과 동일해야 함
+   ---
+   ```
+
+3. **빌드 재실행**
+   ```bash
+   pnpm build
+   ```
+
+4. **캐시 삭제**
+   ```bash
+   rm -rf .next
+   pnpm build
+   ```
+
+#### 모달에 내용이 표시되지 않는 경우
+
+1. **HTML 변환 확인**
+   - `lib/til.ts`의 `markdownToHtml()` 함수가 정상 작동하는지 확인
+   - 콘솔에 에러 메시지 확인
+
+2. **Props 전달 확인**
+   - `TILPageClient`의 `tilContentMap`에 데이터가 있는지 확인
+   - React DevTools로 props 검사
+
+---
+

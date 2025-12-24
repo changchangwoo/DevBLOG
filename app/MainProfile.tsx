@@ -20,7 +20,7 @@ export default function MainProfile() {
       ),
     },
     {
-      label: "Contatct",
+      label: "Contact",
       value: "changchangwoo@naver.com",
       href: "mailto:changchangwoo@naver.com",
       icon: (

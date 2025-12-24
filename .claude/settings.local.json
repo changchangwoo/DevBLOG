@@ -6,7 +6,8 @@
       "Bash(pnpm build)",
       "Bash(pnpm remove:*)",
       "Bash(dir:*)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(cat:*)"
     ]
   }
 }

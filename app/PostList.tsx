@@ -2,9 +2,9 @@
 
 import { useState, useMemo } from "react";
 import type { PostPreview } from "@/lib/posts";
-import PostCard from "@/components/PostCard";
+import PostCard from "@/components/PostCard/PostCard";
 import Divider from "@/components/Divider";
-import SearchBar from "@/app/post/SearchBar";
+import SearchBar from "@/app/SearchBar";
 
 interface PostListProps {
   posts: PostPreview[];
@@ -45,14 +45,12 @@ export default function PostList({ posts, tags }: PostListProps) {
       />
       <Divider
         label={`👀 총 ${filteredPosts.length}개의 포스트 발견!  `}
-        spacing="lg"
+        spacing="md"
         className="body3 text-descript"
       />
       <section>
         {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => (
-            <PostCard key={post.slug} post={post} showCategory={true} />
-          ))
+          filteredPosts.map((post) => <PostCard key={post.slug} post={post} />)
         ) : (
           <p className="text-center text-zinc-500 dark:text-zinc-400">
             검색 결과가 없습니다

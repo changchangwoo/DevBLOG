@@ -1,6 +1,6 @@
 "use client";
 
-import Badge from "../../components/Badge";
+import Badge from "../components/Badge";
 
 interface SearchBarProps {
   searchQuery: string;
@@ -15,6 +15,16 @@ export default function SearchBar({
   tags,
   onTagClick,
 }: SearchBarProps) {
+  const allTags = ["All", ...tags];
+
+  const handleTagClick = (tag: string) => {
+    if (tag === "All") {
+      setSearchQuery("");
+    } else {
+      onTagClick(tag);
+    }
+  };
+
   return (
     <div className="mb-[1rem]">
       <div className="relative">
@@ -40,21 +50,19 @@ export default function SearchBar({
         </svg>
       </div>
 
-      {tags.length > 0 && (
-        <div className="mt-[1rem]">
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => onTagClick(tag)}
-                className="transition-opacity hover:opacity-70"
-              >
-                <Badge>{tag}</Badge>
-              </button>
-            ))}
-          </div>
+      <div className="mt-[1rem]">
+        <div className="flex flex-wrap gap-2">
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => handleTagClick(tag)}
+              className="transition-opacity hover:opacity-70"
+            >
+              <Badge>{tag}</Badge>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }

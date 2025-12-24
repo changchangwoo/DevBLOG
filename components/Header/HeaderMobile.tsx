@@ -130,13 +130,6 @@ export default function HeaderMobile({
           <nav className=" mt-4 pt-4">
             <div className="flex flex-col gap-[2rem]">
               <Link
-                href="/post"
-                className="body3 text-primary "
-                onClick={() => setIsMenuOpen(false)}
-              >
-                포스트
-              </Link>
-              <Link
                 href="/about"
                 className="body3 text-primary "
                 onClick={() => setIsMenuOpen(false)}

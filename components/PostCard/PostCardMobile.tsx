@@ -1,21 +1,33 @@
 import Link from "next/link";
 import type { PostPreview } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
-import Badge from "./Badge";
-import Divider from "./Divider";
+import Badge from "../Badge";
+import Divider from "../Divider";
 
-interface PostCardProps {
+interface PostCardMobileProps {
   post: PostPreview;
   showCategory?: boolean;
 }
 
-export default function PostCard({ post, showCategory = true }: PostCardProps) {
+export default function PostCardMobile({
+  post,
+  showCategory = true,
+}: PostCardMobileProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <article className="group ">
+    <article className="group">
       <Link href={`/post/${post.slug}`}>
         <div className="flex flex-col gap-[1rem]">
+          <div className="flex items-center justify-start">
+            <time className="caption text-descript">
+              {new Date(post.date).toLocaleDateString("ko-KR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
           <h3 className="title2 text-primary">{post.title}</h3>
           <div className="flex flex-wrap gap-[0.5rem]">
             {showCategory && (
@@ -28,15 +40,6 @@ export default function PostCard({ post, showCategory = true }: PostCardProps) {
             ))}
           </div>
           <p className="body1 text-descript">{post.excerpt}</p>
-          <div className="flex items-center justify-end">
-            <time className="caption text-descript">
-              {new Date(post.date).toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-          </div>
         </div>
       </Link>
       <Divider spacing="lg" />

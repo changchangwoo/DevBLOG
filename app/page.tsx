@@ -1,27 +1,22 @@
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, getRecentTag } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Link from "next/link";
 import Badge from "@/components/Badge";
 import Divider from "@/components/Divider";
-import PostCard from "@/components/PostCard";
+import PostCard from "@/components/PostCard/PostCard";
+import PostList from "./PostList";
 
 export default function Home() {
   const posts = getAllPosts();
   const latestPost = posts[0];
-  const recentPost = posts.slice(1, 6);
+  const tags = getRecentTag();
+
   const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col gap-4 pt-[46px]">
+    <div className="min-h-screen bg-background flex flex-col  pt-[46px]">
       <main>
-        <div
-          className="w-full min-h-[20rem] bg-cover bg-center flex flex-col p-[2rem] justify-end "
-          style={{ backgroundImage: "url(/images/common/main_bg.png)" }}
-        >
-          <h1 className="title1 text-white mb-2">울창한 숲</h1>
-          <h2 className="body1 text-white">프론트엔드 개발자 이창우 블로그</h2>
-        </div>
-        <div className="p-[2rem] flex flex-col gap-[2rem]">
+        <div className="p-[2rem] flex flex-col gap-[2rem] mx-auto max-w-7xl">
           <section>
             <div className="flex flex-col gap-[1rem]">
               <Divider spacing="md" label="신규 포스트" className="title2" />
@@ -66,15 +61,8 @@ export default function Home() {
           </section>
           <section>
             <div className="flex flex-col gap-[1rem]">
-              <Divider
-                spacing="md"
-                label="최신 포스트"
-                className="title2"
-                expand="/post"
-              />
-              {recentPost.map((post) => (
-                <PostCard key={post.slug} post={post} showCategory={true} />
-              ))}
+              <Divider spacing="md" label="포스트" className="title2" />
+              <PostList posts={posts} tags={tags} />
             </div>
           </section>
         </div>

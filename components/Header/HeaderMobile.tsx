@@ -6,6 +6,7 @@ import Image from "next/image";
 
 interface HeaderMobileProps {
   isScrolled: boolean;
+  isVisible: boolean;
   mounted: boolean;
   theme: string | undefined;
   setTheme: (theme: string) => void;
@@ -13,6 +14,7 @@ interface HeaderMobileProps {
 
 export default function HeaderMobile({
   isScrolled,
+  isVisible,
   mounted,
   theme,
   setTheme,
@@ -20,15 +22,17 @@ export default function HeaderMobile({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 bg-background xl:hidden border-b border-boundary`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 bg-background xl:hidden border-b border-boundary transition-transform duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="px-[2rem] py-[1rem]">
         <div className="flex items-center justify-between">
           <Link
             href="/"
             className={`flex items-center gap-[0.5rem] justify-center ${
-              isScrolled
-                ? "text-primary"
-                : "text-background"
+              isScrolled ? "text-primary" : "text-background"
             }`}
           >
             <Image
@@ -38,7 +42,7 @@ export default function HeaderMobile({
               height={26}
               className="transition-opacity hover:opacity-80"
             />
-            <h1 className="body3 text-primary">이창우 블로그</h1>
+            <h1 className="body3 text-primary">FE Developer Changwoo</h1>
           </Link>
 
           <div className="flex items-center gap-4">

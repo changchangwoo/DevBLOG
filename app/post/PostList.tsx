@@ -77,10 +77,13 @@ export default function PostList({ posts, tags }: PostListProps) {
             </div>
           </div>
         )}
-
-
       </div>
-      <Divider label={`총 ${filteredPosts.length}건`} spacing="lg" className="body1" color="primary"/>
+      <Divider
+        label={`총 ${filteredPosts.length}건`}
+        spacing="lg"
+        className="body1"
+        color="primary"
+      />
       <div className="space-y-12">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (

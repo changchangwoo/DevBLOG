@@ -5,6 +5,7 @@ import Image from "next/image";
 
 interface HeaderDesktopProps {
   isScrolled: boolean;
+  isVisible: boolean;
   mounted: boolean;
   theme: string | undefined;
   setTheme: (theme: string) => void;
@@ -12,17 +13,18 @@ interface HeaderDesktopProps {
 
 export default function HeaderDesktop({
   isScrolled,
+  isVisible,
   mounted,
   theme,
   setTheme,
 }: HeaderDesktopProps) {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 max-h-[3.4rem] hidden xl:block ${
+      className={`fixed top-0 left-0 right-0 z-50 max-h-[3.4rem] hidden xl:block transition-transform duration-300 ease-in-out ${
         isScrolled
           ? "bg-white/95 dark:bg-zinc-900/95 shadow-md backdrop-blur-sm"
           : "bg-transparent"
-      }`}
+      } ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <nav className="mx-auto max-w-4xl px-6 py-4">
         <div className="flex items-center justify-between">

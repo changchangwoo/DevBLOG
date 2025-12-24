@@ -177,7 +177,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <Giscus />
         </div>
         {/* PC버전 테이블 */}
-        <aside className="hidden xl:block absolute left-full top-[44rem] h-full">
+        <aside className="hidden xl:block absolute left-full top-[44rem] ">
           <div className="sticky top-24 w-[32rem]">
             <TableOfContents headings={headings} />
           </div>

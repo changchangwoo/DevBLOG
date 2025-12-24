@@ -45,7 +45,7 @@ export default function MainProfile() {
   return (
     <aside className="w-full">
       <div className="pt-[4rem]">
-        <div className="flex flex-col gap-[2rem]">
+        <div className="flex flex-col gap-[1rem]">
           <div className="flex flex-col gap-[2rem] items-center">
             <Image
               width={120}
@@ -60,12 +60,12 @@ export default function MainProfile() {
             </div>
           </div>
           <p className="body3 text-descript text-center">
-            커피 한 잔과 토이 프로젝트 개발을 좋아합니다.
+            프로젝트를 좋아하는 주니어 개발자 입니다.
             <br />
             부족하더라도 씩씩한 사람이 되고 싶습니다.
           </p>
 
-          <div className="mt-[1rem] rounded-[8px] flex gap-[2rem] items-center justify-center relative">
+          <div className="rounded-[8px] flex gap-[1rem] items-center justify-center relative">
             {contactList.map((contact) => (
               <IconWithLabel
                 key={contact.label}

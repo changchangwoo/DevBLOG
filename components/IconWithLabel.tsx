@@ -37,7 +37,7 @@ export default function IconWithLabel({
 }: IconWithLabelProps) {
   const content = (
     <>
-      <div className="text-descript group-hover:text-primary transition-colors p-[0.5rem] rounded-[6px] group-hover:bg-boundary">
+      <div className="text-descript group-hover:text-primary transition-colors p-[0.5rem] rounded-[6px] group-hover:bg-boundary cursor-pointer">
         {icon}
       </div>
       <span className="caption text-descript opacity-0 group-hover:opacity-100 transition-opacity absolute mt-[3rem]">

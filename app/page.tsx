@@ -15,7 +15,7 @@ export default function Home() {
   const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col  pt-[46px]">
+    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem]">
       <main>
         <div className="mx-auto max-w-[120rem] flex flex-col xl:flex-row gap-[2rem] xl:gap-[5rem] px-[2rem]">
           <div className="hidden xl:block xl:flex-[1.5] xl:min-w-0">
@@ -36,9 +36,9 @@ export default function Home() {
                             : "url(/images/common/main_bg.png)",
                         }}
                       >
-                        <div className="absolute inset-0 bg-black/70 group-hover:bg-black/70 transition-colors "></div>
+                        <div className="absolute inset-0 bg-white/70 dark:bg-black/70 group-hover:bg-white/80 dark:group-hover:bg-black/70 transition-colors "></div>
                         <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] xl:min-h-[28rem] border border-boundary">
-                          <div className="flex gap-[0.5rem]">
+                          <div className="flex gap-[0.5rem] flex-wrap">
                             {categoryInfo && (
                               <Badge
                                 variant="category"
@@ -52,7 +52,7 @@ export default function Home() {
                             ))}
                           </div>
                           <div>
-                            <h1 className="title2 md:title1 text-white">
+                            <h1 className="title3 text-primary">
                               {latestPost.title}
                             </h1>
                             <h2 className="body1 text-descript">

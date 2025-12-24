@@ -22,7 +22,7 @@ export default function PostCard({ post }: PostCardProps) {
                 src={post.coverImage}
                 alt={post.title}
                 fill
-                className="object-cover"
+                className="object-cover border border-boundary"
               />
             </div>
           )}

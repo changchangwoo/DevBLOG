@@ -9,13 +9,13 @@ export default function Badge({
   variant = "tag",
   colorClass,
 }: BadgeProps) {
-  const baseClass = "caption px-4 rounded-[10px]";
+  const baseClass = "caption px-4 rounded-[10px] cursor-pointer border ";
 
   if (variant === "category" && colorClass) {
     return (
-      <div className={`${baseClass} ${colorClass} text-white`}>{children}</div>
+      <div className={`${baseClass} ${colorClass} text-white border-none`}>{children}</div>
     );
   }
 
-  return <div className={`${baseClass} bg-secondary`}>{children}</div>;
+  return <div className={`${baseClass} bg-secondary border-boundary`}>{children}</div>;
 }

@@ -23,7 +23,7 @@ export default function HeaderDesktop({
     <header
       className={`fixed top-0 left-0 right-0 z-50  hidden xl:block transition-transform duration-300 ease-in-out ${
         isScrolled
-          ? "bg-white/95 dark:bg-zinc-900/55 shadow-md backdrop-blur-sm"
+          ? "bg-background shadow-md backdrop-blur-sm"
           : "bg-transparent"
       } ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
@@ -40,10 +40,11 @@ export default function HeaderDesktop({
             <Image
               src="/images/common/logo.svg"
               alt="Logo"
-              width={32}
-              height={32}
+              width={24}
+              height={24}
               className="transition-opacity hover:opacity-80"
             />
+            <h1 className="body3 text-primary">개발자 이창우</h1>
           </Link>
 
           <div className="flex items-center gap-6">

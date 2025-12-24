@@ -39,11 +39,11 @@ export default function HeaderMobile({
             <Image
               src="/images/common/logo.svg"
               alt="Logo"
-              width={26}
-              height={26}
+              width={24}
+              height={24}
               className="transition-opacity hover:opacity-80"
             />
-            <h1 className="body3 text-primary">FE Developer Changwoo</h1>
+            <h1 className="body3 text-primary">개발자 이창우</h1>
           </Link>
 
           <div className="flex items-center gap-4">

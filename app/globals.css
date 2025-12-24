@@ -243,6 +243,13 @@ body {
   ):before {
   content: none;
 }
+.prose :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *)):before {
+    content: none;
+}
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    color: var(--color-descript);
+
+}
 
 .prose
   :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):before,
@@ -287,6 +294,7 @@ body {
 
 .prose strong {
   font-weight: 700;
+  color: var(--color-primary)
 }
 
 .prose table {

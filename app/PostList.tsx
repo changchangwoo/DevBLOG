@@ -45,14 +45,17 @@ export default function PostList({ posts, tags }: PostListProps) {
       />
       <Divider
         label={`👀 총 ${filteredPosts.length}개의 포스트 발견!  `}
-        spacing="md"
+        spacing="lg"
         className="body3 text-descript"
       />
-      <section>
+      <section className="ut-grid">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => <PostCard key={post.slug} post={post} />)
         ) : (
-          <p className="text-center text-zinc-500 dark:text-zinc-400">
+          <p
+            className="text-center text-primary"
+            style={{ gridColumn: "1 / -1" }}
+          >
             검색 결과가 없습니다
           </p>
         )}

@@ -87,6 +87,17 @@
     font-weight: 400;
     line-height: var(--lh);
   }
+  .ut-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .ut-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 }
 
 html,

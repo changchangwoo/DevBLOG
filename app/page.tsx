@@ -19,7 +19,7 @@ export default function Home() {
         <div className="p-[2rem] flex flex-col gap-[2rem] mx-auto max-w-7xl">
           <section>
             <div className="flex flex-col gap-[1rem]">
-              <Divider spacing="md" label="신규 포스트" className="title2" />
+              <Divider spacing="md" label="신규" className="title2" />
               {latestPost && (
                 <Link href={`/post/${latestPost.slug}`}>
                   <div
@@ -60,10 +60,8 @@ export default function Home() {
             </div>
           </section>
           <section>
-            <div className="flex flex-col gap-[1rem]">
-              <Divider spacing="md" label="포스트" className="title2" />
-              <PostList posts={posts} tags={tags} />
-            </div>
+            <Divider spacing="lg" label="포스트" className="title2" />
+            <PostList posts={posts} tags={tags} />
           </section>
         </div>
       </main>

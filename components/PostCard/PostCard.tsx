@@ -1,20 +1,54 @@
+import Link from "next/link";
+import Image from "next/image";
 import type { PostPreview } from "@/lib/posts";
-import PostCardDesktop from "./PostCardDesktop";
-import PostCardMobile from "./PostCardMobile";
+import { getCategoryInfo } from "@/lib/category";
+import Badge from "../Badge";
+import Divider from "../Divider";
 
 interface PostCardProps {
   post: PostPreview;
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const categoryInfo = getCategoryInfo(post.category);
+
   return (
-    <div>
-      <div className="hidden xl:block">
-        <PostCardDesktop post={post} />
-      </div>
-      <div className="block xl:hidden">
-        <PostCardMobile post={post} />
-      </div>
-    </div>
+    <article className="group">
+      <Link href={`/post/${post.slug}`} className="block">
+        <div className="flex flex-col gap-[1rem]">
+          {post.coverImage && (
+            <div className="hidden md:block relative w-full h-[200px] overflow-hidden rounded-[8px]">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+
+          <h3 className="title2 text-primary">{post.title}</h3>
+          <div className="flex flex-wrap gap-[0.5rem]">
+            <Badge variant="category" colorClass={categoryInfo.colorClass}>
+              {categoryInfo.label}
+            </Badge>
+            {post.tag.map((tag) => (
+              <Badge key={post.slug + tag}>{tag}</Badge>
+            ))}
+          </div>
+          <p className="body1 text-descript">{post.excerpt}</p>
+        </div>
+        <div className="flex items-center justify-start">
+          <time className="caption text-descript">
+            {new Date(post.date).toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
+        </div>
+      </Link>
+      <Divider spacing="lg" className="block md:hidden" />
+    </article>
   );
 }

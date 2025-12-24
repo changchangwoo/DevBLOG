@@ -1,16 +1,18 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface DividerProps {
   className?: string;
   spacing?: "none" | "sm" | "md" | "lg";
   label?: string;
   color?: "boundary" | "primary";
+  expand?: string;
 }
 
 const spacingClasses = {
   none: "",
   sm: "my-4",
-  md: "my-8",
+  md: "my-[1rem]",
   lg: "my-[2rem]",
 };
 
@@ -24,6 +26,7 @@ export default function Divider({
   spacing = "none",
   label,
   color = "boundary",
+  expand,
 }: Readonly<DividerProps>) {
   if (label) {
     return (
@@ -36,6 +39,15 @@ export default function Divider({
       >
         <span className="text-primary whitespace-nowrap">{label}</span>
         <div className={cn("flex-1 h-[0.5px]", colorClasses[color])} />
+        {expand && (
+          <Link
+            href={expand}
+            rel="noopener noreferrer"
+            className="text-descript body3"
+          >
+            전체보기
+          </Link>
+        )}
       </div>
     );
   }

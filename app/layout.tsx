@@ -3,6 +3,7 @@ import "./globals.css";
 import "highlight.js/styles/github.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "울창한 숲",
@@ -16,10 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body className="bg-background">
         <ThemeProvider>
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

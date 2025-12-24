@@ -8,13 +8,14 @@ import PostCard from "@/components/PostCard";
 export default function Home() {
   const posts = getAllPosts();
   const latestPost = posts[0];
+  const recentPost = posts.slice(1, 6);
   const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col gap-4">
-      <main className="">
+    <div className="min-h-screen bg-background flex flex-col gap-4 pt-[46px]">
+      <main>
         <div
-          className="w-full min-h-[24rem] rounded-lg bg-cover bg-center flex flex-col p-[2rem] justify-end "
+          className="w-full min-h-[20rem] bg-cover bg-center flex flex-col p-[2rem] justify-end "
           style={{ backgroundImage: "url(/images/common/main_bg.png)" }}
         >
           <h1 className="title1 text-white mb-2">울창한 숲</h1>
@@ -23,12 +24,7 @@ export default function Home() {
         <div className="p-[2rem] flex flex-col gap-[2rem]">
           <section>
             <div className="flex flex-col gap-[1rem]">
-              <div className="flex items-center gap-[20px] mb-[1rem]">
-                <h1 className="body text-primary body2 whitespace-nowrap">
-                  새로운 아티클
-                </h1>
-                <Divider />
-              </div>
+              <Divider spacing="md" label="신규 포스트" className="title2" />
               {latestPost && (
                 <Link href={`/post/${latestPost.slug}`}>
                   <div
@@ -70,13 +66,13 @@ export default function Home() {
           </section>
           <section>
             <div className="flex flex-col gap-[1rem]">
-              <div className="flex items-center gap-[20px] mb-[1rem]">
-                <h1 className="body text-primary body2 whitespace-nowrap">
-                  최신 아티클
-                </h1>
-                <Divider />
-              </div>
-              {posts.map((post) => (
+              <Divider
+                spacing="md"
+                label="최신 포스트"
+                className="title2"
+                expand="/post"
+              />
+              {recentPost.map((post) => (
                 <PostCard key={post.slug} post={post} showCategory={true} />
               ))}
             </div>

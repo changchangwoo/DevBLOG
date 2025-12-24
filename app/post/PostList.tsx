@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import type { PostPreview } from "@/lib/posts";
 import PostCard from "@/components/PostCard";
 import Divider from "@/components/Divider";
-import Badge from "@/components/Badge";
+import SearchBar from "@/app/post/SearchBar";
 
 interface PostListProps {
   posts: PostPreview[];
@@ -37,54 +37,18 @@ export default function PostList({ posts, tags }: PostListProps) {
 
   return (
     <>
-      {/* 검색바 */}
-      <div className="mb-[1rem]">
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="포스트 제목, 내용, 태그를 입력해주세요"
-            className="body3 w-full rounded-lg border border-boundary px-4 py-3 text-descript placeholder-descript bg-secondary"
-          />
-          <svg
-            className="absolute right-4 top-1/2 h-[2.4rem] w-[2.4rem] -translate-y-1/2 text-primary"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </div>
-
-        {tags.length > 0 && (
-          <div className="mt-[1rem]">
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => handleTagClick(tag)}
-                  className="transition-opacity hover:opacity-70"
-                >
-                  <Badge>{tag}</Badge>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <Divider
-        label={`총 ${filteredPosts.length}건`}
-        spacing="lg"
-        className="body1"
-        color="primary"
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        tags={tags}
+        onTagClick={handleTagClick}
       />
-      <div className="space-y-12">
+      <Divider
+        label={`👀 총 ${filteredPosts.length}개의 포스트 발견!  `}
+        spacing="lg"
+        className="body3 text-descript"
+      />
+      <section>
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => (
             <PostCard key={post.slug} post={post} showCategory={true} />
@@ -94,7 +58,7 @@ export default function PostList({ posts, tags }: PostListProps) {
             검색 결과가 없습니다
           </p>
         )}
-      </div>
+      </section>
     </>
   );
 }

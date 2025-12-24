@@ -60,11 +60,11 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="hidden xl:block absolute">
-      <div className="sticky overflow-y-auto">
-        <h2 className="mb-4 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+      <div className="sticky overflow-y-auto ml-[3rem]">
+        <h2 className="mb-4 title3 font-semibold text-zinc-900 dark:text-zinc-50">
           목차
         </h2>
-        <ul className="space-y-2 text-sm">
+        <ul className="space-y-2 body3">
           {headings.map((heading) => {
             const isActive = activeId === heading.id;
             const indent =

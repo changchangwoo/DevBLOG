@@ -57,7 +57,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="min-h-screen bg-background pt-[46px]">
-      <div className="relative mx-auto max-w-6xl pb-[3rem]">
+      <div className="relative mx-auto max-w-7xl pb-[3rem]">
         {post.coverImage && (
           <Image
             src={post.coverImage}
@@ -177,8 +177,8 @@ export default async function PostPage({ params }: PostPageProps) {
           <Giscus />
         </div>
         {/* PC버전 테이블 */}
-        <aside className="hidden xl:block absolute left-full top-16 h-full">
-          <div className="sticky top-24 w-64">
+        <aside className="hidden xl:block absolute left-full top-[44rem] h-full">
+          <div className="sticky top-24 w-[32rem]">
             <TableOfContents headings={headings} />
           </div>
         </aside>

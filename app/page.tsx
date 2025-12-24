@@ -52,7 +52,7 @@ export default function Home() {
                             ))}
                           </div>
                           <div>
-                            <h1 className="title2 text-white">
+                            <h1 className="title2 md:title1 text-white">
                               {latestPost.title}
                             </h1>
                             <h2 className="body1 text-descript">

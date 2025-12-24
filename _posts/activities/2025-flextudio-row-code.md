@@ -1,11 +1,11 @@
 ---
 title: "2025 로우코드 개발 공모전 회고"
 excerpt: "멋쟁이 사자처럼 x 플렉스튜디오 2025 로우코드 개발 공모전 회고"
-date: "2024-01-30"
+date: "2025-12-02"
 author:
   name: "ChangWoo"
-coverImage: "/images/posts/activities/markdown-features/cover.png"
-tag: ["공모전", "멋쟁이 사자처럼", "플렉스튜디오"]
+coverImage: "/images/posts/activities/2025-flextudio-row-code/cover.png"
+tag: ["공모전", "멋쟁이 사자처럼", "플렉스튜디오", "회고"]
 ---
 
 - **2025년 10월은 말 그대로 내 인생에서 가장 극적인 시간이었다.**

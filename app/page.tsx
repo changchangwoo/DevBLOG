@@ -36,7 +36,7 @@ export default function Home() {
                             : "url(/images/common/main_bg.png)",
                         }}
                       >
-                        <div className="absolute inset-0 bg-white/70 dark:bg-black/70 group-hover:bg-white/80 dark:group-hover:bg-black/70 transition-colors "></div>
+                        <div className="absolute inset-0 bg-white/70 dark:bg-black/70 group-hover:bg-white/80 dark:group-hover:bg-black/70  "></div>
                         <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] xl:min-h-[28rem] border border-boundary">
                           <div className="flex gap-[0.5rem] flex-wrap">
                             {categoryInfo && (

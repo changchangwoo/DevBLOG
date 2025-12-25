@@ -110,16 +110,16 @@ export default function TILCalendar({
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-      <div className="inline-block min-w-full">
+    <div className="w-full overflow-x-auto overflow-y-hidden py-[1rem]">
+      <div className="inline-block min-w-full ">
         {/* 월 라벨 */}
-        <div className="flex gap-[0.2rem] mb-[0.5rem]">
+        <div className="flex gap-[0.2rem] mb-[0.5rem] ml-[2.5rem]">
           {weeks.map((_, weekIndex) => {
             const monthLabel = getMonthIndex(weekIndex);
             return (
               <div
                 key={weekIndex}
-                className="w-[1.2rem] xl:w-[1.4rem] text-[1rem] text-descript"
+                className="w-[1.2rem] xl:w-[1.2rem] text-[1rem] text-descript"
               >
                 {monthLabel || ""}
               </div>
@@ -133,7 +133,7 @@ export default function TILCalendar({
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
               <div
                 key={day}
-                className="h-[1.2rem] xl:h-[1.4rem] text-[1rem] text-descript flex items-center"
+                className="h-[1.2rem] xl:h-[1.2rem] text-[1rem] text-descript flex items-center"
               >
                 {day}
               </div>
@@ -146,7 +146,9 @@ export default function TILCalendar({
               <div key={weekIndex} className="flex flex-col gap-[0.2rem]">
                 {week.map((date, dayIndex) => {
                   const dateStr = formatDate(date);
-                  const hasTIL = dateStr ? tilData.get(dateStr) || false : false;
+                  const hasTIL = dateStr
+                    ? tilData.get(dateStr) || false
+                    : false;
                   const isPlaceholder = date.getTime() === 0;
 
                   return (
@@ -159,7 +161,7 @@ export default function TILCalendar({
                       }}
                       disabled={isPlaceholder || !hasTIL}
                       className={`
-                        w-[1.2rem] h-[1.2rem] xl:w-[1.4rem] xl:h-[1.4rem]
+                        w-[1.2rem] h-[1.2rem] xl:w-[1.2rem] xl:h-[1.2rem]
                         rounded-[0.2rem] border border-boundary
                         transition-all duration-200
                         ${
@@ -167,7 +169,7 @@ export default function TILCalendar({
                             ? "bg-transparent border-transparent cursor-default"
                             : hasTIL
                             ? "bg-green-500 dark:bg-green-600 hover:ring-2 hover:ring-green-400 cursor-pointer"
-                            : "bg-zinc-100 dark:bg-zinc-800 cursor-default"
+                            : "bg-background cursor-default"
                         }
                       `}
                       title={
@@ -182,7 +184,6 @@ export default function TILCalendar({
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );

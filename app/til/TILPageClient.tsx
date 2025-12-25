@@ -27,36 +27,36 @@ export default function TILPageClient({
     setSelectedDate(null);
   };
 
-  // 선택된 날짜의 TIL 내용 가져오기
   const selectedContent = selectedDate
     ? tilContentMap.get(selectedDate) || "TIL 내용이 없습니다."
     : "";
 
   return (
-    <div className="space-y-[3rem]">
-      {/* 연도 선택 */}
+    <section className="w-full bg-code-block p-[2rem] rounded-[8px]">
       {availableYears.length > 1 && (
         <div className="flex gap-[1rem] flex-wrap">
           {availableYears.map((y) => (
             <a
               key={y}
               href={`/til?year=${y}`}
-              className={`px-[2rem] py-[1rem] rounded-[0.8rem] body3 transition-colors ${
+              className={`px-[1rem]  rounded-[0.8rem] caption border border-boundary ${
                 y === year
-                  ? "bg-primary text-white"
-                  : "bg-zinc-100 dark:bg-zinc-800 text-primary hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  ? "bg-primary text-boundary"
+                  : "bg-boundary text-primary hover:bg-zinc-200 dark:hover:bg-zinc-700"
               }`}
             >
-              {y}년
+              {y}
             </a>
           ))}
         </div>
       )}
 
-      {/* 캘린더 */}
-      <TILCalendar year={year} tilData={tilData} onDateClick={handleDateClick} />
+      <TILCalendar
+        year={year}
+        tilData={tilData}
+        onDateClick={handleDateClick}
+      />
 
-      {/* 모달 */}
       {selectedDate && (
         <TILModal
           isOpen={!!selectedDate}
@@ -65,6 +65,6 @@ export default function TILPageClient({
           content={selectedContent}
         />
       )}
-    </div>
+    </section>
   );
 }

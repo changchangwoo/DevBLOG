@@ -24,13 +24,12 @@ interface HeaderDesktopProps {
         href: string;
         labelDesktop: string;
         labelMobile: string;
-      },
-            TIL: {
+      };
+      TIL: {
         href: string;
         labelDesktop: string;
         labelMobile: string;
       };
-      
     };
   };
   themeIcons: {
@@ -50,7 +49,7 @@ export default function HeaderDesktop({
 }: HeaderDesktopProps) {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50  hidden xl:block transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50  hidden md:block transition-transform duration-300 ease-in-out ${
         isScrolled
           ? "bg-background shadow-md backdrop-blur-sm"
           : "bg-transparent"

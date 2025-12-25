@@ -6,6 +6,7 @@ import {
 } from "@/lib/til";
 import TILPageClient from "./TILPageClient";
 import Divider from "@/components/Divider";
+import MainProfile from "../MainProfile";
 
 export const metadata = {
   title: "TIL | ChangWoo의 블로그",
@@ -35,27 +36,36 @@ export default async function TILPage({ searchParams }: TILPageProps) {
   const tilContentObject = Object.fromEntries(tilContentMap);
 
   return (
-    <div className="min-h-screen bg-background pt-[5.4rem]">
-      <main className="mx-auto max-w-7xl px-[2rem] py-[4rem]">
-        {/* 헤더 */}
-        <div className="mb-[4rem]">
-          <h1 className="title1 text-primary mb-[1rem]">Today I Learned</h1>
+    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem]">
+      <main>
+        <div className="mx-auto max-w-[120rem] flex flex-col xl:flex-row gap-[2rem] xl:gap-[5rem] px-[2rem]">
+          <div className="hidden xl:block xl:flex-[1.5] xl:min-w-0">
+            <MainProfile />
+          </div>
+          <div className="flex-1 xl:flex-[5] xl:min-w-0">
+            <div className="flex flex-col gap-[2rem]">
+              <section className="flex flex-col ">
+                <Divider
+                  spacing="md"
+                  label="학습"
+                  className="title2 text-primary"
+                />
+                <h3 className="body3 text-descript mb-[2rem]">
+                  Today I Learned를 기록하는 공간입니다. <br />
+                  잔디를 클릭하시면 기록한 내용의 확인이 가능합니다.
+                  <br />
+                </h3>
 
+                <TILPageClient
+                  year={selectedYear}
+                  tilData={new Map(Object.entries(tilDataObject))}
+                  tilContentMap={new Map(Object.entries(tilContentObject))}
+                  availableYears={availableYears}
+                />
+              </section>
+            </div>
+          </div>
         </div>
-
-        <Divider
-          spacing="lg"
-          label={`${selectedYear}년 학습 기록`}
-          className="title2 text-primary"
-        />
-
-        {/* 클라이언트 컴포넌트 */}
-        <TILPageClient
-          year={selectedYear}
-          tilData={new Map(Object.entries(tilDataObject))}
-          tilContentMap={new Map(Object.entries(tilContentObject))}
-          availableYears={availableYears}
-        />
       </main>
     </div>
   );

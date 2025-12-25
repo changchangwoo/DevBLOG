@@ -13,6 +13,7 @@ export interface TILData {
   title: string;
   content: string;
   html: string;
+  pinned?: boolean;
 }
 
 export interface TILWithHtml {
@@ -51,11 +52,26 @@ export function getTILByDate(date: string): TILData | null {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
 
+    // date를 문자열로 통일 (Date 객체인 경우 YYYY-MM-DD 형식으로 변환)
+    let dateStr = date;
+    if (data.date) {
+      if (data.date instanceof Date) {
+        const d = data.date;
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        dateStr = `${year}-${month}-${day}`;
+      } else {
+        dateStr = String(data.date);
+      }
+    }
+
     return {
-      date: data.date || date,
+      date: dateStr,
       title: data.title || "TIL",
       content,
       html: "",
+      pinned: data.pinned || false,
     };
   } catch (error) {
     console.error(`Error reading TIL for date ${date}:`, error);
@@ -131,4 +147,21 @@ export async function getAllTILsWithHtmlForYear(
   }
 
   return tilMap;
+}
+
+/**
+ * 특정 연도의 Pinned TIL 목록 가져오기
+ */
+export function getPinnedTILsForYear(year: number): TILData[] {
+  const dates = getTILDates(year);
+  const pinnedTILs: TILData[] = [];
+
+  dates.forEach((date) => {
+    const tilData = getTILByDate(date);
+    if (tilData && tilData.pinned) {
+      pinnedTILs.push(tilData);
+    }
+  });
+
+  return pinnedTILs;
 }

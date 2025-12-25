@@ -84,7 +84,7 @@
   }
   .caption {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 300;
     line-height: var(--lh);
   }
   .ut-grid {
@@ -96,6 +96,7 @@
   @media (min-width: 768px) {
     .ut-grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 0;
     }
   }
 }
@@ -243,12 +244,15 @@ body {
   ):before {
   content: none;
 }
-.prose :where(blockquote p:first-of-type):not(:where([class~="not-prose"], [class~="not-prose"] *)):before {
-    content: none;
+.prose
+  :where(blockquote p:first-of-type):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ):before {
+  content: none;
 }
-.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-    color: var(--color-descript);
-
+.prose
+  :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  color: var(--color-descript);
 }
 
 .prose
@@ -294,7 +298,7 @@ body {
 
 .prose strong {
   font-weight: 700;
-  color: var(--color-primary)
+  color: var(--color-primary);
 }
 
 .prose table {

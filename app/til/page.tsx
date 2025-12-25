@@ -3,6 +3,8 @@ import {
   getAllTILsWithHtmlForYear,
   getAvailableYears,
   getCurrentYear,
+  getPinnedTILsForYear,
+  markdownToHtml,
 } from "@/lib/til";
 import TILPageClient from "./TILPageClient";
 import Divider from "@/components/Divider";
@@ -29,6 +31,18 @@ export default async function TILPage({ searchParams }: TILPageProps) {
   // 모든 TIL 내용을 HTML로 변환하여 로드
   const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
 
+  // Pinned TIL 가져오기
+  const pinnedTILs = getPinnedTILsForYear(selectedYear);
+
+  // Pinned TIL을 HTML로 변환
+  const pinnedTILsWithHtml = await Promise.all(
+    pinnedTILs.map(async (til) => ({
+      date: til.date,
+      title: til.title,
+      html: await markdownToHtml(til.content),
+    }))
+  );
+
   const availableYears = getAvailableYears();
 
   // Map을 직렬화 가능한 객체로 변환
@@ -47,15 +61,15 @@ export default async function TILPage({ searchParams }: TILPageProps) {
               <section className="flex flex-col ">
                 <Divider
                   spacing="md"
-                  label="학습"
+                  label="TIL"
                   className="title2 text-primary"
                 />
-
                 <TILPageClient
                   year={selectedYear}
                   tilData={new Map(Object.entries(tilDataObject))}
                   tilContentMap={new Map(Object.entries(tilContentObject))}
                   availableYears={availableYears}
+                  pinnedTILs={pinnedTILsWithHtml}
                 />
               </section>
             </div>

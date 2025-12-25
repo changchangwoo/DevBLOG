@@ -108,6 +108,13 @@ export default function HeaderMobile({
               >
                 {config.navigation.about.labelMobile}
               </Link>
+              <Link
+                href={config.navigation.TIL.href}
+                className="body3 text-primary "
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {config.navigation.TIL.labelMobile}
+              </Link>
             </div>
           </nav>
         )}

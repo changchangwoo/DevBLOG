@@ -3,12 +3,20 @@
 import { useState } from "react";
 import TILCalendar from "@/components/TILCalendar";
 import Divider from "@/components/Divider";
+import TILDetail from "./TILDetail";
+
+interface PinnedTIL {
+  date: string;
+  title: string;
+  html: string;
+}
 
 interface TILPageClientProps {
   year: number;
   tilData: Map<string, string>;
   tilContentMap: Map<string, string>;
   availableYears: number[];
+  pinnedTILs: PinnedTIL[];
 }
 
 export default function TILPageClient({
@@ -16,6 +24,7 @@ export default function TILPageClient({
   tilData,
   tilContentMap,
   availableYears,
+  pinnedTILs,
 }: TILPageClientProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
@@ -62,22 +71,33 @@ export default function TILPageClient({
           <br />
         </h3>
       </section>
+      {pinnedTILs.length > 0 && (
+        <>
+          <Divider
+            className="title2 text-primary"
+            spacing="lg"
+            label="Pinned"
+          />
+          <section className="flex gap-[1rem] flex-wrap">
+            {pinnedTILs.map((til) => (
+              <button
+                key={til.date}
+                onClick={() => handleDateClick(til.date)}
+                className="px-[1.5rem] py-[0.5rem] bg-secondary rounded-[0.5rem] border border-boundary hover:border-primary  cursor-pointer"
+              >
+                <h3 className="body3 text-primary">{til.title}</h3>
+              </button>
+            ))}
+          </section>
+        </>
+      )}
 
       {selectedDate && (
-        <div>
-          <Divider label={selectedDate} className="title2 " spacing="lg" />
-          <div className="w-full bg- rounded-[8px]  overflow-hidden ">
-            <div className="flex items-center justify-between ">
-              <div>
-                <h2 className="title2 text-primary">{selectedTitle}</h2>
-              </div>
-            </div>
-            <div
-              className="px-[2rem] prose max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: selectedContent }}
-            />
-          </div>
-        </div>
+        <TILDetail
+          selectedTitle={selectedTitle}
+          selectedContent={selectedContent}
+          selectedDate={selectedDate}
+        />
       )}
     </div>
   );

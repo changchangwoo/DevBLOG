@@ -12,18 +12,18 @@ const headerConfig = {
     width: 24,
     height: 24,
   },
-  siteTitle: "개발자 이창우",
+  siteTitle: "changchangwoo",
   navigation: {
     about: {
       href: "/about",
       labelDesktop: "About",
-      labelMobile: "소개",
+      labelMobile: "About",
     },
     TIL: {
       href: "/til",
       labelDesktop: "TIL",
       labelMobile: "TIL",
-    }
+    },
   },
 };
 

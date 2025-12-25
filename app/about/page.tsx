@@ -1,3 +1,6 @@
+import Divider from "@/components/Divider";
+import MainProfile from "../MainProfile";
+
 export const metadata = {
   title: "About | ChangWoo의 블로그",
   description: "프론트엔드 개발자 이창우의 소개",
@@ -5,6 +8,17 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background">hello World</div>
+    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem] pb-[2rem]">
+      <main>
+        <div className="max-w-[120rem] mx-auto flex flex-col justify-center items-center px-[2rem] gap-[2rem]">
+            <MainProfile/>
+                    <div className="bg-secondary p-[2rem] body3 text-primary rounded-[8px]">
+            TBD : 취준중
+
+        </div>
+        </div>
+
+      </main>
+    </div>
   );
 }

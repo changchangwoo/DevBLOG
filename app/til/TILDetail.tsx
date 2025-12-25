@@ -7,15 +7,13 @@ interface TILDetailProps {
 }
 
 export default function TILDetail({
-  selectedDate,
   selectedTitle,
   selectedContent,
 }: TILDetailProps) {
-  console.log(selectedDate);
   return (
     <div>
       <Divider className="title2 " spacing="lg" />
-      <div className="w-full bg-secondary rounded-[8px]  overflow-hidden p-[2rem]">
+      <div className="w-full  rounded-[8px]  overflow-hidden p-[2rem]">
         <div className="flex items-center justify-between ">
           <div>
             <h2 className="title2 text-primary">{selectedTitle}</h2>

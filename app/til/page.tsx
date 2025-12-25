@@ -50,7 +50,7 @@ export default async function TILPage({ searchParams }: TILPageProps) {
   const tilContentObject = Object.fromEntries(tilContentMap);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem]">
+    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem] pb-[2rem] ">
       <main>
         <div className="mx-auto max-w-[120rem] flex flex-col xl:flex-row gap-[2rem] xl:gap-[5rem] px-[2rem]">
           <div className="hidden xl:block xl:flex-[1.5] xl:min-w-0">
@@ -58,7 +58,7 @@ export default async function TILPage({ searchParams }: TILPageProps) {
           </div>
           <div className="flex-1 xl:flex-[5] xl:min-w-0">
             <div className="flex flex-col gap-[2rem]">
-              <section className="flex flex-col ">
+              <section className="flex flex-col gap-[1rem]">
                 <Divider
                   spacing="md"
                   label="TIL"

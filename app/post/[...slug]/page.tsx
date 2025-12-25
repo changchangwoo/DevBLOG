@@ -178,7 +178,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
         {/* PC버전 테이블 */}
         <aside className="hidden xl:block absolute left-full top-[44rem] min-h-[calc(100%-44rem)]">
-          <div className="sticky top-24 w-[32rem]">
+          <div className="sticky top-[12rem] w-[32rem]">
             <TableOfContents headings={headings} />
           </div>
         </aside>

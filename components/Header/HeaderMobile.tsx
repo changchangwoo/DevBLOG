@@ -13,7 +13,8 @@ interface HeaderMobileProps {
   setTheme: (theme: string) => void;
   config: {
     logo: {
-      src: string;
+      light: string;
+      dark: string;
       alt: string;
       width: number;
       height: number;
@@ -64,16 +65,15 @@ export default function HeaderMobile({
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className={`flex items-center gap-[0.5rem] justify-center ${
+            className={`flex items-center gap-[0.5rem] justify-center transition-all duration-200 hover:brightness-90 dark:hover:brightness-110 ${
               isScrolled ? "text-primary" : "text-background"
             }`}
           >
             <Image
-              src={config.logo.src}
+              src={theme === "dark" ? config.logo.dark : config.logo.light}
               alt={config.logo.alt}
               width={config.logo.width}
               height={config.logo.height}
-              className="transition-opacity hover:opacity-80"
             />
             <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
@@ -82,10 +82,10 @@ export default function HeaderMobile({
             {mounted && (
               <IconWithLabel
                 icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
-                label={theme === "dark" ? "Light Mode" : "Dark Mode"}
+                label={theme === "dark" ? "Light" : "Dark"}
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 ariaLabel="테마 전환"
-                className="hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
               />
             )}
             <IconWithLabel
@@ -93,7 +93,7 @@ export default function HeaderMobile({
               label={isMenuOpen ? "Close Menu" : "Open Menu"}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
-              className="hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+              className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
             />
           </div>
         </div>
@@ -103,14 +103,14 @@ export default function HeaderMobile({
             <div className="flex flex-col gap-[2rem]">
               <Link
                 href={config.navigation.about.href}
-                className="body3 text-primary "
+                className="body3 text-primary transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {config.navigation.about.labelMobile}
               </Link>
               <Link
                 href={config.navigation.TIL.href}
-                className="body3 text-primary "
+                className="body3 text-primary transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {config.navigation.TIL.labelMobile}

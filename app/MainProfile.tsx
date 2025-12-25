@@ -1,5 +1,6 @@
 import Image from "next/image";
 import IconWithLabel from "@/components/IconWithLabel";
+import Divider from "@/components/Divider";
 
 export default function MainProfile() {
   const contactList = [
@@ -43,8 +44,9 @@ export default function MainProfile() {
   ];
 
   return (
-    <aside className="w-full">
-      <div className="pt-[4rem]">
+    <aside className="w-full ">
+      <Divider label="소개" spacing="md" className="title2"/>
+      <div className="pt-[3rem]">
         <div className="flex flex-col gap-[1rem]">
           <div className="flex flex-col gap-[2rem] items-center">
             <Image
@@ -60,7 +62,7 @@ export default function MainProfile() {
             </div>
           </div>
           <p className="body3 text-descript text-center">
-            프로젝트를 좋아하는 주니어 개발자 입니다.
+            프로젝트를 좋아하는 개발자 입니다.
             <br />
             부족하더라도 씩씩한 사람이 되고 싶습니다.
           </p>

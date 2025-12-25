@@ -7,12 +7,13 @@ import HeaderDesktop from "./HeaderDesktop";
 
 const headerConfig = {
   logo: {
-    src: "/images/common/logo.svg",
+    light: "/images/common/logo_light.png",
+    dark: "/images/common/logo_dark.png",
     alt: "Logo",
     width: 24,
     height: 24,
   },
-  siteTitle: "changchangwoo",
+  siteTitle: "Changchangwoo's blog",
   navigation: {
     about: {
       href: "/about",

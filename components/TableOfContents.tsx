@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { TocHeading } from "@/lib/toc";
+import Divider from "./Divider";
 
 interface TableOfContentsProps {
   headings: TocHeading[];
@@ -61,9 +62,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <nav className="hidden xl:block absolute">
       <div className="sticky overflow-y-auto ml-[3rem]">
-        <h2 className="mb-4 title3 font-semibold text-zinc-900 dark:text-zinc-50">
-          목차
-        </h2>
+        <Divider label="목차" className="title3" spacing="md"/>
         <ul className="space-y-2 body3">
           {headings.map((heading) => {
             const isActive = activeId === heading.id;

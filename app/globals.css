@@ -90,13 +90,13 @@
   .ut-grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
+    gap: 0px;
   }
 
   @media (min-width: 768px) {
     .ut-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 0;
+      gap: 2rem;
     }
   }
 }
@@ -110,6 +110,16 @@ body {
   scroll-behavior: smooth;
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
   scrollbar-width: none;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+/* 다크모드 전환 시 모든 요소에 일관된 애니메이션 적용 */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
 }
 
 /* ===== Prose (Markdown Content) ===== */

@@ -4,6 +4,7 @@ import { useState } from "react";
 import TILCalendar from "@/components/TILCalendar";
 import Divider from "@/components/Divider";
 import TILDetail from "./TILDetail";
+import Badge from "@/components/Badge";
 
 interface PinnedTIL {
   date: string;
@@ -65,9 +66,9 @@ export default function TILPageClient({
           onDateClick={handleDateClick}
         />
 
-        <h3 className="body3 text-descript ">
-          Today I Learned를 기록하는 공간입니다. <br />
-          잔디를 클릭하시면 기록한 내용의 확인이 가능합니다.
+        <h3 className="body3 text-primary ">
+          🔥🔥🔥 Today I Learned를 기록하는 공간입니다.<br/> 
+          <span className="caption text-descript">   잔디를 클릭하면 내용확인이 가능합니다.</span>
           <br />
         </h3>
       </section>
@@ -83,9 +84,8 @@ export default function TILPageClient({
               <button
                 key={til.date}
                 onClick={() => handleDateClick(til.date)}
-                className="px-[1.5rem] py-[0.5rem] bg-secondary rounded-[0.5rem] border border-boundary hover:border-primary  cursor-pointer"
               >
-                <h3 className="body3 text-primary">{til.title}</h3>
+                <Badge>{til.title}</Badge>
               </button>
             ))}
           </section>

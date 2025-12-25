@@ -13,7 +13,7 @@ export default function PostCard({ post }: PostCardProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <article className="group transition-all duration-300 ease-in-out">
+    <article className="group transition-opacity duration-300 ease-in-out hover:opacity-70">
       <Link href={`/post/${post.slug}`} className="block">
         <div className="flex flex-col gap-[1rem]">
           {post.coverImage && (
@@ -22,7 +22,7 @@ export default function PostCard({ post }: PostCardProps) {
                 src={post.coverImage}
                 alt={post.title}
                 fill
-                className="object-cover border border-boundary transition-all duration-300 ease-in-out group-hover:brightness-90 dark:group-hover:brightness-70 group-hover:scale-105"
+                className="object-cover border border-boundary transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
             </div>
           )}
@@ -36,7 +36,7 @@ export default function PostCard({ post }: PostCardProps) {
                 })}
               </time>
             </div>
-            <h3 className="title2 text-primary transition-colors duration-200 group-hover:text-zinc-600 dark:group-hover:text-zinc-300">{post.title}</h3>
+            <h3 className="title2 text-primary">{post.title}</h3>
           </div>
           <div className="flex flex-wrap gap-[0.5rem]">
             <Badge variant="category" colorClass={categoryInfo.colorClass}>

@@ -13,7 +13,7 @@ export default function AboutPage() {
         <div className="max-w-[120rem] mx-auto flex flex-col justify-center items-center px-[2rem] gap-[2rem]">
             <MainProfile/>
                     <div className="bg-secondary p-[2rem] body3 text-primary rounded-[8px]">
-            TBD : 취준중
+            TBD : 다시 취준ㅠ
 
         </div>
         </div>

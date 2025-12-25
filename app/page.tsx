@@ -15,7 +15,7 @@ export default function Home() {
   const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem]  transition-transform">
+    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem]  ">
       <main>
         <div className="mx-auto max-w-[120rem] flex flex-col xl:flex-row gap-[2rem] xl:gap-[5rem] px-[2rem]">
           <div className="hidden xl:block xl:flex-[1.5] xl:min-w-0">
@@ -28,16 +28,16 @@ export default function Home() {
                   <Divider spacing="md" label="신규" className="title2" />
                   {latestPost && (
                     <Link href={`/post/${latestPost.slug}`}>
-                      <div className="w-full min-h-[20rem] xl:min-h-[28rem] rounded-[8px] relative overflow-hidden cursor-pointer group border border-boundary">
+                      <div className="w-full min-h-[20rem] xl:min-h-[28rem] rounded-[8px] relative overflow-hidden cursor-pointer group hover:opacity-80 border border-boundary transition-opacity duration-300">
                         <div
-                          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-105"
+                          className="absolute inset-0 bg-cover bg-center  transition-transform duration-300 ease-in-out group-hover:scale-105"
                           style={{
                             backgroundImage: latestPost.coverImage
                               ? `url(${latestPost.coverImage})`
                               : "url(/images/common/main_bg.png)",
                           }}
                         />
-                        <div className="absolute inset-0 bg-white/70 dark:bg-black/70 group-hover:brightness-90 " />
+                        <div className="absolute inset-0 bg-white/70 dark:bg-black/70   " />
                         <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] xl:min-h-[28rem] border border-boundary">
                           <div className="flex gap-[0.5rem] flex-wrap">
                             {categoryInfo && (

@@ -50,14 +50,14 @@ export default function HeaderDesktop({
 }: HeaderDesktopProps) {
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50  hidden md:block  bg-background
+      className={`fixed top-0 left-0 right-0 z-50  hidden md:block  bg-background transition-transform duration-400
          ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <nav className="mx-auto max-w-[1200px] px-6 py-4">
         <div className="flex items-center justify-between ">
             <Link
               href="/"
-              className={`flex items-center gap-2  hover:brightness-90 dark:hover:brightness-110  px-3 py-2 rounded-[8px] bg-background`}
+              className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
             >
               <Image
                 src={theme === "dark" ? config.logo.dark : config.logo.light}
@@ -70,14 +70,14 @@ export default function HeaderDesktop({
           <div className="flex items-center gap-6">
             <Link
               href={config.navigation.about.href}
-              className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:brightness-90 dark:hover:brightness-110`}
+              className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:bg-background-hover`}
             >
               {config.navigation.about.labelDesktop}
             </Link>
 
             <Link
               href={config.navigation.TIL.href}
-              className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:brightness-90 dark:hover:brightness-110`}
+              className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:bg-background-hover`}
             >
               {config.navigation.TIL.labelDesktop}
             </Link>
@@ -88,7 +88,7 @@ export default function HeaderDesktop({
                 label={theme === "dark" ? "Light" : "Dark"}
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 ariaLabel="테마 전환"
-                className="rounded-[8px] bg-background hover:brightness-90 dark:hover:brightness-110"
+                className="rounded-[8px] bg-background hover:bg-background-hover"
               />
             )}
           </div>

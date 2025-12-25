@@ -162,7 +162,7 @@ export default function TILCalendar({
                       className={`
                         w-[1.2rem] h-[1.2rem] xl:w-[1.2rem] xl:h-[1.2rem]
                         rounded-[0.2rem] border border-boundary
-                        transition-all duration-200
+                        
                         ${
                           isPlaceholder
                             ? "bg-transparent border-transparent cursor-default"

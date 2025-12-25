@@ -10,12 +10,14 @@ const tilDirectory = path.join(process.cwd(), "_til");
 
 export interface TILData {
   date: string; // YYYY-MM-DD 형식
+  title: string;
   content: string;
   html: string;
 }
 
 export interface TILWithHtml {
   date: string;
+  title: string;
   html: string;
 }
 
@@ -34,9 +36,8 @@ export function getTILDates(year: number): string[] {
   return fileNames
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => fileName.replace(/\.md$/, ""))
-    .sort((a, b) => b.localeCompare(a)); 
+    .sort((a, b) => b.localeCompare(a));
 }
-
 
 export function getTILByDate(date: string): TILData | null {
   try {
@@ -52,15 +53,15 @@ export function getTILByDate(date: string): TILData | null {
 
     return {
       date: data.date || date,
+      title: data.title || "TIL",
       content,
-      html: "", 
+      html: "",
     };
   } catch (error) {
     console.error(`Error reading TIL for date ${date}:`, error);
     return null;
   }
 }
-
 
 export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await remark()
@@ -72,13 +73,15 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   return result.toString();
 }
 
-
-export function getAllTILsForYear(year: number): Map<string, boolean> {
+export function getAllTILsForYear(year: number): Map<string, string> {
   const dates = getTILDates(year);
-  const tilMap = new Map<string, boolean>();
+  const tilMap = new Map<string, string>();
 
   dates.forEach((date) => {
-    tilMap.set(date, true);
+    const tilData = getTILByDate(date);
+    if (tilData) {
+      tilMap.set(date, tilData.title);
+    }
   });
 
   return tilMap;

@@ -2,7 +2,7 @@
 
 interface TILCalendarProps {
   year: number;
-  tilData: Map<string, boolean>; // date -> hasTIL
+  tilData: Map<string, string>; // date -> title
   onDateClick: (date: string) => void;
 }
 
@@ -146,9 +146,8 @@ export default function TILCalendar({
               <div key={weekIndex} className="flex flex-col gap-[0.2rem]">
                 {week.map((date, dayIndex) => {
                   const dateStr = formatDate(date);
-                  const hasTIL = dateStr
-                    ? tilData.get(dateStr) || false
-                    : false;
+                  const tilTitle = dateStr ? tilData.get(dateStr) : undefined;
+                  const hasTIL = !!tilTitle;
                   const isPlaceholder = date.getTime() === 0;
 
                   return (
@@ -174,7 +173,7 @@ export default function TILCalendar({
                       `}
                       title={
                         !isPlaceholder && hasTIL
-                          ? `${dateStr} - TIL 있음`
+                          ? `${dateStr} - ${tilTitle}`
                           : dateStr
                       }
                     />

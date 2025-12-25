@@ -125,7 +125,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </div>
             <h3 className="body3 text-descript">
-              커피 한 잔과 토이 프로젝트 개발을 좋아합니다.
+              <strong>프로젝트를 좋아하는 주니어 개발자</strong>입니다.
               <br />
               부족하더라도 항상 씩씩한 사람이 되고 싶습니다.
             </h3>
@@ -177,7 +177,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <Giscus />
         </div>
         {/* PC버전 테이블 */}
-        <aside className="hidden xl:block absolute left-full top-[44rem] ">
+        <aside className="hidden xl:block absolute left-full top-[44rem] min-h-[calc(100%-44rem)]">
           <div className="sticky top-24 w-[32rem]">
             <TableOfContents headings={headings} />
           </div>

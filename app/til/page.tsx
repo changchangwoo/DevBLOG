@@ -50,11 +50,6 @@ export default async function TILPage({ searchParams }: TILPageProps) {
                   label="학습"
                   className="title2 text-primary"
                 />
-                <h3 className="body3 text-descript mb-[2rem]">
-                  Today I Learned를 기록하는 공간입니다. <br />
-                  잔디를 클릭하시면 기록한 내용의 확인이 가능합니다.
-                  <br />
-                </h3>
 
                 <TILPageClient
                   year={selectedYear}

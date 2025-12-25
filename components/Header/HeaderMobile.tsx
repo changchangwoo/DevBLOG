@@ -56,7 +56,7 @@ export default function HeaderMobile({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-background md:hidden border-b border-boundary transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-background md:hidden  transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

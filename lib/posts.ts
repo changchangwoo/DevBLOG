@@ -70,7 +70,6 @@ export function getPostBySlug(slug: string): Post {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // 슬러그에서 카테고리 추출 (예: "javascript/arrays" -> "javascript")
   const slugParts = realSlug.split("/");
   const categoryFromPath =
     slugParts.length > 1 ? slugParts[0] : "uncategorized";
@@ -81,9 +80,7 @@ export function getPostBySlug(slug: string): Post {
     slug: realSlug,
     content,
     ...metadata,
-    // front matter에 tag가 없으면 빈 배열 사용
     tag: metadata.tag || [],
-    // front matter에 category가 없으면 폴더 경로에서 추출한 카테고리 사용
     category: metadata.category || categoryFromPath,
   };
 }
@@ -112,7 +109,6 @@ export function getAllPosts(): PostPreview[] {
 export function getRecentTag(): string[] {
   const posts = getAllPosts();
 
-  // 태그 빈도수를 계산
   const tagFrequency = new Map<string, number>();
 
   for (const post of posts) {
@@ -123,7 +119,7 @@ export function getRecentTag(): string[] {
 
   // 빈도순으로 정렬하고 상위 20개만 반환
   return Array.from(tagFrequency.entries())
-    .sort((a, b) => b[1] - a[1]) // 빈도 내림차순
+    .sort((a, b) => b[1] - a[1])
     .slice(0, 20)
     .map(([tag]) => tag);
 }

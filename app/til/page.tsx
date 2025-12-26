@@ -11,7 +11,7 @@ import Divider from "@/components/common/Divider";
 import PageLayout from "@/components/layout/PageLayout";
 
 export const metadata = {
-  title: "TIL | ChangWoo의 블로그",
+  title: "TIL | changchangwoo 블로그",
   description: "매일의 학습 기록 - Today I Learned",
 };
 

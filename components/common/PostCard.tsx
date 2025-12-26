@@ -16,16 +16,20 @@ export default function PostCard({ post }: PostCardProps) {
     <article className="group transition-opacity duration-300 ease-in-out hover:opacity-70">
       <Link href={`/post/${post.slug}`} className="block">
         <div className="flex flex-col gap-[1rem]">
-          {post.coverImage && (
-            <div className="hidden md:block relative w-full min-h-[200px] overflow-hidden rounded-[8px]">
+          <div className="hidden md:block relative w-full min-h-[200px] overflow-hidden rounded-[8px]">
+            {post.coverImage ? (
               <Image
                 src={post.coverImage}
                 alt={post.title}
                 fill
                 className="object-cover border border-boundary transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
-            </div>
-          )}
+            ) : (
+              <div className="caption text-descript border border-boundary flex items-center justify-center bg-secondary min-h-[200px]">
+                none thumnail
+              </div>
+            )}
+          </div>
           <div>
             <div className="flex items-center justify-start">
               <time className="caption text-descript">

@@ -6,8 +6,11 @@ import Header from "@/components/common/Header/Header";
 import Footer from "@/components/common/Footer";
 
 export const metadata: Metadata = {
-  title: "울창한 숲",
+  title: "changchangwoo 블로그",
   description: "프론트엔드 개발자 이창우의 기술 블로그입니다.",
+  icons: {
+    icon: "/images/common/fav.png",
+  },
 };
 
 export default function RootLayout({

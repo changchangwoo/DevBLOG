@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import IconWithLabel from "@/components/IconWithLabel";
+import IconWithLabel from "@/components/common/IconWithLabel";
 
 interface HeaderMobileProps {
   isScrolled: boolean;

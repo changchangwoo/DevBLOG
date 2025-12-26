@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug, markdownToHtml } from "@/lib/posts";
 import { extractHeadings } from "@/lib/toc";
 import { getCategoryInfo } from "@/lib/category";
-import TableOfContents from "@/components/TableOfContents";
-import Badge from "@/components/Badge";
+import TableOfContents from "@/components/post-detail/TableOfContents";
+import Badge from "@/components/common/Badge";
 import Image from "next/image";
-import Divider from "@/components/Divider";
-import Giscus from "@/components/Giscus";
-import IconWithLabel from "@/components/IconWithLabel";
-import ScrollProgressBar from "@/components/ScrollProgressBar";
+import Divider from "@/components/common/Divider";
+import Giscus from "@/components/post-detail/Giscus";
+import IconWithLabel from "@/components/common/IconWithLabel";
+import ScrollProgressBar from "@/components/post-detail/ScrollProgressBar";
 
 interface PostPageProps {
   params: Promise<{
@@ -57,9 +57,9 @@ export default async function PostPage({ params }: PostPageProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <div className="min-h-screen bg-background pt-[46px]">
+    <div className="min-h-screen bg-background ">
       <ScrollProgressBar />
-      <div className="relative mx-auto max-w-7xl pb-[3rem]">
+      <div className="relative mx-auto max-w-7xl ">
         {post.coverImage && (
           <Image
             src={post.coverImage}

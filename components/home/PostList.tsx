@@ -2,9 +2,9 @@
 
 import { useState, useMemo } from "react";
 import type { PostPreview } from "@/lib/posts";
-import PostCard from "@/components/PostCard/PostCard";
-import Divider from "@/components/Divider";
-import SearchBar from "@/app/SearchBar";
+import PostCard from "@/components/common/PostCard";
+import Divider from "@/components/common/Divider";
+import SearchBar from "@/components/home/SearchBar";
 
 interface PostListProps {
   posts: PostPreview[];

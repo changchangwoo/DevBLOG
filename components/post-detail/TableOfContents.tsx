@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { TocHeading } from "@/lib/toc";
-import Divider from "./Divider";
+import Divider from "../common/Divider";
 
 interface TableOfContentsProps {
   headings: TocHeading[];
@@ -21,7 +21,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
         });
       },
       {
-        rootMargin: "-80px 0px -80% 0px", // 헤더 높이 고려
+        rootMargin: "-80px 0px -80% 0px",
       }
     );
 

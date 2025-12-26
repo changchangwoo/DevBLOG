@@ -1,6 +1,6 @@
 import Image from "next/image";
-import IconWithLabel from "@/components/IconWithLabel";
-import Divider from "@/components/Divider";
+import IconWithLabel from "@/components/common/IconWithLabel";
+import Divider from "@/components/common/Divider";
 
 export default function MainProfile() {
   const contactList = [
@@ -45,7 +45,7 @@ export default function MainProfile() {
 
   return (
     <aside className="w-full ">
-      <Divider label="소개" spacing="md" className="title2"/>
+      <Divider label="소개" spacing="md" className="title2" />
       <div className="pt-[3rem]">
         <div className="flex flex-col gap-[1rem]">
           <div className="flex flex-col gap-[2rem] items-center">

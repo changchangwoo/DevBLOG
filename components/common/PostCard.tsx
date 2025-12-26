@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { PostPreview } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
-import Badge from "../Badge";
-import Divider from "../Divider";
+import Badge from "./Badge";
+import Divider from "./Divider";
 
 interface PostCardProps {
   post: PostPreview;

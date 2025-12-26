@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import IconWithLabel from "@/components/IconWithLabel";
+import IconWithLabel from "@/components/common/IconWithLabel";
 
 interface HeaderDesktopProps {
   isScrolled: boolean;
@@ -55,18 +55,18 @@ export default function HeaderDesktop({
     >
       <nav className="mx-auto max-w-[1200px] px-6 py-4">
         <div className="flex items-center justify-between ">
-            <Link
-              href="/"
-              className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
-            >
-              <Image
-                src={theme === "dark" ? config.logo.dark : config.logo.light}
-                alt={config.logo.alt}
-                width={config.logo.width}
-                height={config.logo.height}
-              />
-              <h1 className="body3 text-primary">{config.siteTitle}</h1>
-            </Link>
+          <Link
+            href="/"
+            className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
+          >
+            <Image
+              src={theme === "dark" ? config.logo.dark : config.logo.light}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
+            />
+            <h1 className="body3 text-primary">{config.siteTitle}</h1>
+          </Link>
           <div className="flex items-center gap-6">
             <Link
               href={config.navigation.about.href}

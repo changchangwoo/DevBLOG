@@ -1,6 +1,6 @@
 "use client";
 
-import Badge from "../components/Badge";
+import Badge from "../common/Badge";
 
 interface SearchBarProps {
   searchQuery: string;

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import TILCalendar from "@/components/TILCalendar";
-import Divider from "@/components/Divider";
+import Divider from "@/components/common/Divider";
 import TILDetail from "./TILDetail";
-import Badge from "@/components/Badge";
+import Badge from "@/components/common/Badge";
+import TILCalendar from "@/components/til/TILCalendar";
 
 interface PinnedTIL {
   date: string;
@@ -67,8 +67,12 @@ export default function TILPageClient({
         />
 
         <h3 className="body3 text-primary ">
-          🔥🔥🔥 Today I Learned를 기록하는 공간입니다.<br/> 
-          <span className="caption text-descript">   잔디를 클릭하면 내용확인이 가능합니다.</span>
+          🔥🔥🔥 Today I Learned를 기록하는 공간입니다.
+          <br />
+          <span className="caption text-descript">
+            {" "}
+            잔디를 클릭하면 내용확인이 가능합니다.
+          </span>
           <br />
         </h3>
       </section>
@@ -81,10 +85,7 @@ export default function TILPageClient({
           />
           <section className="flex gap-[1rem] flex-wrap">
             {pinnedTILs.map((til) => (
-              <button
-                key={til.date}
-                onClick={() => handleDateClick(til.date)}
-              >
+              <button key={til.date} onClick={() => handleDateClick(til.date)}>
                 <Badge>{til.title}</Badge>
               </button>
             ))}

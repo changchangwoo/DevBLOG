@@ -7,8 +7,8 @@ import {
   markdownToHtml,
 } from "@/lib/til";
 import TILPageClient from "./TILPageClient";
-import Divider from "@/components/Divider";
-import MainProfile from "../MainProfile";
+import Divider from "@/components/common/Divider";
+import PageLayout from "@/components/layout/PageLayout";
 
 export const metadata = {
   title: "TIL | ChangWoo의 블로그",
@@ -42,32 +42,17 @@ export default async function TILPage({ searchParams }: TILPageProps) {
   const tilContentObject = Object.fromEntries(tilContentMap);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col pt-[5.4rem] pb-[2rem] ">
-      <main>
-        <div className="mx-auto max-w-[120rem] flex flex-col xl:flex-row gap-[2rem] xl:gap-[5rem] px-[2rem]">
-          <div className="hidden xl:block xl:flex-[1.5] xl:min-w-0">
-            <MainProfile />
-          </div>
-          <div className="flex-1 xl:flex-[5] xl:min-w-0">
-            <div className="flex flex-col gap-[2rem]">
-              <section className="flex flex-col gap-[1rem]">
-                <Divider
-                  spacing="md"
-                  label="TIL"
-                  className="title2 text-primary"
-                />
-                <TILPageClient
-                  year={selectedYear}
-                  tilData={new Map(Object.entries(tilDataObject))}
-                  tilContentMap={new Map(Object.entries(tilContentObject))}
-                  availableYears={availableYears}
-                  pinnedTILs={pinnedTILsWithHtml}
-                />
-              </section>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+    <PageLayout>
+      <section className="flex flex-col gap-[1rem]">
+        <Divider spacing="md" label="TIL" className="title2 text-primary" />
+        <TILPageClient
+          year={selectedYear}
+          tilData={new Map(Object.entries(tilDataObject))}
+          tilContentMap={new Map(Object.entries(tilContentObject))}
+          availableYears={availableYears}
+          pinnedTILs={pinnedTILsWithHtml}
+        />
+      </section>
+    </PageLayout>
   );
 }

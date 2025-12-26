@@ -62,7 +62,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   return (
     <nav className="hidden xl:block absolute">
       <div className="sticky overflow-y-auto ml-[3rem]">
-        <Divider label="목차" className="title3" spacing="md"/>
+        <Divider label="목차" className="title3" spacing="md" />
         <ul className="space-y-2 body3">
           {headings.map((heading) => {
             const isActive = activeId === heading.id;
@@ -78,10 +78,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
                 <a
                   href={`#${heading.id}`}
                   onClick={(e) => handleClick(e, heading.id)}
-                  className={`block py-1  hover:text-blue-600 dark:hover:text-blue-400 ${
-                    isActive
-                      ? "font-medium text-blue-600 dark:text-blue-400"
-                      : "text-zinc-600 dark:text-zinc-400"
+                  className={`block py-1 px-[1rem] hover:bg-background-hover rounded-[8px] ${
+                    isActive ? "font-bold" : "text-zinc-600 dark:text-zinc-400"
                   }`}
                 >
                   {heading.text}

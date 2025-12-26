@@ -25,16 +25,9 @@ export default async function TILPage({ searchParams }: TILPageProps) {
   const currentYear = getCurrentYear();
   const selectedYear = yearParam ? parseInt(yearParam, 10) : currentYear;
 
-  // TIL 존재 여부 맵
   const tilData = getAllTILsForYear(selectedYear);
-
-  // 모든 TIL 내용을 HTML로 변환하여 로드
   const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
-
-  // Pinned TIL 가져오기
   const pinnedTILs = getPinnedTILsForYear(selectedYear);
-
-  // Pinned TIL을 HTML로 변환
   const pinnedTILsWithHtml = await Promise.all(
     pinnedTILs.map(async (til) => ({
       date: til.date,
@@ -45,7 +38,6 @@ export default async function TILPage({ searchParams }: TILPageProps) {
 
   const availableYears = getAvailableYears();
 
-  // Map을 직렬화 가능한 객체로 변환
   const tilDataObject = Object.fromEntries(tilData);
   const tilContentObject = Object.fromEntries(tilContentMap);
 

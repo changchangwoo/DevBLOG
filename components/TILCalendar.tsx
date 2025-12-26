@@ -110,7 +110,7 @@ export default function TILCalendar({
   };
 
   return (
-    <div className="w-full overflow-x-auto overflow-y-hidden ">
+    <div className="w-full overflow-x-auto overflow-y-hidden py-[1rem]">
       <div className="inline-block min-w-full ">
         {/* 월 라벨 */}
         <div className="flex gap-[0.2rem] mb-[0.5rem] ml-[2.5rem]">

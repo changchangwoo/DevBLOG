@@ -9,6 +9,7 @@ import Image from "next/image";
 import Divider from "@/components/Divider";
 import Giscus from "@/components/Giscus";
 import IconWithLabel from "@/components/IconWithLabel";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 
 interface PostPageProps {
   params: Promise<{
@@ -57,6 +58,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="min-h-screen bg-background pt-[46px]">
+      <ScrollProgressBar />
       <div className="relative mx-auto max-w-7xl pb-[3rem]">
         {post.coverImage && (
           <Image
@@ -69,17 +71,19 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
         <article className="flex-1 min-w-0 p-[2rem]">
           <header className="flex flex-col gap-[1rem]">
-            <div className="flex items-center gap-3">
-              <time className="body3 text-descript ">
-                {new Date(post.date).toLocaleDateString("ko-KR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            </div>
+            <div>
+              <div className="flex items-center gap-3">
+                <time className="body3 text-descript ">
+                  {new Date(post.date).toLocaleDateString("ko-KR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+              </div>
 
-            <h1 className="title3 text-primary">{post.title}</h1>
+              <h1 className="title3 text-primary">{post.title}</h1>
+            </div>
             <p className="body1 text-descript">{post.excerpt}</p>
             <div className="flex gap-[0.5rem]">
               {categoryInfo && (

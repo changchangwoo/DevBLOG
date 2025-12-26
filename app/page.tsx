@@ -1,7 +1,6 @@
 import { getAllPosts, getRecentTag } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Link from "next/link";
-import Image from "next/image";
 import Badge from "@/components/Badge";
 import Divider from "@/components/Divider";
 import PostList from "./PostList";

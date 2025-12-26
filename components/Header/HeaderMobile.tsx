@@ -90,7 +90,7 @@ export default function HeaderMobile({
             )}
             <IconWithLabel
               icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
-              label={isMenuOpen ? "Close Menu" : "Open Menu"}
+              label={isMenuOpen ? "Menu" : "Menu"}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
               className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"

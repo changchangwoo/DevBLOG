@@ -15,6 +15,11 @@ const headerConfig = {
   },
   siteTitle: "Changchangwoo's blog",
   navigation: {
+    home: {
+      href: "/",
+      labelDesktop: "Home",
+      labelMobile: "Home",
+    },
     about: {
       href: "/about",
       labelDesktop: "About",

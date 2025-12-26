@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import IconWithLabel from "@/components/IconWithLabel";
@@ -21,6 +21,11 @@ interface HeaderMobileProps {
     };
     siteTitle: string;
     navigation: {
+      home: {
+        href: string;
+        labelDesktop: string;
+        labelMobile: string;
+      };
       about: {
         href: string;
         labelDesktop: string;
@@ -54,6 +59,10 @@ export default function HeaderMobile({
   menuIcons,
 }: HeaderMobileProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [isVisible]);
 
   return (
     <header
@@ -98,26 +107,37 @@ export default function HeaderMobile({
           </div>
         </div>
 
-        {isMenuOpen && (
-          <nav className=" mt-4 pt-4">
-            <div className="flex flex-col gap-[2rem]">
-              <Link
-                href={config.navigation.about.href}
-                className="body3 text-primary transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {config.navigation.about.labelMobile}
-              </Link>
-              <Link
-                href={config.navigation.TIL.href}
-                className="body3 text-primary transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {config.navigation.TIL.labelMobile}
-              </Link>
-            </div>
-          </nav>
-        )}
+        <nav
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen
+              ? "max-h-[300px] opacity-100 mt-4 pt-4"
+              : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col gap-[2rem]">
+            <Link
+              href={config.navigation.home.href}
+              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {config.navigation.home.labelMobile}
+            </Link>
+            <Link
+              href={config.navigation.about.href}
+              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {config.navigation.about.labelMobile}
+            </Link>
+            <Link
+              href={config.navigation.TIL.href}
+              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {config.navigation.TIL.labelMobile}
+            </Link>
+          </div>
+        </nav>
       </div>
     </header>
   );

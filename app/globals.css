@@ -13,14 +13,14 @@
     Roboto, "Helvetica Neue", Arial, sans-serif;
 
   --primary: #1d1b20;
-  --background: #f8f7fb;
-  --background-hover: #eceaf2;
-  --secondary: #f1f0f5;
-  --descript: #6b6e76;
-  --dot: #a3a6b1;
-  --boundary: #e2e1e8;
-  --quote-bg: #edeaf3;
-  --code-block: #f2f1f6;
+  --background: #fdfbff;
+  --background-hover: #f1eff4;
+  --secondary: #eeeef3;
+  --descript: #5f5e65;
+  --dot: #93909a;
+  --boundary: #e6e1e9;
+  --quote-bg: #ffffff;
+  --code-block: #f1f0f5;
 }
 
 .dark {
@@ -273,7 +273,7 @@ body {
   font-weight: 500;
   /* font-style: italic; */
   padding: 1rem 2rem;
-  background: var(--color-boundary);
+  background: var(--color-code-block);
   border-radius: 8px;
 }
 

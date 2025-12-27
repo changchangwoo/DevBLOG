@@ -2,7 +2,7 @@
 
 interface TILCalendarProps {
   year: number;
-  tilData: Map<string, string>; // date -> title
+  tilData: Map<string, string>;
   onDateClick: (date: string) => void;
 }
 
@@ -11,11 +11,10 @@ export default function TILCalendar({
   tilData,
   onDateClick,
 }: TILCalendarProps) {
-  // 해당 연도의 모든 날짜 생성 (1월 1일 ~ 12월 31일)
   const generateYearDates = () => {
     const dates: Date[] = [];
-    const startDate = new Date(year, 0, 1); // 1월 1일
-    const endDate = new Date(year, 11, 31); // 12월 31일
+    const startDate = new Date(year, 0, 1);
+    const endDate = new Date(year, 11, 31);
 
     for (
       let date = new Date(startDate);
@@ -28,16 +27,14 @@ export default function TILCalendar({
     return dates;
   };
 
-  // 주 단위로 날짜 그룹화
   const groupByWeeks = (dates: Date[]) => {
     const weeks: Date[][] = [];
     let currentWeek: Date[] = [];
 
-    // 첫 주의 시작을 일요일로 맞추기 위해 빈 칸 추가
     const firstDate = dates[0];
     const firstDay = firstDate.getDay();
     for (let i = 0; i < firstDay; i++) {
-      currentWeek.push(new Date(0)); // placeholder
+      currentWeek.push(new Date(0));
     }
 
     dates.forEach((date) => {
@@ -49,10 +46,9 @@ export default function TILCalendar({
       }
     });
 
-    // 마지막 주 처리
     if (currentWeek.length > 0) {
       while (currentWeek.length < 7) {
-        currentWeek.push(new Date(0)); // placeholder
+        currentWeek.push(new Date(0));
       }
       weeks.push(currentWeek);
     }
@@ -87,7 +83,6 @@ export default function TILCalendar({
     "Dec",
   ];
 
-  // 월별 표시를 위한 인덱스 계산
   const getMonthIndex = (weekIndex: number): string | null => {
     if (weekIndex >= weeks.length) return null;
 
@@ -96,7 +91,6 @@ export default function TILCalendar({
 
     const month = firstDateInWeek.getMonth();
 
-    // 해당 월의 첫 번째 주인 경우에만 월 라벨 표시
     if (weekIndex === 0) return monthLabels[month];
 
     const prevWeekFirstDate = weeks[weekIndex - 1]?.find(

@@ -44,7 +44,7 @@ export default function PostList({ posts, tags }: PostListProps) {
         onTagClick={handleTagClick}
       />
       <Divider
-        label={`👀 총 ${filteredPosts.length}개의 포스트 발견!  `}
+        label={`총 ${filteredPosts.length}개의 포스트  `}
         spacing="lg"
         className="body3 text-descript"
       />

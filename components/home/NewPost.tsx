@@ -24,7 +24,7 @@ export default function NewPost({ latestPost, categoryInfo }: NewPostProps) {
                   : "url(/images/common/main_bg.png)",
               }}
             />
-            <div className="absolute inset-0 bg-white/70 dark:bg-black/70   " />
+            <div className="absolute inset-0 bg-white/70 dark:bg-black/50   " />
             <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] xl:min-h-[28rem] border border-boundary">
               <div className="flex gap-[0.5rem] flex-wrap">
                 {categoryInfo && (
@@ -40,8 +40,10 @@ export default function NewPost({ latestPost, categoryInfo }: NewPostProps) {
                 ))}
               </div>
               <div>
-                <h1 className="title2 text-primary">{latestPost.title}</h1>
-                <h2 className="body1 text-descript">{latestPost.excerpt}</h2>
+                <h1 className="title2 md:title3 text-primary">
+                  {latestPost.title}
+                </h1>
+                <h2 className="body1 text-primary">{latestPost.excerpt}</h2>
               </div>
             </div>
           </div>

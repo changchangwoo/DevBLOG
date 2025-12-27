@@ -78,12 +78,14 @@ export default function HeaderMobile({
               isScrolled ? "text-primary" : "text-background"
             }`}
           >
-            <Image
-              src={theme === "dark" ? config.logo.dark : config.logo.light}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
-            />
+            {mounted && (
+              <Image
+                src={theme === "dark" ? config.logo.dark : config.logo.light}
+                alt={config.logo.alt}
+                width={config.logo.width}
+                height={config.logo.height}
+              />
+            )}
             <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
 

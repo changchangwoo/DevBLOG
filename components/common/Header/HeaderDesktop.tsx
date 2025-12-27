@@ -40,7 +40,6 @@ interface HeaderDesktopProps {
 }
 
 export default function HeaderDesktop({
-  isScrolled,
   isVisible,
   mounted,
   theme,
@@ -59,12 +58,14 @@ export default function HeaderDesktop({
             href="/"
             className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
           >
-            <Image
-              src={theme === "dark" ? config.logo.dark : config.logo.light}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
-            />
+            {mounted && (
+              <Image
+                src={theme === "dark" ? config.logo.dark : config.logo.light}
+                alt={config.logo.alt}
+                width={config.logo.width}
+                height={config.logo.height}
+              />
+            )}
             <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
           <div className="flex items-center gap-6">

@@ -16,11 +16,19 @@ export default function TILDetail({
       <div className="w-full  rounded-[8px]  overflow-hidden px-[2rem]">
         <div className="flex items-center justify-between ">
           <div>
-            <h2 className="title2 text-primary">{selectedTitle}</h2>
+            <h2 className="title1 text-primary">{selectedTitle}</h2>
           </div>
         </div>
         <div
-          className="prose max-w-none dark:prose-invert"
+          className="
+            prose max-w-none
+            prose-img:w-full
+            prose-img:h-auto
+            prose-img:rounded-2xl
+            prose-img:border
+            prose-img:border-boundary
+            dark:prose-invert
+          "
           dangerouslySetInnerHTML={{ __html: selectedContent }}
         />
       </div>

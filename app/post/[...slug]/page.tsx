@@ -222,7 +222,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background ">
       <ScrollProgressBar />
       <div className="relative mx-auto max-w-7xl">
         {post.coverImage && (
@@ -234,7 +234,11 @@ export default async function PostPage({ params }: PostPageProps) {
             className="w-full min-h-[18rem] border object-cover"
           />
         )}
-        <article className="flex-1 min-w-0 p-[2rem]">
+        <article
+          className={`flex-1 min-w-0 p-[2rem] ${
+            !post.coverImage ? "pt-[7.4rem]" : ""
+          }`}
+        >
           {renderPostHeader(
             post.title,
             post.date,

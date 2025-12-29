@@ -4,7 +4,7 @@ excerpt: "입사와 퇴사, 그리고 번아웃까지 경험한 2025년 회고"
 date: "2025-12-27"
 author:
   name: "ChangWoo"
-coverImage: "/images/posts/life/2025-retrospect/cover.webp"
+coverImage: "/images/posts/life/2025-retrospect/cover.png"
 tag: ["2025", "회고"]
 ---
 

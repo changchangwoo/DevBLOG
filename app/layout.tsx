@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="bg-background">
         <ThemeProvider>
           <Header />
-          <div className="pt-[5.4rem] pb-[2rem]">{children}</div>
+          <div className="pt-[5.4rem] pb-[2rem]s">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>

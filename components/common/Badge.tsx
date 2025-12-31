@@ -22,5 +22,5 @@ export default function Badge({
     );
   }
 
-  return <div className={`${baseClass} `}>{children}</div>;
+  return <div className={`${baseClass} ${colorClass} `}>{children}</div>;
 }

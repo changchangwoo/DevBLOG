@@ -79,7 +79,7 @@ export default function SearchBar({
         </svg>
       </div>
 
-      <div className="mt-[1rem]">
+      {/* <div className="mt-[1rem]">
         <div className="flex flex-wrap gap-2">
           {allTags.map((tag) => (
             <button
@@ -91,7 +91,7 @@ export default function SearchBar({
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

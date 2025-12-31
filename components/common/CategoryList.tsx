@@ -33,6 +33,11 @@ export default function CategoryList() {
       <div>
         <Divider icon={TagIcon} spacing="lg" className="caption" />
         <div className="flex flex-wrap gap-2 mt-4">
+          <Link href="/">
+            <Badge variant="category" colorClass="bg-category-all">
+              전체
+            </Badge>
+          </Link>
           {categories.map((category) => {
             const categoryInfo = getCategoryInfo(category);
             return (

@@ -7,6 +7,7 @@ interface DividerProps {
   label?: string;
   color?: "boundary" | "primary";
   expand?: string;
+  icon?: React.ReactNode;
 }
 
 const spacingClasses = {
@@ -27,8 +28,9 @@ export default function Divider({
   label,
   color = "boundary",
   expand,
+  icon,
 }: Readonly<DividerProps>) {
-  if (label) {
+  if (label || icon) {
     return (
       <div
         className={cn(
@@ -37,7 +39,12 @@ export default function Divider({
           className
         )}
       >
-        <span className="text-primary whitespace-nowrap">{label}</span>
+        <div className="flex items-center gap-2">
+          {icon && <span className="text-descript">{icon}</span>}
+          {label && (
+            <span className="text-primary whitespace-nowrap">{label}</span>
+          )}
+        </div>
         <div className={cn("flex-1 h-[0.5px]", colorClasses[color])} />
         {expand && (
           <Link

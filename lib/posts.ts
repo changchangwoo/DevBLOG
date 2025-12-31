@@ -124,6 +124,19 @@ export function getRecentTag(): string[] {
     .map(([tag]) => tag);
 }
 
+export function getAllCategories(): string[] {
+  const posts = getAllPosts();
+  const categories = new Set<string>();
+
+  for (const post of posts) {
+    if (post.category && post.category !== "uncategorized") {
+      categories.add(post.category);
+    }
+  }
+
+  return Array.from(categories).sort();
+}
+
 export async function markdownToHtml(markdown: string): Promise<string> {
   const result = await remark()
     .use(remarkGfm)

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { PostPreview } from "@/lib/posts";
+import { filterPosts } from "@/lib/filter";
 import PostCard from "@/components/common/PostCard";
 import Divider from "@/components/common/Divider";
 import SearchBar from "@/components/home/SearchBar";
@@ -12,34 +14,54 @@ interface PostListProps {
 }
 
 export default function PostList({ posts, tags }: PostListProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // URL 파라미터에서 초기값 읽기
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("search") || ""
+  );
+
+  // URL 파라미터가 변경될 때 로컬 state 동기화
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    setSearchQuery(search);
+  }, [searchParams]);
 
   const filteredPosts = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return posts;
-    }
+    const tag = searchParams.get("tag") || undefined;
+    const category = searchParams.get("category") || undefined;
+    const search = searchQuery.trim() || undefined;
 
-    const query = searchQuery.toLowerCase();
-    return posts.filter((post) => {
-      const titleMatch = post.title.toLowerCase().includes(query);
-      const excerptMatch = post.excerpt.toLowerCase().includes(query);
-      const tagMatch = post.tag.some((tag) =>
-        tag.toLowerCase().includes(query)
-      );
-
-      return titleMatch || excerptMatch || tagMatch;
-    });
-  }, [posts, searchQuery]);
+    return filterPosts(posts, { tag, category, search });
+  }, [posts, searchParams, searchQuery]);
 
   const handleTagClick = (tag: string) => {
-    setSearchQuery(tag);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tag", tag);
+    params.delete("category");
+    params.delete("search");
+    router.push(`/?${params.toString()}`);
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    const params = new URLSearchParams(searchParams.toString());
+    if (query.trim()) {
+      params.set("search", query);
+    } else {
+      params.delete("search");
+    }
+    params.delete("tag");
+    params.delete("category");
+    router.push(`/?${params.toString()}`);
   };
 
   return (
     <>
       <SearchBar
         searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
+        setSearchQuery={handleSearchChange}
         tags={tags}
         onTagClick={handleTagClick}
       />

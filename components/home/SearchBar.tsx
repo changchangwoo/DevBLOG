@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Badge from "../common/Badge";
 
 interface SearchBarProps {
@@ -15,14 +17,41 @@ export default function SearchBar({
   tags,
   onTagClick,
 }: SearchBarProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const allTags = ["All", ...tags];
+
+  const [localQuery, setLocalQuery] = useState(searchQuery);
+
+  useEffect(() => {
+    setLocalQuery(searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (localQuery !== searchQuery) {
+        setSearchQuery(localQuery);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [localQuery, searchQuery, setSearchQuery]);
 
   const handleTagClick = (tag: string) => {
     if (tag === "All") {
+      router.push("/");
+      setLocalQuery("");
       setSearchQuery("");
     } else {
       onTagClick(tag);
     }
+  };
+
+  const isActiveTag = (tag: string) => {
+    if (tag === "All") {
+      return !searchParams.get("tag") && !searchParams.get("category");
+    }
+    return searchParams.get("tag") === tag;
   };
 
   return (
@@ -30,8 +59,8 @@ export default function SearchBar({
       <div className="relative">
         <input
           type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={localQuery}
+          onChange={(e) => setLocalQuery(e.target.value)}
           placeholder="포스트 제목, 내용, 태그를 입력해주세요"
           className="body3 w-full rounded-lg border border-boundary px-4 py-3 text-descript placeholder-descript bg-secondary"
         />
@@ -58,7 +87,7 @@ export default function SearchBar({
               onClick={() => handleTagClick(tag)}
               className="transition-opacity hover:opacity-70"
             >
-              <Badge>{tag}</Badge>
+              <Badge active={isActiveTag(tag)}>{tag}</Badge>
             </button>
           ))}
         </div>

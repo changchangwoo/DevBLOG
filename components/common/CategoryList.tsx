@@ -28,15 +28,13 @@ export default function CategoryList() {
     </svg>
   );
 
-  console.log(categories);
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-[2rem]">
       <div>
         <Divider icon={TagIcon} spacing="lg" className="caption" />
-        <div className="flex flex-wrap gap-2 ">
+        <div className="flex flex-wrap gap-2 mt-4">
           {categories.map((category) => {
             const categoryInfo = getCategoryInfo(category);
-            console.log(categoryInfo);
             return (
               <Link key={category} href={`/?category=${category}`}>
                 <Badge variant="category" colorClass={categoryInfo.colorClass}>
@@ -46,9 +44,9 @@ export default function CategoryList() {
             );
           })}
           {tags.map((tag) => (
-            <button key={tag} className="transition-opacity hover:opacity-70">
+            <Link key={tag} href={`/?tag=${tag}`}>
               <Badge>{tag}</Badge>
-            </button>
+            </Link>
           ))}
         </div>
       </div>

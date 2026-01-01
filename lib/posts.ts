@@ -8,6 +8,8 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStringify from "rehype-stringify";
+import rehypeHeadingDivider from "./rehype-heading-divider";
+import rehypeCallout from "./rehype-callout";
 
 const postsDirectory = path.join(process.cwd(), "_posts");
 
@@ -137,11 +139,16 @@ export function getAllCategories(): string[] {
   return Array.from(categories).sort();
 }
 
-export async function markdownToHtml(markdown: string): Promise<string> {
+export async function markdownToHtml(
+  markdown: string,
+  category: string = "all"
+): Promise<string> {
   const result = await remark()
     .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeSlug)
+    .use(rehypeCallout, { category })
+    .use(rehypeHeadingDivider)
     .use(rehypeHighlight)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);

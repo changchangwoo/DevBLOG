@@ -248,7 +248,7 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  const content = await markdownToHtml(post.content);
+  const content = await markdownToHtml(post.content, post.category);
   const headings = extractHeadings(post.content);
   const categoryInfo = getCategoryInfo(post.category);
 

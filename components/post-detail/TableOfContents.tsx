@@ -62,7 +62,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="hidden xl:block absolute">
-      <div className="sticky overflow-y-auto ml-[3rem]">
+      <div className="sticky overflow-y-auto ml-[3rem] min-w-[20rem]">
         <Divider label="목차" className="title3" spacing="md" />
         <ul className="space-y-2 body3">
           {headings.map((heading) => {

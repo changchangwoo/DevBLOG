@@ -1,7 +1,7 @@
 ---
 title: "스포트라이트 프로젝트 정리"
-description: "풀스택 데브코스 2기 최종 프로젝트 스포트라이트"
-date: "2025-09-09"
+description: "풀스택 데브코스 2기 최종 프로젝트 스포트라이트 정리"
+date: "2024-09-09"
 author:
   name: "ChangWoo"
 coverImage: "/images/posts/project/spot-light/cover.png"
@@ -33,8 +33,8 @@ tag: ["스포트라이트", "데브코스"]
 > 사용자는 자신이 아끼는 스팟들을 하나의 셀렉션으로 묶어 다른 사람들과 공유 할 수 있습니다.
 >
 > **스포트라이트와 함께 일상 속의 최애 장소를 기록하고, 공유하며, 새로운 경험을 해보세요!**
->
-> ![](https://velog.velcdn.com/images/changwoo/post/c3469e13-2972-47d4-91d1-836604eb196b/image.gif)
+
+![](https://velog.velcdn.com/images/changwoo/post/c3469e13-2972-47d4-91d1-836604eb196b/image.gif)
 
 ## 담당 기능
 
@@ -154,7 +154,7 @@ export default async function Home() {
 
 ## 4L 회고
 
-### Liked 👍
+### Liked
 
 **1.구체적인 기획**
 
@@ -175,7 +175,7 @@ export default async function Home() {
 - 프론트엔드 직군을 희망하지만, 백엔드 기능도 도맡아 구현하다보니 **전체적인 개발 프로세스를 확실하게 익힐 수 있었다.**
 - 이러한 경험은 앞으로 백엔드 파트와의 API 명세구현, 데이터 모델 생성과 같은 **설계 단계에 소통에서 정말 유의미한 도움**이 될 것이라고 생각한다.
 
-### Learned ✏️
+### Learned
 
 **1.새로운 기술 스택(Next, tailwindCSS) 학습**
 
@@ -190,7 +190,7 @@ export default async function Home() {
 - 특히 쿼리문 작성을 어려워했었는데 Knex 라이브러리의 도움을 받아 빌더를 통해 작업하다보니 수월하게 진행할 수 있었다.
 - 아직은 정말 미숙하지만 나름대로 백엔드 성능 최적화에 욕심도 생겼다.
 
-### Lacked 😂
+### Lacked
 
 **1.현업보다는 분업 느낌**
 
@@ -205,7 +205,7 @@ export default async function Home() {
 - 리딩 능력의 부족으로 팀원에게 다방면의 코딩 방법을 제공하기에도, 팀원의 코드를 통해 내가 성장하기에도 어려움이 있었다.
 - 다음 프로젝트가 진행되기 까지, 반드시 향상시키고 싶은 부분이다.
 
-### LongedFor ✨
+### LongedFor
 
 **1.담당 업무에 대한 책임감**
 

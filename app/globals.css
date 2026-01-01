@@ -156,6 +156,28 @@ body {
   margin-bottom: 1rem;
 }
 
+/* 헤더 구분선 스타일 (Divider와 동일) */
+.prose .heading-with-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose .heading-with-divider h2,
+.prose .heading-with-divider h3 {
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.prose .heading-divider {
+  flex: 1;
+  height: 0.5px;
+  background-color: var(--color-boundary);
+}
+
 .prose h4 {
   font-size: 1.25em;
   font-weight: bold;
@@ -279,8 +301,8 @@ body {
 
 .prose
   :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border-inline-start-width: 0rem;
-  border-inline-start-color: none;
+  border-inline-start-width: 4px;
+  border-inline-start-color: var(--color-category-project);
   quotes: "“" "”" "‘" "’";
   margin-top: 1.6em;
   margin-bottom: 1.6em;
@@ -321,6 +343,62 @@ body {
 .prose td {
   border-bottom: 1px solid var(--boundary);
   padding: 0.5em 1em;
+}
+
+/* ===== Callout Styles ===== */
+.prose .callout {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-code-block);
+  border: 1px solid var(--color-boundary);
+  border-left: 4px solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.prose .callout-title {
+  font-weight: 700;
+  font-size: 0.95em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.prose .callout-content {
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.prose .callout-content p:first-child {
+  margin-top: 0;
+}
+
+.prose .callout-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Callout 카테고리별 색상 */
+.prose .callout[data-category="activities"] {
+  border-left-color: var(--color-category-activity);
+}
+
+.prose .callout[data-category="tech"] {
+  border-left-color: var(--color-category-tech);
+}
+
+.prose .callout[data-category="life"] {
+  border-left-color: var(--color-category-life);
+}
+
+.prose .callout[data-category="project"],
+.prose .callout[data-category="projects"] {
+  border-left-color: var(--color-category-project);
+}
+
+.prose .callout[data-category="all"] {
+  border-left-color: var(--color-category-all);
 }
 
 .color-box-border-info {

@@ -39,19 +39,19 @@ function renderPostHeader(
   return (
     <>
       <header className="flex flex-col gap-[1rem]">
-        <div>
-          <div className="flex items-center gap-3">
-            <time className="body3 text-descript">
-              {new Date(date).toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-          </div>
-          <h1 className="title3 text-primary">{title}</h1>
+        <div className="flex items-center">
+          <time className="body3 text-descript">
+            {new Date(date).toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>
         </div>
-        <p className="body1 text-descript">{excerpt}</p>
+        <div>
+          <h1 className="title3 text-primary">{title}</h1>
+          <p className="body1 text-descript mt-[0.5rem]">{excerpt}</p>
+        </div>
         <div className="flex gap-[0.5rem]">
           {categoryInfo && (
             <Badge variant="category" colorClass={categoryInfo.colorClass}>
@@ -99,11 +99,11 @@ function renderAuthorProfile() {
           <span className="body3 text-descript">{AUTHOR_INFO.role}</span>
         </div>
       </div>
-      <h3 className="body3 text-descript">
+      <div className="body3 text-descript">
         <strong>프로젝트를 좋아하는 주니어 개발자</strong>입니다.
         <br />
         부족하더라도 항상 씩씩한 사람이 되고 싶습니다.
-      </h3>
+      </div>
       <div className="flex gap-[1rem] justify-start mt-[1rem] relative">
         {AUTHOR_INFO.links.github && (
           <IconWithLabel
@@ -156,9 +156,9 @@ function renderPostFooter() {
     <div className="px-[1rem] md:px-[2rem] flex flex-col gap-[2rem]">
       <Divider spacing="none" />
       {renderAuthorProfile()}
-      <h1 className="text-center caption text-descript">
+      <div className="text-center caption text-descript">
         반응을 주시면 정말 큰 힘이 될 것 같아요! 🌱
-      </h1>
+      </div>
       <Giscus />
     </div>
   );

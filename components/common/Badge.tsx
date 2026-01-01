@@ -12,7 +12,7 @@ export default function Badge({
   active = false,
 }: BadgeProps) {
   const baseClass =
-    "caption px-4 rounded-[10px] cursor-pointer border border-boundary ";
+    "caption px-4 rounded-[10px] cursor-pointer border border-boundary hover:opacity-70 transition-opacity  ";
 
   if (variant === "category" && colorClass) {
     return (
@@ -22,5 +22,5 @@ export default function Badge({
     );
   }
 
-  return <div className={`${baseClass} ${colorClass} `}>{children}</div>;
+  return <div className={`bg-secondary ${baseClass} `}>{children}</div>;
 }

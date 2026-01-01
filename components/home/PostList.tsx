@@ -17,12 +17,10 @@ export default function PostList({ posts, tags }: PostListProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // URL 파라미터에서 초기값 읽기
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("search") || ""
   );
 
-  // URL 파라미터가 변경될 때 로컬 state 동기화
   useEffect(() => {
     const search = searchParams.get("search") || "";
     setSearchQuery(search);

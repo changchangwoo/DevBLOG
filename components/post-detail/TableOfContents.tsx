@@ -40,8 +40,9 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
+    console.log(element);
     if (element) {
-      const headerOffset = 80; // 헤더 높이 + 여백
+      const headerOffset = 60;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;

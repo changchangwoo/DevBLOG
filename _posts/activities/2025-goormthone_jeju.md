@@ -1,6 +1,6 @@
 ---
 title: "구름톤 in JEJU 15기 회고"
-excerpt: "처음하는 언어, 처음하는 해커톤"
+excerpt: "처음하는 해커톤, 처음하는 언어"
 date: "2025-12-02"
 author:
   name: "ChangWoo"

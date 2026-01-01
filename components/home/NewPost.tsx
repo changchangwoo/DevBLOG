@@ -41,7 +41,7 @@ export default function NewPost({ latestPost, categoryInfo }: NewPostProps) {
               </div>
               <div>
                 <h1 className="title3 text-primary">{latestPost.title}</h1>
-                <h2 className="body1 text-primary">{latestPost.excerpt}</h2>
+                <p className="body1 text-primary">{latestPost.excerpt}</p>
               </div>
             </div>
           </div>

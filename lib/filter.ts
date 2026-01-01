@@ -1,4 +1,5 @@
 import type { PostPreview } from "./posts";
+import { getCategoryInfo } from "./category";
 
 export interface FilterParams {
   tag?: string;
@@ -25,11 +26,14 @@ export function filterPosts(
     filtered = filtered.filter((post) => {
       const titleMatch = post.title.toLowerCase().includes(query);
       const descriptionMatch = post.description.toLowerCase().includes(query);
+      const categoryKorMatch = getCategoryInfo(post.category)
+        .label.toLowerCase()
+        .includes(query);
       const tagMatch = post.tag.some((tag) =>
         tag.toLowerCase().includes(query)
       );
 
-      return titleMatch || descriptionMatch || tagMatch;
+      return titleMatch || descriptionMatch || categoryKorMatch || tagMatch;
     });
   }
 

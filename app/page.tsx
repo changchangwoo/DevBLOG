@@ -14,11 +14,11 @@ export default function Home() {
 
   return (
     <PageLayout>
-      {/* <section>
-        <NewPost latestPost={latestPost} categoryInfo={categoryInfo} />
-      </section> */}
       <section>
-        <Divider spacing="lg" label="포스트" className="title2" />
+        <NewPost latestPost={latestPost} categoryInfo={categoryInfo} />
+      </section>
+      <section>
+        <Divider spacing="md" label={`포스트`} className="title2" />
         <Suspense>
           <PostList posts={posts} tags={tags} />
         </Suspense>

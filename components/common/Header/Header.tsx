@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import type { PostPreview } from "@/lib/posts";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
 import SearchModal from "../SearchModal";
@@ -115,7 +116,13 @@ const MenuIcons = {
   ),
 };
 
-export default function Header() {
+interface HeaderProps {
+  categories: string[];
+  tags: string[];
+  posts: PostPreview[];
+}
+
+export default function Header({ categories, tags, posts }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -181,6 +188,9 @@ export default function Header() {
         onClose={() => setIsSearchOpen(false)}
         theme={theme}
         config={headerConfig}
+        categories={categories}
+        tags={tags}
+        posts={posts}
       />
     </>
   );

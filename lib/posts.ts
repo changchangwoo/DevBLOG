@@ -119,10 +119,8 @@ export function getRecentTag(): string[] {
     }
   }
 
-  // 빈도순으로 정렬하고 상위 20개만 반환
   return Array.from(tagFrequency.entries())
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 20)
     .map(([tag]) => tag);
 }
 

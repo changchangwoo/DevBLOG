@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import Badge from "./Badge";
+import PostCard from "./PostCard";
+import { getCategoryInfo } from "@/lib/category";
+import { filterPosts } from "@/lib/filter";
+import type { PostPreview } from "@/lib/posts";
+import Divider from "./Divider";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -19,6 +25,9 @@ interface SearchModalProps {
     };
     siteTitle: string;
   };
+  categories: string[];
+  tags: string[];
+  posts: PostPreview[];
 }
 
 export default function SearchModal({
@@ -26,19 +35,33 @@ export default function SearchModal({
   onClose,
   theme,
   config,
+  categories,
+  tags,
+  posts,
 }: SearchModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
-  // 모달 열릴 때 input에 포커스
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const filteredPosts = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) return [];
+    return filterPosts(posts, { search: debouncedSearchQuery.trim() });
+  }, [posts, debouncedSearchQuery]);
+
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // ESC 키로 닫기
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -50,7 +73,6 @@ export default function SearchModal({
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
-  // body 스크롤 방지
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -67,13 +89,17 @@ export default function SearchModal({
     e.preventDefault();
   };
 
+  const handleBadgeClick = (value: string) => {
+    setSearchQuery(value);
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed bg-background w-full h-full z-50">
       <div
         className="relative bg-background mx-auto max-w-7xl
-      flex flex-col gap-[2rem] px-[2rem]"
+      flex flex-col gap-[2rem] px-[2rem] gap-["
       >
         <header className="relative min-h-[5.4rem] flex justify-center items-center py-[2rem]">
           <Link
@@ -88,7 +114,6 @@ export default function SearchModal({
             />
           </Link>
 
-          {/* Exit 버튼 */}
           <button
             onClick={onClose}
             className="absolute top-[2.4rem] right-[1rem] p-2 rounded-[8px] hover:bg-background-hover transition-colors cursor-pointer"
@@ -111,7 +136,6 @@ export default function SearchModal({
         </header>
 
         <div>
-          {/* 검색 입력 */}
           <form onSubmit={handleSearch} className="relative">
             <div className="relative">
               <input
@@ -137,18 +161,46 @@ export default function SearchModal({
               </svg>
             </div>
           </form>
-
-          {/* 카테고리 리스트 출력되어야하는 부분 */}
-
-          {/* 검색 결과 영역 (나중에 구현) */}
-          {searchQuery && (
-            <div className="border-t border-boundary p-[2rem]">
-              <p className="body3 text-descript text-center">
-                &apos;{searchQuery}&apos; TBD
-              </p>
-            </div>
-          )}
         </div>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => {
+            const categoryInfo = getCategoryInfo(category);
+            return (
+              <button
+                key={category}
+                onClick={() => handleBadgeClick(categoryInfo.label)}
+              >
+                <Badge variant="category" colorClass={categoryInfo.colorClass}>
+                  {categoryInfo.label}
+                </Badge>
+              </button>
+            );
+          })}
+          {tags.map((tag) => (
+            <button key={tag} onClick={() => handleBadgeClick(tag)}>
+              <Badge>{tag}</Badge>
+            </button>
+          ))}
+        </div>
+        {debouncedSearchQuery && (
+          <div>
+            <Divider spacing="md" />
+            <p className="body3 text-descript flex gap-[0.4rem] justify-center my-[2rem]">
+              포스트
+              <span className="text-primary font-bold">
+                {filteredPosts.length}건
+              </span>
+              발견! 👀
+            </p>
+            <section className="ut-grid">
+              {filteredPosts.map((post) => (
+                <div key={post.slug} onClick={onClose}>
+                  <PostCard post={post} />
+                </div>
+              ))}
+            </section>
+          </div>
+        )}
       </div>
     </div>
   );

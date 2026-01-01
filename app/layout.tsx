@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "highlight.js/styles/github.css";
 import ThemeProvider from "@/components/context/ThemeProvider";
-import Header from "@/components/common/Header/Header";
+import HeaderWrapper from "@/components/common/Header/HeaderWrapper";
 import Footer from "@/components/common/Footer";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="bg-background">
         <ThemeProvider>
-          <Header />
+          <HeaderWrapper />
           <div className="pt-[5.4rem] pb-[2rem]s">{children}</div>
           <Footer />
         </ThemeProvider>

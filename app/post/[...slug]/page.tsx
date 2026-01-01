@@ -31,7 +31,7 @@ interface CategoryInfo {
 function renderPostHeader(
   title: string,
   date: string,
-  excerpt: string,
+  description: string,
   categoryInfo: CategoryInfo | null,
   tags: string[],
   slug: string
@@ -50,7 +50,7 @@ function renderPostHeader(
         </div>
         <div>
           <h1 className="title3 text-primary">{title}</h1>
-          <p className="body1 text-descript mt-[0.5rem]">{excerpt}</p>
+          <p className="body1 text-descript mt-[0.5rem]">{description}</p>
         </div>
         <div className="flex gap-[0.5rem]">
           {categoryInfo && (
@@ -190,17 +190,48 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   if (!post) {
     return {
-      title: "Post Not Found",
+      title: "Post Not Found | changchangwoo 블로그",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
   return {
     title: `${post.title} | changchangwoo 블로그`,
-    description: post.excerpt,
-    keywords: [...post.tag, post.category],
-    authors: "개발자 이창우",
-    creator: "개발자 이창우",
-    publisher: "개발자 이창우",
+    description: post.description,
+    keywords: [
+      post.title,
+      ...post.tag,
+      post.category,
+      "프론트엔드 블로그",
+      "개발 블로그",
+    ],
+    authors: [
+      {
+        name: "이창우",
+        url: "https://www.changchangwoo.com/about",
+      },
+    ],
+    creator: "이창우",
+    publisher: "changchangwoo",
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      locale: "ko_KR",
+      siteName: "changchangwoo 블로그",
+      publishedTime: post.date,
+      tags: post.tag,
+      images: [
+        {
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
   };
 }
 
@@ -242,7 +273,7 @@ export default async function PostPage({ params }: PostPageProps) {
           {renderPostHeader(
             post.title,
             post.date,
-            post.excerpt,
+            post.description,
             categoryInfo,
             post.tag,
             post.slug

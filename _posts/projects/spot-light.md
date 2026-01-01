@@ -1,6 +1,6 @@
 ---
 title: "스포트라이트 프로젝트 정리"
-excerpt: "풀스택 데브코스 2기 최종 프로젝트 스포트라이트"
+description: "풀스택 데브코스 2기 최종 프로젝트 스포트라이트"
 date: "2025-09-09"
 author:
   name: "ChangWoo"

@@ -50,7 +50,7 @@ export default function PostCard({ post }: PostCardProps) {
               <Badge key={post.slug + tag}>{tag}</Badge>
             ))}
           </div>
-          <p className="body1 text-descript">{post.excerpt}</p>
+          <p className="body1 text-descript">{post.description}</p>
         </div>
       </Link>
       <Divider spacing="lg" className="block md:hidden" />

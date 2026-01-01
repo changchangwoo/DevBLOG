@@ -29,7 +29,7 @@ Front Matter에 `coverImage` 필드 추가:
 ```markdown
 ---
 title: "포스트 제목"
-excerpt: "포스트 요약"
+description: "포스트 요약"
 date: "2024-01-15"
 author:
   name: "작성자"
@@ -55,10 +55,12 @@ Markdown 본문에서 이미지 삽입:
 ## 예시
 
 `_posts/life/hello-world.md` 포스트의 이미지는:
+
 - `public/images/posts/life/hello-world/cover.jpg`
 - `public/images/posts/life/hello-world/example.png`
 
 위치에 저장하고, 포스트에서는:
+
 - `/images/posts/life/hello-world/cover.jpg`
 - `/images/posts/life/hello-world/example.png`
 

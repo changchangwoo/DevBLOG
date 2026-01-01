@@ -1,6 +1,6 @@
 ---
 title: "2025년을 정리하면서"
-excerpt: "입사와 퇴사, 그리고 번아웃까지 경험한 2025년 회고"
+description: "입사와 퇴사, 그리고 번아웃까지 경험한 2025년 회고"
 date: "2025-12-27"
 author:
   name: "ChangWoo"

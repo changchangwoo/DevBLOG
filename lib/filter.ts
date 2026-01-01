@@ -24,12 +24,12 @@ export function filterPosts(
     const query = filters.search.toLowerCase();
     filtered = filtered.filter((post) => {
       const titleMatch = post.title.toLowerCase().includes(query);
-      const excerptMatch = post.excerpt.toLowerCase().includes(query);
+      const descriptionMatch = post.description.toLowerCase().includes(query);
       const tagMatch = post.tag.some((tag) =>
         tag.toLowerCase().includes(query)
       );
 
-      return titleMatch || excerptMatch || tagMatch;
+      return titleMatch || descriptionMatch || tagMatch;
     });
   }
 

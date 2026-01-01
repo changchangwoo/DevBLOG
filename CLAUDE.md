@@ -91,7 +91,7 @@ DevBLOG/
 ### 포스트 작성 흐름
 
 1. `_posts/` 디렉토리에 `.md` 파일 생성
-2. Front Matter로 메타데이터 정의 (title, excerpt, date, author)
+2. Front Matter로 메타데이터 정의 (title, description, date, author)
 3. Markdown으로 본문 작성
 4. 빌드 시 `generateStaticParams()`로 모든 포스트 페이지를 정적 생성
 
@@ -100,7 +100,7 @@ DevBLOG/
 ```markdown
 ---
 title: "포스트 제목"
-excerpt: "짧은 요약"
+description: "짧은 요약"
 date: "2024-01-15"
 author:
   name: "작성자 이름"
@@ -200,7 +200,7 @@ Markdown 파일 읽기 및 파싱을 담당하는 유틸리티 모듈:
 ### 4. 새 포스트 추가 방법
 
 1. `_posts/new-post.md` 파일 생성
-2. Front Matter 작성 (title, excerpt, date, author)
+2. Front Matter 작성 (title, description, date, author)
 3. Markdown 본문 작성
 4. `pnpm build` 실행 → 자동으로 정적 페이지 생성됨
 5. Git commit 후 배포
@@ -695,17 +695,17 @@ export default async function TILPage({ searchParams }) {
 
 ### TIL vs 블로그 포스트 비교
 
-| 항목             | TIL                     | 블로그 포스트                             |
-| ---------------- | ----------------------- | ----------------------------------------- |
-| **목적**         | 매일의 러프한 학습 메모 | 완성도 있는 기술 글                       |
-| **형식**         | Bullet point            | 구조화된 문서                             |
-| **길이**         | 짧음 (3-5줄)            | 김 (500+ 단어)                            |
-| **작성 시간**    | 1-2분                   | 30분 ~ 수 시간                            |
-| **SEO**          | 중요하지 않음           | 매우 중요                                 |
-| **시각화**       | GitHub 잔디 캘린더      | 포스트 목록/카드                          |
-| **디렉토리**     | `_til/YYYY/`            | `_posts/category/`                        |
-| **Front Matter** | `date`만                | `title`, `excerpt`, `author`, `tag`, etc. |
-| **URL**          | `/til?year=2025`        | `/post/category/slug`                     |
+| 항목             | TIL                     | 블로그 포스트                                 |
+| ---------------- | ----------------------- | --------------------------------------------- |
+| **목적**         | 매일의 러프한 학습 메모 | 완성도 있는 기술 글                           |
+| **형식**         | Bullet point            | 구조화된 문서                                 |
+| **길이**         | 짧음 (3-5줄)            | 김 (500+ 단어)                                |
+| **작성 시간**    | 1-2분                   | 30분 ~ 수 시간                                |
+| **SEO**          | 중요하지 않음           | 매우 중요                                     |
+| **시각화**       | GitHub 잔디 캘린더      | 포스트 목록/카드                              |
+| **디렉토리**     | `_til/YYYY/`            | `_posts/category/`                            |
+| **Front Matter** | `date`만                | `title`, `description`, `author`, `tag`, etc. |
+| **URL**          | `/til?year=2025`        | `/post/category/slug`                         |
 
 ---
 

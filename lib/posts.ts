@@ -13,7 +13,7 @@ const postsDirectory = path.join(process.cwd(), "_posts");
 
 export interface PostMetadata {
   title: string;
-  excerpt: string;
+  description: string;
   date: string;
   author: {
     name: string;
@@ -93,7 +93,7 @@ export function getAllPosts(): PostPreview[] {
       return {
         slug: post.slug,
         title: post.title,
-        excerpt: post.excerpt,
+        description: post.description,
         tag: post.tag,
         category: post.category,
         date: post.date,

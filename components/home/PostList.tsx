@@ -49,11 +49,11 @@ export default function PostList({ posts, tags }: PostListProps) {
 
   return (
     <>
-      {/* <SearchBar
+      <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={handleSearchChange}
         tags={tags}
-      /> */}
+      />
       <Divider
         label={`총 ${filteredPosts.length}개의 포스트  `}
         spacing="md"

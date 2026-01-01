@@ -185,7 +185,7 @@ export default function SearchModal({
         {debouncedSearchQuery && (
           <div>
             <Divider spacing="md" />
-            <p className="body3 text-descript flex gap-[0.4rem] justify-center my-[2rem]">
+            <p className="body3 text-descript flex gap-[0.4rem]  mt-[1rem] mb-[2rem]">
               포스트
               <span className="text-primary font-bold">
                 {filteredPosts.length}건

@@ -12,16 +12,15 @@ export default function Home() {
   const tags = getRecentTag();
   const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
 
-
   return (
     <PageLayout>
-      <section>
+      {/* <section>
         <NewPost latestPost={latestPost} categoryInfo={categoryInfo} />
-      </section>
+      </section> */}
       <section>
         <Divider spacing="lg" label="포스트" className="title2" />
         <Suspense>
-          <PostList posts={posts} tags={tags}  />
+          <PostList posts={posts} tags={tags} />
         </Suspense>
       </section>
     </PageLayout>

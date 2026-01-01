@@ -36,7 +36,9 @@ interface HeaderDesktopProps {
   themeIcons: {
     sun: React.ReactElement;
     moon: React.ReactElement;
+    search: React.ReactElement;
   };
+  onSearchClick: () => void;
 }
 
 export default function HeaderDesktop({
@@ -46,6 +48,7 @@ export default function HeaderDesktop({
   setTheme,
   config,
   themeIcons,
+  onSearchClick,
 }: HeaderDesktopProps) {
   return (
     <header
@@ -84,13 +87,23 @@ export default function HeaderDesktop({
             </Link>
 
             {mounted && (
-              <IconWithLabel
-                icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
-                label={theme === "dark" ? "Light" : "Dark"}
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                ariaLabel="테마 전환"
-                className="rounded-[8px] bg-background hover:bg-background-hover"
-              />
+              <>
+                <IconWithLabel
+                  icon={themeIcons.search}
+                  label="Search"
+                  onClick={onSearchClick}
+                  ariaLabel="검색"
+                  className="rounded-[8px] bg-background hover:bg-background-hover text-descript"
+                />
+
+                <IconWithLabel
+                  icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
+                  label={theme === "dark" ? "Light" : "Dark"}
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  ariaLabel="테마 전환"
+                  className="rounded-[8px] bg-background hover:bg-background-hover"
+                />
+              </>
             )}
           </div>
         </div>

@@ -2,20 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Badge from "../common/Badge";
 
 interface SearchBarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   tags: string[];
-  onTagClick: (tag: string) => void;
 }
 
 export default function SearchBar({
   searchQuery,
   setSearchQuery,
   tags,
-  onTagClick,
 }: SearchBarProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -36,23 +33,6 @@ export default function SearchBar({
 
     return () => clearTimeout(timer);
   }, [localQuery, searchQuery, setSearchQuery]);
-
-  const handleTagClick = (tag: string) => {
-    if (tag === "All") {
-      router.push("/");
-      setLocalQuery("");
-      setSearchQuery("");
-    } else {
-      onTagClick(tag);
-    }
-  };
-
-  const isActiveTag = (tag: string) => {
-    if (tag === "All") {
-      return !searchParams.get("tag") && !searchParams.get("category");
-    }
-    return searchParams.get("tag") === tag;
-  };
 
   return (
     <div className="mb-[1rem]">

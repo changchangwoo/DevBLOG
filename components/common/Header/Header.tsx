@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
+import SearchModal from "../SearchModal";
 
 const headerConfig = {
   logo: {
@@ -64,9 +65,23 @@ const ThemeIcons = {
       />
     </svg>
   ),
+  search: (
+    <svg
+      className=" h-[2.4rem] w-[2.4rem] text-primary"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      />
+    </svg>
+  ),
 };
 
-// 메뉴 아이콘 SVG
 const MenuIcons = {
   hamburger: (
     <svg
@@ -105,6 +120,7 @@ export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -147,6 +163,7 @@ export default function Header() {
         setTheme={setTheme}
         config={headerConfig}
         themeIcons={ThemeIcons}
+        onSearchClick={() => setIsSearchOpen(true)}
       />
       <HeaderMobile
         isScrolled={isScrolled}
@@ -157,6 +174,13 @@ export default function Header() {
         config={headerConfig}
         themeIcons={ThemeIcons}
         menuIcons={MenuIcons}
+        onSearchClick={() => setIsSearchOpen(true)}
+      />
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        theme={theme}
+        config={headerConfig}
       />
     </>
   );

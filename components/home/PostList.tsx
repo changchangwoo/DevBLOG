@@ -34,14 +34,6 @@ export default function PostList({ posts, tags }: PostListProps) {
     return filterPosts(posts, { tag, category, search });
   }, [posts, searchParams, searchQuery]);
 
-  const handleTagClick = (tag: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("tag", tag);
-    params.delete("category");
-    params.delete("search");
-    router.push(`/?${params.toString()}`);
-  };
-
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
     const params = new URLSearchParams(searchParams.toString());
@@ -57,12 +49,11 @@ export default function PostList({ posts, tags }: PostListProps) {
 
   return (
     <>
-      <SearchBar
+      {/* <SearchBar
         searchQuery={searchQuery}
         setSearchQuery={handleSearchChange}
         tags={tags}
-        onTagClick={handleTagClick}
-      />
+      /> */}
       <Divider
         label={`총 ${filteredPosts.length}개의 포스트  `}
         spacing="lg"

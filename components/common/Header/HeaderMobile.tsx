@@ -41,11 +41,13 @@ interface HeaderMobileProps {
   themeIcons: {
     sun: React.ReactElement;
     moon: React.ReactElement;
+    search: React.ReactElement;
   };
   menuIcons: {
     hamburger: React.ReactElement;
     close: React.ReactElement;
   };
+  onSearchClick: () => void;
 }
 
 export default function HeaderMobile({
@@ -57,6 +59,7 @@ export default function HeaderMobile({
   config,
   themeIcons,
   menuIcons,
+  onSearchClick,
 }: HeaderMobileProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -91,21 +94,30 @@ export default function HeaderMobile({
 
           <div className="flex items-center gap-4">
             {mounted && (
-              <IconWithLabel
-                icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
-                label={theme === "dark" ? "Light" : "Dark"}
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                ariaLabel="테마 전환"
-                className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
-              />
+              <>
+                <IconWithLabel
+                  icon={themeIcons.search}
+                  label="Search"
+                  onClick={onSearchClick}
+                  ariaLabel="검색"
+                  className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110 text-descript"
+                />
+                <IconWithLabel
+                  icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
+                  label={theme === "dark" ? "Light" : "Dark"}
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  ariaLabel="테마 전환"
+                  className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
+                />
+                <IconWithLabel
+                  icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
+                  label={isMenuOpen ? "Menu" : "Menu"}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+                  className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
+                />
+              </>
             )}
-            <IconWithLabel
-              icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
-              label={isMenuOpen ? "Menu" : "Menu"}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
-              className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
-            />
           </div>
         </div>
 

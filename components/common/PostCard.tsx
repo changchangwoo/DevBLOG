@@ -40,7 +40,7 @@ export default function PostCard({ post }: PostCardProps) {
                 })}
               </time>
             </div>
-            <h3 className="title2 text-primary">{post.title}</h3>
+            <span className="title2 text-primary">{post.title}</span>
           </div>
           <div className="flex flex-wrap gap-[0.5rem]">
             <Badge variant="category" colorClass={categoryInfo.colorClass}>

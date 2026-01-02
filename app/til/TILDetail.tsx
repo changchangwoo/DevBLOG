@@ -16,7 +16,7 @@ export default function TILDetail({
       <div className="w-full  rounded-[8px]  overflow-hidden px-[2rem]">
         <div className="flex items-center justify-between ">
           <div>
-            <h2 className="title1 text-primary">{selectedTitle}</h2>
+            <h1 className="title1 text-primary">{selectedTitle}</h1>
           </div>
         </div>
         <div

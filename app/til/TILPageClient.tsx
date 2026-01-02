@@ -66,7 +66,7 @@ export default function TILPageClient({
           onDateClick={handleDateClick}
         />
 
-        <h3 className="body3 text-primary ">
+        <div className="body3 text-primary ">
           🔥🔥🔥 Today I Learned를 기록하는 공간입니다.
           <br />
           <span className="caption text-descript">
@@ -74,7 +74,7 @@ export default function TILPageClient({
             잔디를 클릭하면 내용확인이 가능합니다.
           </span>
           <br />
-        </h3>
+        </div>
       </section>
       {pinnedTILs.length > 0 && (
         <>

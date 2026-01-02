@@ -190,7 +190,7 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   if (!post) {
     return {
-      title: "Post Not Found | changchangwoo 블로그",
+      title: "Post Not Found | Changchangwoo 블로그",
       robots: {
         index: false,
         follow: false,
@@ -199,7 +199,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   }
 
   return {
-    title: `${post.title} | changchangwoo 블로그`,
+    title: `${post.title} | Changchangwoo 블로그`,
     description: post.description,
     keywords: [
       post.title,
@@ -221,16 +221,19 @@ export async function generateMetadata({ params }: PostPageProps) {
       description: post.description,
       type: "article",
       locale: "ko_KR",
-      siteName: "changchangwoo 블로그",
+      siteName: "Changchangwoo 블로그",
       publishedTime: post.date,
       tags: post.tag,
-      images: [
-        {
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      images: post.coverImage
+        ? [
+            {
+              url: post.coverImage,
+              width: 1200,
+              height: 630,
+              alt: post.title,
+            },
+          ]
+        : [],
     },
   };
 }

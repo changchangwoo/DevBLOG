@@ -6,7 +6,6 @@ import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStringify from "rehype-stringify";
 import rehypeHeadingDivider from "./rehype-heading-divider";
 import rehypeCallout from "./rehype-callout";
@@ -122,6 +121,14 @@ export function getRecentTag(): string[] {
   return Array.from(tagFrequency.entries())
     .sort((a, b) => b[1] - a[1])
     .map(([tag]) => tag);
+}
+
+export function getPinnedPost(): PostPreview | null {
+  const posts = getAllPosts();
+  const { PINNED_POST_SLUG } = require("@/constant/const");
+
+  const pinnedPost = posts.find((post) => post.slug === PINNED_POST_SLUG);
+  return pinnedPost || null;
 }
 
 export function getAllCategories(): string[] {

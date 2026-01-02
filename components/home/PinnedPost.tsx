@@ -1,26 +1,27 @@
 import Link from "next/link";
-import Divider from "../common/Divider";
 import Badge from "../common/Badge";
 import { PostPreview } from "@/lib/posts";
 import { CategoryInfo } from "@/lib/category";
 
-interface NewPostProps {
-  latestPost: PostPreview;
+interface PinnedPostProps {
+  pinnedPost: PostPreview | null;
   categoryInfo: CategoryInfo | null;
 }
 
-export default function NewPost({ latestPost, categoryInfo }: NewPostProps) {
+export default function PinnedPost({
+  pinnedPost,
+  categoryInfo,
+}: PinnedPostProps) {
   return (
-    <div className="flex flex-col gap-[1rem]">
-      <Divider spacing="md" label="신규" className="title2" />
-      {latestPost && (
-        <Link href={`/post/${latestPost.slug}`}>
+    <div className="flex flex-col gap-[1rem pt-[2rem]">
+      {pinnedPost && (
+        <Link href={`/post/${pinnedPost.slug}`}>
           <div className="w-full min-h-[20rem] xl:min-h-[28rem] rounded-[8px] relative overflow-hidden cursor-pointer group hover:opacity-80 border border-boundary transition-opacity duration-300">
             <div
               className="absolute inset-0 bg-cover bg-center  transition-transform duration-300 ease-in-out group-hover:scale-105"
               style={{
-                backgroundImage: latestPost.coverImage
-                  ? `url(${latestPost.coverImage})`
+                backgroundImage: pinnedPost.coverImage
+                  ? `url(${pinnedPost.coverImage})`
                   : "url(/images/common/main_bg.png)",
               }}
             />
@@ -35,13 +36,13 @@ export default function NewPost({ latestPost, categoryInfo }: NewPostProps) {
                     {categoryInfo.label}
                   </Badge>
                 )}
-                {latestPost.tag.map((tag) => (
-                  <Badge key={latestPost.slug + tag}>{tag}</Badge>
+                {pinnedPost.tag.map((tag) => (
+                  <Badge key={pinnedPost.slug + tag}>{tag}</Badge>
                 ))}
               </div>
               <div>
-                <h1 className="title3 text-primary">{latestPost.title}</h1>
-                <p className="body1 text-primary">{latestPost.description}</p>
+                <h1 className="title3 text-primary">{pinnedPost.title}</h1>
+                <p className="body1 text-primary">{pinnedPost.description}</p>
               </div>
             </div>
           </div>

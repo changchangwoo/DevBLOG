@@ -56,7 +56,7 @@ export default function PostList({ posts, tags }: PostListProps) {
       />
       <Divider
         label={`총 ${filteredPosts.length}개의 포스트  `}
-        spacing="md"
+        spacing="lg"
         className="body3 text-descript"
       />
       <section className="ut-grid">

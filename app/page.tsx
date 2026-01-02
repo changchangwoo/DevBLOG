@@ -1,24 +1,29 @@
-import { getAllPosts, getRecentTag, getAllCategories } from "@/lib/posts";
+import {
+  getAllPosts,
+  getRecentTag,
+  getAllCategories,
+  getPinnedPost,
+} from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Divider from "@/components/common/Divider";
 import PostList from "../components/home/PostList";
-import NewPost from "../components/home/NewPost";
 import PageLayout from "@/components/layout/PageLayout";
 import { Suspense } from "react";
+import PinnedPost from "@/components/home/PinnedPost";
 
 export default function Home() {
   const posts = getAllPosts();
-  const latestPost = posts[0];
+  const pinnedPost = getPinnedPost();
   const tags = getRecentTag();
-  const categoryInfo = latestPost ? getCategoryInfo(latestPost.category) : null;
+  const categoryInfo = pinnedPost ? getCategoryInfo(pinnedPost.category) : null;
 
   return (
     <PageLayout>
       <section>
-        <NewPost latestPost={latestPost} categoryInfo={categoryInfo} />
+        <PinnedPost pinnedPost={pinnedPost} categoryInfo={categoryInfo} />
       </section>
       <section>
-        <Divider spacing="md" label={`포스트`} className="title2" />
+        <Divider label={`포스트`} className="title2 mb-[2rem]" />
         <Suspense>
           <PostList posts={posts} tags={tags} />
         </Suspense>

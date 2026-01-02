@@ -35,7 +35,7 @@ export default function SearchBar({
   }, [localQuery, searchQuery, setSearchQuery]);
 
   return (
-    <div className="mb-[1rem]">
+    <div className="my-[1rem]">
       <div className="relative">
         <input
           type="text"

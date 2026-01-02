@@ -9,7 +9,9 @@
       "Bash(pnpm dev:*)",
       "Bash(cat:*)",
       "Bash(pnpm list:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(curl:*)",
+      "Bash(echo:*)"
     ]
   }
 }

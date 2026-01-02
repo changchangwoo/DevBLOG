@@ -10,6 +10,7 @@ import Giscus from "@/components/post-detail/Giscus";
 import IconWithLabel from "@/components/common/IconWithLabel";
 import ScrollProgressBar from "@/components/post-detail/ScrollProgressBar";
 import { AUTHOR_INFO } from "@/lib/author";
+import Link from "next/link";
 
 interface PostPageProps {
   params: Promise<{
@@ -54,12 +55,18 @@ function renderPostHeader(
         </div>
         <div className="flex gap-[0.5rem]">
           {categoryInfo && (
-            <Badge variant="category" colorClass={categoryInfo.colorClass}>
-              {categoryInfo.label}
-            </Badge>
+            <Link href={`/?category=${slug.split("/")[0]}`}>
+              <Badge variant="category" colorClass={categoryInfo.colorClass}>
+                {categoryInfo.label}
+              </Badge>
+            </Link>
           )}
           {tags &&
-            tags.map((tag) => <Badge key={`${slug}-${tag}`}>{tag}</Badge>)}
+            tags.map((tag) => (
+              <Link key={`${slug}-${tag}`} href={`/?tag=${tag}`}>
+                <Badge>{tag}</Badge>
+              </Link>
+            ))}
         </div>
       </header>
       <Divider spacing="lg" />
@@ -190,7 +197,7 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   if (!post) {
     return {
-      title: "Post Not Found | Changchangwoo 블로그",
+      title: "Post Not Found",
       robots: {
         index: false,
         follow: false,
@@ -199,7 +206,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   }
 
   return {
-    title: `${post.title} | Changchangwoo 블로그`,
+    title: `${post.title}`,
     description: post.description,
     keywords: [
       post.title,

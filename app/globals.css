@@ -156,12 +156,11 @@ body {
   margin-bottom: 1rem;
 }
 
-/* 헤더 구분선 스타일 (Divider와 동일) */
 .prose .heading-with-divider {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
@@ -337,7 +336,7 @@ body {
   font-weight: 600;
   border-bottom: 1px solid var(--boundary);
   padding: 0.5em 1em;
-  text-align: left;
+  text-align: center;
 }
 
 .prose td {

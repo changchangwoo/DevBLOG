@@ -139,6 +139,8 @@ body {
   margin-top: 1rem;
   margin-bottom: 1rem;
   line-height: 1.1111111;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose h2 {
@@ -147,6 +149,8 @@ body {
   margin-top: 1rem;
   margin-bottom: 1rem;
   line-height: 1.3333333;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose h3 {
@@ -154,6 +158,8 @@ body {
   font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose .heading-with-divider {
@@ -167,8 +173,7 @@ body {
 .prose .heading-with-divider h2,
 .prose .heading-with-divider h3 {
   margin: 0;
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: 0;
 }
 
 .prose .heading-divider {
@@ -183,6 +188,8 @@ body {
   margin-top: 1rem;
   margin-bottom: 1rem;
   line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* 인라인 코드 */

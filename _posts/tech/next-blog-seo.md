@@ -14,20 +14,18 @@ tag: ["NextJS", "SEO", "블로그"]
 - 공들여 만든 포스팅이 아무런 관심도 받지 못한 채 웹 속에 파묻혀있다면 얼마나 속상할까?
 - 이 글에서는 프론트엔드 개발자 관점에서, 개인 블로그에 SEO를 어떻게 도입했는지에 정리했다.
 
-## 렌더링 전략 설계
+### 렌더링 전략 설계
 
 - 포스팅 페이지에 **렌더링 전략은 포스트 데이터를 어떤 방식으로 관리하느냐에 따라 구분**했다.
 - CMS(Content Management System)와 같은 외부 데이터 저장소를 통해 포스팅을 관리하는 경우에는 ISR 방식이 최적이며
-- 레포지토리에서 정적 파일로 포스팅을 관리하는 경우에는 SSG 방식이 가장 이상적*라고 판단했다.
+- 레포지토리에서 정적 파일로 포스팅을 관리하는 경우에는 SSG 방식이 가장 이상적라고 판단했다.
 
-### SSG (Static Site Generator)
-
+**SSG (Static Site Generator)** 
 - SSG 는 빌드 시점에 모든 HTML을 미리 생성하는 방식이다.
 - 생성된 페이지는 정적 파일로 CDN을 통해 즉시 제공되기 때문에 응답 속도와 SEO 측면에서 매우 유리하다.
 - 다만, 포스트를 수정하거나 추가할 경우 전체 빌드 및 배포 과정이 필요하다는 단점이 있다.
 
-### ISR (Incremental Static Regeneration)
-
+**ISR (Incremental Static Regeneration)**
 - ISR은 SSG의 정적 페이지 제공 방식을 유지하면서 특정 조건에서 해당 페이지를 다시 생성할 수 있도록 확장한 렌더링 전략이다.
 - CMS 와 같은 외부 데이터 저장소를 사용하는 경우, 전체 빌드를 다시 수행하지 않고도 변경 페이지를 갱신할 수 있다는 점이 가장 큰 장점이다.
 - 하지만 On-Demand Revalidation API, WebHook등 고려해야할 요소 역시 많아진다.
@@ -43,7 +41,7 @@ tag: ["NextJS", "SEO", "블로그"]
 > 무엇보다도, **추후 포스팅 수가 늘어나거나 CMS 도입이 필요하다면 그 시점에 전환해도 충분히 대응 가능할 것 같았다.**
 > 
 
-## 메타 태그 관리
+### 메타 태그 관리
 
 - 메타 태그는 페이지의 핵심 정보(=메타 데이터)를 담고 있으며, 검색엔진이나 크롤러가 페이지를 이해하는 데 사용하는 가장 기초적인 단서이다.
 - 템플릿이 되는 공통 메타데이터와 페이지별 세부 메타데이터를 분리하여 관리하였다.
@@ -135,14 +133,14 @@ export const metadata = {
 |---|---|
 | ![open_graph_1](/images/posts/tech/next-blog-seo/open_graph_1.png) | ![open_graph_2](/images/posts/tech/next-blog-seo/open_graph_2.png) |
 
-## 시맨틱 태그 구분
+### 시맨틱 태그 구분
 
 - 시맨틱 태그는 단순히 마크업을 위한 요소가 아니라, 검색 엔진이 페이지의 구조와 역할을 이해하도록 돕는 장치다.
 - 따라서 레이아웃을 설계 할 때, 최대한 **의미와 역할을 기준으로 구성할 수 있도록 태그를 선택**했다.
 - 특히, Headung 제목 계층이 순차적으로 구분되어지지 않는 경우가 많았다.
     - 페이지 내 h1은 단하나만 존재해야하며, h2, h3는 순서 계층을 유지해야한다.
 
-## Robots.txt, Sitemap.xml
+### Robots.txt, Sitemap.xml
 
 - 검색 엔진 크롤러가 사이트를 효율적으로 탐색할 수 있도록 `robots.txt`와 `sitemap.xml`을 함께 구성하였다.
 - `robots.txt`는 크롤러의 접근 범위를 제어하고, `sitemap.xml`은 사이트의 구조와 주요 페이지 정보를 명시적으로 제공한다.
@@ -171,7 +169,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 - 사이트맵은 정적 페이지 뿐 아니라, **동적 라우트로 생성되는 페이지까지 포함하는 것이 중요**하다.
 - Next.js에서 제공하는 `MetadataRoute.Sitemap`을 활용해 빌드 시점에 이를 고려한`sitemap.xml`을 자동을 생성하도록 구현하였다.
 
-## 페이지 성능 분석
+### 페이지 성능 분석
 
 - 검색엔진은 콘텐츠뿐만 아니라 **페이지 성능 또한 주요 평가 요소로 고려**한다.
 - 그렇기에 건강한 Core web Vitals(LCP, CLS, FID) 지표는 매우 중요하다.
@@ -194,7 +192,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ![light_house_3](/images/posts/tech/next-blog-seo/light_house_3.png)
     
 
-## non-www, wwwURL 분리
+### non-www, wwwURL 분리
 
 ![301](/images/posts/tech/next-blog-seo/301.png)
 
@@ -203,7 +201,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 - 그렇기 때문에, non-www로 접근했을 때 www로 도메인으로 리디렉션 설정을 해주었다.
 - Vercel의 도메인 관리 기능을 활용해 별도의 설정 없이 간단하게 적용할 수 있었다.
 
-## 구글 서치 콘솔을 통한 색인 관리
+### 구글 서치 콘솔을 통한 색인 관리
 
 - SEO를 적용한 사이트 배포 이후, Google Search Console에 도메인 속성으로 사이트를 등록하고 `sitemap.xml`을 제출하여 크롤링 및 색인을 유도했다.
 
@@ -220,7 +218,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 >
 >    3. 노출이 자주 발생하는 페이지를 기준으로 콘텐츠 확장
 
-## 마치며
+### 마치며
 
 - 프로젝트를 진행할 수록, 사용자 확보에 대한 욕심과 SEO에 대한 중요성을 크게 체감하고 있다.
 - 이번에 블로그를 개발하며, SEO와 같이 그동안 어렴풋이 적용했던 내용들의 개념을 확실히 잡고 갈 수 있어 도움이 된다.

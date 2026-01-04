@@ -215,20 +215,10 @@ export async function generateMetadata({ params }: PostPageProps) {
       "프론트엔드 블로그",
       "개발 블로그",
     ],
-    authors: [
-      {
-        name: "이창우",
-        url: "https://www.changchangwoo.com/about",
-      },
-    ],
-    creator: "이창우",
-    publisher: "changchangwoo",
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
-      locale: "ko_KR",
-      siteName: "Changchangwoo 블로그",
       publishedTime: post.date,
       tags: post.tag,
       images: post.coverImage

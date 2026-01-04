@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Badge from "../common/Badge";
 import { PostPreview } from "@/lib/posts";
 import { CategoryInfo } from "@/lib/category";
@@ -17,13 +18,12 @@ export default function PinnedPost({
       {pinnedPost && (
         <Link href={`/post/${pinnedPost.slug}`}>
           <div className="w-full min-h-[20rem] xl:min-h-[28rem] rounded-[8px] relative overflow-hidden cursor-pointer group hover:opacity-80 border border-boundary transition-opacity duration-300">
-            <div
-              className="absolute inset-0 bg-cover bg-center  transition-transform duration-300 ease-in-out group-hover:scale-105"
-              style={{
-                backgroundImage: pinnedPost.coverImage
-                  ? `url(${pinnedPost.coverImage})`
-                  : "url(/images/common/main_bg.png)",
-              }}
+            <Image
+              src={pinnedPost.coverImage || "/images/common/main_bg.png"}
+              alt={pinnedPost.title || "Pinned post cover"}
+              fill
+              className="object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
+              priority
             />
             <div className="absolute inset-0 bg-white/60 dark:bg-black/50   " />
             <div className="relative z-10 flex flex-col justify-between p-[2rem] min-h-[20rem] xl:min-h-[28rem] border border-boundary">

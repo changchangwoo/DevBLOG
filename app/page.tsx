@@ -11,6 +11,12 @@ import PageLayout from "@/components/layout/PageLayout";
 import { Suspense } from "react";
 import PinnedPost from "@/components/home/PinnedPost";
 
+export const metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
 export default function Home() {
   const posts = getAllPosts();
   const pinnedPost = getPinnedPost();

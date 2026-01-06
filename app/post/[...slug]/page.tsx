@@ -232,6 +232,9 @@ export async function generateMetadata({ params }: PostPageProps) {
           ]
         : [],
     },
+    alternates: {
+      canonical: `/post/${slugString}`,
+    },
   };
 }
 

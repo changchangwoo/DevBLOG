@@ -10,10 +10,15 @@ import TILPageClient from "./TILPageClient";
 import Divider from "@/components/common/Divider";
 import PageLayout from "@/components/layout/PageLayout";
 
-export const metadata = {
-  title: "TIL | changchangwoo 블로그",
-  description: "매일의 학습 기록 - Today I Learned",
-};
+export async function generateMetadata({ searchParams }: TILPageProps) {
+  return {
+    title: "TIL | changchangwoo 블로그",
+    description: "매일의 학습 기록 - Today I Learned",
+    alternates: {
+      canonical: "/til",
+    },
+  };
+}
 
 interface TILPageProps {
   searchParams: Promise<{ year?: string }>;

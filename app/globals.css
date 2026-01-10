@@ -350,6 +350,7 @@ body {
 .prose td {
   border-bottom: 1px solid var(--boundary);
   padding: 0.5em 1em;
+  text-align: center;
 }
 
 /* ===== Callout Styles ===== */

@@ -5,7 +5,7 @@ date: "2026-01-04"
 author:
   name: "ChangWoo"
 coverImage: "/images/posts/tech/next-blog-seo/cover.png"
-tag: ["NextJS", "SEO", "블로그"]
+tag: ["Next", "SEO", "블로그"]
 ---
 
 - 직접 개발 블로그를 만들면 많은 자유를 얻을 수 있다.

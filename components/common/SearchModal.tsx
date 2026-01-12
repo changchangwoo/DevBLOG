@@ -8,7 +8,7 @@ import Badge from "./Badge";
 import PostCard from "./PostCard";
 import { getCategoryInfo } from "@/lib/category";
 import { filterPosts } from "@/lib/filter";
-import type { PostPreview } from "@/lib/posts";
+import type { PostPreview, Tag, Category } from "@/lib/posts";
 import Divider from "./Divider";
 
 interface SearchModalProps {
@@ -25,8 +25,8 @@ interface SearchModalProps {
     };
     siteTitle: string;
   };
-  categories: string[];
-  tags: string[];
+  categories: Category[];
+  tags: Tag[];
   posts: PostPreview[];
 }
 
@@ -164,21 +164,21 @@ export default function SearchModal({
         </div>
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => {
-            const categoryInfo = getCategoryInfo(category);
+            const categoryInfo = getCategoryInfo(category.name);
             return (
               <button
-                key={category}
+                key={category.name}
                 onClick={() => handleBadgeClick(categoryInfo.label)}
               >
                 <Badge variant="category" colorClass={categoryInfo.colorClass}>
-                  {categoryInfo.label}
+                  {categoryInfo.label} ({category.count})
                 </Badge>
               </button>
             );
           })}
           {tags.map((tag) => (
-            <button key={tag} onClick={() => handleBadgeClick(tag)}>
-              <Badge>{tag}</Badge>
+            <button key={tag.name} onClick={() => handleBadgeClick(tag.name)}>
+              <Badge>{tag.name} ({tag.count})</Badge>
             </button>
           ))}
         </div>

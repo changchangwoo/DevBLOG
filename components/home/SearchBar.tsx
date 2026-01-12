@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Tag } from "@/lib/posts";
 
 interface SearchBarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  tags: string[];
+  tags: Tag[];
 }
 
 export default function SearchBar({
@@ -58,20 +59,6 @@ export default function SearchBar({
           />
         </svg>
       </div>
-
-      {/* <div className="mt-[1rem]">
-        <div className="flex flex-wrap gap-2">
-          {allTags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => handleTagClick(tag)}
-              className="transition-opacity hover:opacity-70"
-            >
-              <Badge active={isActiveTag(tag)}>{tag}</Badge>
-            </button>
-          ))}
-        </div>
-      </div> */}
     </div>
   );
 }

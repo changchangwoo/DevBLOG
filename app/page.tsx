@@ -1,9 +1,4 @@
-import {
-  getAllPosts,
-  getRecentTag,
-  getAllCategories,
-  getPinnedPost,
-} from "@/lib/posts";
+import { getAllPosts, getAllTag, getPinnedPost } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Divider from "@/components/common/Divider";
 import PostList from "../components/home/PostList";
@@ -20,7 +15,7 @@ export const metadata = {
 export default function Home() {
   const posts = getAllPosts();
   const pinnedPost = getPinnedPost();
-  const tags = getRecentTag();
+  const tags = getAllTag();
   const categoryInfo = pinnedPost ? getCategoryInfo(pinnedPost.category) : null;
 
   return (

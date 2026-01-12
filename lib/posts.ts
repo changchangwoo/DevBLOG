@@ -37,6 +37,16 @@ export interface PostPreview extends PostMetadata {
   category: string;
 }
 
+export interface Tag {
+  name: string;
+  count: number;
+}
+
+export interface Category {
+  name: string;
+  count: number;
+}
+
 export function getPostSlugs(): string[] {
   if (!fs.existsSync(postsDirectory)) {
     return [];
@@ -107,7 +117,7 @@ export function getAllPosts(): PostPreview[] {
   return posts;
 }
 
-export function getRecentTag(): string[] {
+export function getAllTag(): Tag[] {
   const posts = getAllPosts();
 
   const tagFrequency = new Map<string, number>();
@@ -118,9 +128,11 @@ export function getRecentTag(): string[] {
     }
   }
 
+  console.log(tagFrequency);
+
   return Array.from(tagFrequency.entries())
-    .sort((a, b) => b[1] - a[1])
-    .map(([tag]) => tag);
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 }
 
 export function getPinnedPost(): PostPreview | null {
@@ -131,17 +143,22 @@ export function getPinnedPost(): PostPreview | null {
   return pinnedPost || null;
 }
 
-export function getAllCategories(): string[] {
+export function getAllCategories(): Category[] {
   const posts = getAllPosts();
-  const categories = new Set<string>();
+  const categoryFrequency = new Map<string, number>();
 
   for (const post of posts) {
     if (post.category && post.category !== "uncategorized") {
-      categories.add(post.category);
+      categoryFrequency.set(
+        post.category,
+        (categoryFrequency.get(post.category) || 0) + 1
+      );
     }
   }
 
-  return Array.from(categories).sort();
+  return Array.from(categoryFrequency.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 }
 
 export async function markdownToHtml(

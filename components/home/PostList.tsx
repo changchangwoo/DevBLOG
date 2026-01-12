@@ -2,7 +2,7 @@
 
 import { useMemo, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import type { PostPreview } from "@/lib/posts";
+import type { PostPreview, Tag } from "@/lib/posts";
 import { filterPosts } from "@/lib/filter";
 import PostCard from "@/components/common/PostCard";
 import Divider from "@/components/common/Divider";
@@ -10,7 +10,7 @@ import SearchBar from "@/components/home/SearchBar";
 
 interface PostListProps {
   posts: PostPreview[];
-  tags: string[];
+  tags: Tag[];
 }
 
 export default function PostList({ posts, tags }: PostListProps) {

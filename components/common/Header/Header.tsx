@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import type { PostPreview } from "@/lib/posts";
+import type { PostPreview, Tag, Category } from "@/lib/posts";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
 import SearchModal from "../SearchModal";
@@ -117,8 +117,8 @@ const MenuIcons = {
 };
 
 interface HeaderProps {
-  categories: string[];
-  tags: string[];
+  categories: Category[];
+  tags: Tag[];
   posts: PostPreview[];
 }
 

@@ -1,4 +1,4 @@
-import { getAllCategories, getRecentTag } from "@/lib/posts";
+import { getAllCategories, getAllTag } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Badge from "./Badge";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import Divider from "./Divider";
 
 export default function CategoryList() {
   const categories = getAllCategories();
-  const tags = getRecentTag();
+  const tags = getAllTag();
 
   if (categories.length === 0) {
     return null;
@@ -39,9 +39,9 @@ export default function CategoryList() {
             </Badge>
           </Link>
           {categories.map((category) => {
-            const categoryInfo = getCategoryInfo(category);
+            const categoryInfo = getCategoryInfo(category.name);
             return (
-              <Link key={category} href={`/?category=${category}`}>
+              <Link key={category.name} href={`/?category=${category.name}`}>
                 <Badge variant="category" colorClass={categoryInfo.colorClass}>
                   {categoryInfo.label}
                 </Badge>
@@ -49,8 +49,8 @@ export default function CategoryList() {
             );
           })}
           {tags.map((tag) => (
-            <Link key={tag} href={`/?tag=${tag}`}>
-              <Badge>{tag}</Badge>
+            <Link key={tag.name} href={`/?tag=${tag.name}`}>
+              <Badge>{tag.name}</Badge>
             </Link>
           ))}
         </div>

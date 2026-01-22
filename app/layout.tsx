@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     default: "Changchangwoo's blog",
     template: "%s | Changchangwoo 블로그",
   },
-  description: "프론트엔드 개발자 이창우의 블로그입니다.",
+  description:
+    "프론트엔드 개발자 이창우의 블로그입니다. React, Next.js, TypeScript를 중심으로 프론트엔드 개발 경험과 프로젝트 회고를 기록하고 있습니다.",
   keywords: [
     "프론트엔드",
     "개발 블로그",

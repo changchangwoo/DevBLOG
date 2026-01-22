@@ -120,7 +120,7 @@ export async function generateMetadata({ params }: PostPageProps) {
 ```jsx
 export const metadata = {
   alternates: {
-    canonical: "/",
+    canonical: "https://www.changchangwoo.com/",
   },
 };
 ```
@@ -187,7 +187,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 - 개선 사항은 다음과 같다
 
   ![light_house_4](/images/posts/tech/next-blog-seo/light_house_4.png)
-
   - 메인 영역에 노출되는 PinnedPost가 `next/image`를 사용하지 않아 이미지 최적화가 적용되어지지 않고 있었다. 이를 교체했다.
   - 블로그 검색에 대한 기능을 QueryString 기반으로 구현했으나, 디바운싱 처리가 누락되어 타이핑 마다 요청이 발생하고 있었다. 200ms 디바운싱을 적용해 요청 수를 줄였다.
 
@@ -214,9 +213,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 - 현재는 사이트 배포 초기 단계로, 아직 유의미한 색인 데이터는 쌓이지 않았지만 향후 다음과 같은 기준으로 서치 콘솔을 운영할 계획이다.
 
 > 1.  검색어 기준으로 의도한 키워드가 노출이 되어 있는지 확인
->
 > 2.  노출 대비 CTR이 낮은 페이지에 대한 메타데이터 개선
->
 > 3.  노출이 자주 발생하는 페이지를 기준으로 콘텐츠 확장
 
 ### 마치며

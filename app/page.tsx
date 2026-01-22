@@ -8,7 +8,7 @@ import PinnedPost from "@/components/home/PinnedPost";
 
 export const metadata = {
   alternates: {
-    canonical: "/",
+    canonical: "https://www.changchangwoo.com/",
   },
 };
 

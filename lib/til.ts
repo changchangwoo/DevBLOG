@@ -137,7 +137,7 @@ export function getAvailableYears(): number[] {
  * 특정 연도의 모든 TIL 데이터를 HTML로 변환하여 가져오기
  */
 export async function getAllTILsWithHtmlForYear(
-  year: number
+  year: number,
 ): Promise<Map<string, string>> {
   const dates = getTILDates(year);
   const tilMap = new Map<string, string>();

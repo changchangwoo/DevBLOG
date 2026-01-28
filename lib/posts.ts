@@ -128,8 +128,6 @@ export function getAllTag(): Tag[] {
     }
   }
 
-  console.log(tagFrequency);
-
   return Array.from(tagFrequency.entries())
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
@@ -151,7 +149,7 @@ export function getAllCategories(): Category[] {
     if (post.category && post.category !== "uncategorized") {
       categoryFrequency.set(
         post.category,
-        (categoryFrequency.get(post.category) || 0) + 1
+        (categoryFrequency.get(post.category) || 0) + 1,
       );
     }
   }
@@ -163,7 +161,7 @@ export function getAllCategories(): Category[] {
 
 export async function markdownToHtml(
   markdown: string,
-  category: string = "all"
+  category: string = "all",
 ): Promise<string> {
   const result = await remark()
     .use(remarkGfm)

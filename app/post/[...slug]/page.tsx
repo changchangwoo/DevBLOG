@@ -35,7 +35,7 @@ function renderPostHeader(
   description: string,
   categoryInfo: CategoryInfo | null,
   tags: string[],
-  slug: string
+  slug: string,
 ) {
   return (
     <>
@@ -279,7 +279,7 @@ export default async function PostPage({ params }: PostPageProps) {
             post.description,
             categoryInfo,
             post.tag,
-            post.slug
+            post.slug,
           )}
           {renderPostContent(content)}
         </article>

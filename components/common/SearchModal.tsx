@@ -96,10 +96,10 @@ export default function SearchModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bg-background w-full h-full z-50">
+    <div className="fixed inset-0 bg-background w-full h-full z-50 overflow-y-auto">
       <div
         className="relative bg-background mx-auto max-w-7xl
-      flex flex-col gap-[2rem] px-[2rem] gap-["
+      flex flex-col gap-[2rem] px-[2rem] min-h-full pb-[4rem]"
       >
         <header className="relative min-h-[5.4rem] flex justify-center items-center py-[2rem]">
           <Link

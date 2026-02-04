@@ -67,7 +67,7 @@ export default function TILPageClient({
         />
 
         <div className="body3 text-primary ">
-          🔥🔥🔥 Today I Learned를 기록하는 공간입니다.
+          Today I Learned를 기록하는 공간입니다. 🔥🔥🔥
           <br />
           <span className="caption text-descript">
             {" "}

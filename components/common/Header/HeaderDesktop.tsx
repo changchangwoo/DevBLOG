@@ -8,7 +8,6 @@ import IconWithLabel from "@/components/common/IconWithLabel";
 interface HeaderDesktopProps {
   isScrolled: boolean;
   isVisible: boolean;
-  mounted: boolean;
   theme: string | undefined;
   setTheme: (theme: string) => void;
   config: {
@@ -43,7 +42,6 @@ interface HeaderDesktopProps {
 
 export default function HeaderDesktop({
   isVisible,
-  mounted,
   theme,
   setTheme,
   config,
@@ -61,14 +59,20 @@ export default function HeaderDesktop({
             href="/"
             className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
           >
-            {mounted && (
-              <Image
-                src={theme === "dark" ? config.logo.dark : config.logo.light}
-                alt={config.logo.alt}
-                width={config.logo.width}
-                height={config.logo.height}
-              />
-            )}
+            <Image
+              src={config.logo.light}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
+              className="block dark:hidden"
+            />
+            <Image
+              src={config.logo.dark}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
+              className="hidden dark:block"
+            />
             <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
           <div className="flex items-center gap-6">
@@ -86,25 +90,26 @@ export default function HeaderDesktop({
               {config.navigation.TIL.labelDesktop}
             </Link>
 
-            {mounted && (
-              <>
-                <IconWithLabel
-                  icon={themeIcons.search}
-                  label="Search"
-                  onClick={onSearchClick}
-                  ariaLabel="검색"
-                  className="rounded-[8px] bg-background hover:bg-background-hover text-descript"
-                />
+            <IconWithLabel
+              icon={themeIcons.search}
+              label="Search"
+              onClick={onSearchClick}
+              ariaLabel="검색"
+              className="rounded-[8px] bg-background hover:bg-background-hover text-descript"
+            />
 
-                <IconWithLabel
-                  icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
-                  label={theme === "dark" ? "Light" : "Dark"}
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  ariaLabel="테마 전환"
-                  className="rounded-[8px] bg-background hover:bg-background-hover"
-                />
-              </>
-            )}
+            <IconWithLabel
+              icon={
+                <>
+                  <span className="hidden dark:block">{themeIcons.sun}</span>
+                  <span className="block dark:hidden">{themeIcons.moon}</span>
+                </>
+              }
+              label={theme === "dark" ? "Light" : "Dark"}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              ariaLabel="테마 전환"
+              className="rounded-[8px] bg-background hover:bg-background-hover"
+            />
           </div>
         </div>
       </nav>

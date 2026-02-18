@@ -159,6 +159,17 @@ export function getAllCategories(): Category[] {
     .sort((a, b) => b.count - a.count);
 }
 
+export const POSTS_PER_PAGE = 6;
+
+export function getTotalPages(totalPosts: number): number {
+  return Math.ceil(totalPosts / POSTS_PER_PAGE);
+}
+
+export function getPostsByPage(posts: PostPreview[], page: number): PostPreview[] {
+  const start = (page - 1) * POSTS_PER_PAGE;
+  return posts.slice(start, start + POSTS_PER_PAGE);
+}
+
 export async function markdownToHtml(
   markdown: string,
   category: string = "all",

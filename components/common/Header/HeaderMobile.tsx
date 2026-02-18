@@ -8,7 +8,6 @@ import IconWithLabel from "@/components/common/IconWithLabel";
 interface HeaderMobileProps {
   isScrolled: boolean;
   isVisible: boolean;
-  mounted: boolean;
   theme: string | undefined;
   setTheme: (theme: string) => void;
   config: {
@@ -53,7 +52,6 @@ interface HeaderMobileProps {
 export default function HeaderMobile({
   isScrolled,
   isVisible,
-  mounted,
   theme,
   setTheme,
   config,
@@ -81,43 +79,50 @@ export default function HeaderMobile({
               isScrolled ? "text-primary" : "text-background"
             }`}
           >
-            {mounted && (
-              <Image
-                src={theme === "dark" ? config.logo.dark : config.logo.light}
-                alt={config.logo.alt}
-                width={config.logo.width}
-                height={config.logo.height}
-              />
-            )}
+            <Image
+              src={config.logo.light}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
+              className="block dark:hidden"
+            />
+            <Image
+              src={config.logo.dark}
+              alt={config.logo.alt}
+              width={config.logo.width}
+              height={config.logo.height}
+              className="hidden dark:block"
+            />
             <h1 className="body3 text-primary">{config.siteTitle}</h1>
           </Link>
 
           <div className="flex items-center gap-4">
-            {mounted && (
-              <>
-                <IconWithLabel
-                  icon={themeIcons.search}
-                  label="Search"
-                  onClick={onSearchClick}
-                  ariaLabel="검색"
-                  className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110 text-descript"
-                />
-                <IconWithLabel
-                  icon={theme === "dark" ? themeIcons.sun : themeIcons.moon}
-                  label={theme === "dark" ? "Light" : "Dark"}
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  ariaLabel="테마 전환"
-                  className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
-                />
-                <IconWithLabel
-                  icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
-                  label={isMenuOpen ? "Menu" : "Menu"}
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
-                  className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
-                />
-              </>
-            )}
+            <IconWithLabel
+              icon={themeIcons.search}
+              label="Search"
+              onClick={onSearchClick}
+              ariaLabel="검색"
+              className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110 text-descript"
+            />
+            <IconWithLabel
+              icon={
+                <>
+                  <span className="hidden dark:block">{themeIcons.sun}</span>
+                  <span className="block dark:hidden">{themeIcons.moon}</span>
+                </>
+              }
+              label={theme === "dark" ? "Light" : "Dark"}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              ariaLabel="테마 전환"
+              className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
+            />
+            <IconWithLabel
+              icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
+              label={isMenuOpen ? "Menu" : "Menu"}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+              className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
+            />
           </div>
         </div>
 

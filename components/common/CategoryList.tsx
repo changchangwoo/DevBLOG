@@ -33,7 +33,7 @@ export default function CategoryList() {
       <div>
         <Divider icon={TagIcon} spacing="lg" className="caption" />
         <div className="flex flex-wrap gap-2 mt-4">
-          <Link href="/">
+          <Link href="/posts">
             <Badge variant="category" colorClass="bg-category-all">
               전체
             </Badge>
@@ -41,7 +41,10 @@ export default function CategoryList() {
           {categories.map((category) => {
             const categoryInfo = getCategoryInfo(category.name);
             return (
-              <Link key={category.name} href={`/?category=${category.name}`}>
+              <Link
+                key={category.name}
+                href={`/posts?category=${category.name}`}
+              >
                 <Badge variant="category" colorClass={categoryInfo.colorClass}>
                   {categoryInfo.label}
                 </Badge>
@@ -49,7 +52,7 @@ export default function CategoryList() {
             );
           })}
           {tags.map((tag) => (
-            <Link key={tag.name} href={`/?tag=${tag.name}`}>
+            <Link key={tag.name} href={`/posts?tag=${tag.name}`}>
               <Badge>{tag.name}</Badge>
             </Link>
           ))}

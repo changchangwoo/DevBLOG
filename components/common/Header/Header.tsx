@@ -126,13 +126,8 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [mounted, setMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -165,7 +160,6 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
       <HeaderDesktop
         isScrolled={isScrolled}
         isVisible={isVisible}
-        mounted={mounted}
         theme={theme}
         setTheme={setTheme}
         config={headerConfig}
@@ -175,7 +169,6 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
       <HeaderMobile
         isScrolled={isScrolled}
         isVisible={isVisible}
-        mounted={mounted}
         theme={theme}
         setTheme={setTheme}
         config={headerConfig}

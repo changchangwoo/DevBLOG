@@ -5,6 +5,7 @@ interface DividerProps {
   className?: string;
   spacing?: "none" | "sm" | "md" | "lg";
   label?: string;
+  subLabel?: string;
   color?: "boundary" | "primary";
   expand?: string;
   icon?: React.ReactNode;
@@ -26,6 +27,7 @@ export default function Divider({
   className,
   spacing = "none",
   label,
+  subLabel,
   color = "boundary",
   expand,
   icon,
@@ -34,27 +36,30 @@ export default function Divider({
     return (
       <div
         className={cn(
-          "flex items-center gap-4 w-full",
+          "flex flex-col gap-[0.4rem] w-full",
           spacing !== "none" && spacingClasses[spacing],
-          className
+          className,
         )}
       >
-        <div className="flex items-center gap-2">
-          {icon && <span className="text-descript">{icon}</span>}
-          {label && (
-            <span className="text-primary whitespace-nowrap">{label}</span>
+        <div className="flex items-center gap-4 w-full">
+          <div className="flex items-center gap-2">
+            {icon && <span className="text-descript">{icon}</span>}
+            {label && (
+              <span className="text-primary whitespace-nowrap">{label}</span>
+            )}
+          </div>
+          <div className={cn("flex-1 h-[0.5px]", colorClasses[color])} />
+          {expand && (
+            <Link
+              href={expand}
+              rel="noopener noreferrer"
+              className="text-descript body3"
+            >
+              전체보기
+            </Link>
           )}
         </div>
-        <div className={cn("flex-1 h-[0.5px]", colorClasses[color])} />
-        {expand && (
-          <Link
-            href={expand}
-            rel="noopener noreferrer"
-            className="text-descript body3"
-          >
-            전체보기
-          </Link>
-        )}
+        {subLabel && <span className="body3 text-descript">{subLabel}</span>}
       </div>
     );
   }
@@ -65,7 +70,7 @@ export default function Divider({
         "w-full h-[0.5px]",
         colorClasses[color],
         spacing !== "none" && spacingClasses[spacing],
-        className
+        className,
       )}
     />
   );

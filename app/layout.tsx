@@ -53,6 +53,11 @@ export const metadata: Metadata = {
     description: "프론트엔드 개발자 이창우의 블로그입니다.",
     images: ["/images/common/og_img.png"],
   },
+  alternates: {
+    types: {
+      "application/rss+xml": "https://www.changchangwoo.com/feed.xml",
+    },
+  },
   robots: {
     index: true,
     follow: true,

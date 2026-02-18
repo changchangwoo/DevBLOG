@@ -12,7 +12,9 @@
       "Bash(findstr:*)",
       "Bash(curl:*)",
       "Bash(echo:*)",
-      "WebFetch(domain:www.changchangwoo.com)"
+      "WebFetch(domain:www.changchangwoo.com)",
+      "WebFetch(domain:changchangwoo.com)",
+      "Bash(xargs:*)"
     ]
   }
 }

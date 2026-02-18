@@ -10,6 +10,7 @@ import Giscus from "@/components/post-detail/Giscus";
 import IconWithLabel from "@/components/common/IconWithLabel";
 import ScrollProgressBar from "@/components/post-detail/ScrollProgressBar";
 import { AUTHOR_INFO } from "@/lib/author";
+import { generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/jsonld";
 import Link from "next/link";
 
 interface PostPageProps {
@@ -41,7 +42,7 @@ function renderPostHeader(
     <>
       <header className="flex flex-col gap-[1rem]">
         <div className="flex items-center">
-          <time className="body3 text-descript">
+          <time className="body3 text-descript" dateTime={new Date(date).toISOString()}>
             {new Date(date).toLocaleDateString("ko-KR", {
               year: "numeric",
               month: "long",
@@ -219,6 +220,7 @@ export async function generateMetadata({ params }: PostPageProps) {
       title: post.title,
       description: post.description,
       type: "article",
+      url: `/post/${slugString}`,
       publishedTime: post.date,
       tags: post.tag,
       images: post.coverImage
@@ -231,6 +233,12 @@ export async function generateMetadata({ params }: PostPageProps) {
             },
           ]
         : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: post.coverImage ? [post.coverImage] : [],
     },
     alternates: {
       canonical: `/post/${slugString}`,
@@ -255,8 +263,35 @@ export default async function PostPage({ params }: PostPageProps) {
   const headings = extractHeadings(post.content);
   const categoryInfo = getCategoryInfo(post.category);
 
+  const blogPostingJsonLd = generateBlogPostingJsonLd({
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    slug: post.slug,
+    coverImage: post.coverImage,
+    tag: post.tag,
+  });
+
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "홈", href: "/" },
+    { name: categoryInfo?.label || post.category, href: `/?category=${post.category}` },
+    { name: post.title, href: `/post/${post.slug}` },
+  ]);
+
   return (
     <div className="min-h-screen bg-background ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogPostingJsonLd),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
       <ScrollProgressBar />
       <div className="relative mx-auto max-w-7xl">
         {post.coverImage && (

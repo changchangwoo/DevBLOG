@@ -1,5 +1,6 @@
 import { getAllPosts, getAllTag, getPinnedPost } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
+import { generateWebSiteJsonLd } from "@/lib/jsonld";
 import Divider from "@/components/common/Divider";
 import PostList from "../components/home/PostList";
 import PageLayout from "@/components/layout/PageLayout";
@@ -8,7 +9,7 @@ import PinnedPost from "@/components/home/PinnedPost";
 
 export const metadata = {
   alternates: {
-    canonical: "https://www.changchangwoo.com/",
+    canonical: "/",
   },
 };
 
@@ -20,6 +21,12 @@ export default function Home() {
 
   return (
     <PageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateWebSiteJsonLd()),
+        }}
+      />
       <section>
         <PinnedPost pinnedPost={pinnedPost} categoryInfo={categoryInfo} />
       </section>

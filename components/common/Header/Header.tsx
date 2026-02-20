@@ -127,7 +127,12 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -155,12 +160,14 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
     };
   }, [lastScrollY]);
 
+  const resolvedTheme = mounted ? theme : "dark";
+
   return (
     <>
       <HeaderDesktop
         isScrolled={isScrolled}
         isVisible={isVisible}
-        theme={theme}
+        theme={resolvedTheme}
         setTheme={setTheme}
         config={headerConfig}
         themeIcons={ThemeIcons}
@@ -169,7 +176,7 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
       <HeaderMobile
         isScrolled={isScrolled}
         isVisible={isVisible}
-        theme={theme}
+        theme={resolvedTheme}
         setTheme={setTheme}
         config={headerConfig}
         themeIcons={ThemeIcons}

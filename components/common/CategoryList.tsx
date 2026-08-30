@@ -43,7 +43,7 @@ export default function CategoryList() {
             return (
               <Link
                 key={category.name}
-                href={`/posts?category=${category.name}`}
+                href={`/posts/category/${encodeURIComponent(category.name)}`}
               >
                 <Badge variant="category" colorClass={categoryInfo.colorClass}>
                   {categoryInfo.label}
@@ -52,7 +52,7 @@ export default function CategoryList() {
             );
           })}
           {tags.map((tag) => (
-            <Link key={tag.name} href={`/posts?tag=${tag.name}`}>
+            <Link key={tag.name} href={`/posts/tag/${encodeURIComponent(tag.name)}`}>
               <Badge>{tag.name}</Badge>
             </Link>
           ))}

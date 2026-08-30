@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Divider from "@/components/common/Divider";
 import TILDetail from "./TILDetail";
 import Badge from "@/components/common/Badge";
@@ -14,6 +15,7 @@ interface PinnedTIL {
 
 interface TILPageClientProps {
   year: number;
+  defaultYear: number;
   tilData: Map<string, string>;
   tilContentMap: Map<string, string>;
   availableYears: number[];
@@ -22,6 +24,7 @@ interface TILPageClientProps {
 
 export default function TILPageClient({
   year,
+  defaultYear,
   tilData,
   tilContentMap,
   availableYears,
@@ -45,9 +48,9 @@ export default function TILPageClient({
         {availableYears.length > 1 && (
           <div className="flex gap-[1rem] flex-wrap">
             {availableYears.map((y) => (
-              <a
+              <Link
                 key={y}
-                href={`/til?year=${y}`}
+                href={y === defaultYear ? "/til" : `/til/${y}`}
                 className={`px-[1rem] rounded-[0.8rem] caption border border-boundary ${
                   y === year
                     ? "bg-primary text-boundary"
@@ -55,7 +58,7 @@ export default function TILPageClient({
                 }`}
               >
                 {y}
-              </a>
+              </Link>
             ))}
           </div>
         )}

@@ -45,7 +45,7 @@ function renderPostHeader(
         </div>
         <div className="flex gap-[0.5rem]">
           {categoryInfo && (
-            <Link href={`/?category=${slug.split("/")[0]}`}>
+            <Link href={`/posts/category/${encodeURIComponent(slug.split("/")[0])}`}>
               <Badge variant="category" colorClass={categoryInfo.colorClass}>
                 {categoryInfo.label}
               </Badge>
@@ -53,7 +53,7 @@ function renderPostHeader(
           )}
           {tags &&
             tags.map((tag) => (
-              <Link key={`${slug}-${tag}`} href={`/?tag=${tag}`}>
+              <Link key={`${slug}-${tag}`} href={`/posts/tag/${encodeURIComponent(tag)}`}>
                 <Badge>{tag}</Badge>
               </Link>
             ))}
@@ -173,6 +173,8 @@ function renderTableOfContents(headings: TocHeading[]) {
 
 // ===== Next.js 함수들 =====
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
@@ -265,7 +267,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: "홈", href: "/" },
-    { name: categoryInfo?.label || post.category, href: `/?category=${post.category}` },
+    { name: categoryInfo?.label || post.category, href: `/posts/category/${encodeURIComponent(post.category)}` },
     { name: post.title, href: `/post/${post.slug}` },
   ]);
 

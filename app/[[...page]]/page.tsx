@@ -18,12 +18,19 @@ interface HomePageProps {
   params: Promise<{ page?: string[] }>;
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const total = getAllPosts().length;
-  const totalPages = getTotalPages(total);
-  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
-    page: [String(i + 2)],
-  }));
+  const totalPages = getTotalPages(getAllPosts().length);
+
+  // 인덱스 경로(/)도 반드시 포함해야 한다.
+  // dynamicParams = false 이므로 여기 없는 경로는 404가 된다.
+  return [
+    { page: [] as string[] },
+    ...Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
+      page: [String(i + 2)],
+    })),
+  ];
 }
 
 export async function generateMetadata({
@@ -77,7 +84,7 @@ export default async function HomePage({ params }: HomePageProps) {
             }}
           />
           <section>
-            <PinnedPost pinnedPost={pinnedPost} categoryInfo={categoryInfo} />
+<PinnedPost pinnedPost={pinnedPost} categoryInfo={categoryInfo} />
           </section>
         </>
       )}
@@ -90,7 +97,7 @@ export default async function HomePage({ params }: HomePageProps) {
         />
         <div className="ut-grid">
           {posts.length > 0 ? (
-            posts.map((post) => <PostCard key={post.slug} post={post} />)
+posts.map((post) => <PostCard key={post.slug} post={post} />)
           ) : (
             <p
               className="text-center text-primary body1"

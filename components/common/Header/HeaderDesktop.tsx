@@ -1,53 +1,23 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import IconWithLabel from "@/components/common/IconWithLabel";
+import { ThemeIcons, ThemeToggleIcon, headerConfig } from "./config";
 
 interface HeaderDesktopProps {
-  isScrolled: boolean;
   isVisible: boolean;
-  theme: string | undefined;
-  setTheme: (theme: string) => void;
-  config: {
-    logo: {
-      light: string;
-      dark: string;
-      alt: string;
-      width: number;
-      height: number;
-    };
-    siteTitle: string;
-    navigation: {
-      about: {
-        href: string;
-        labelDesktop: string;
-        labelMobile: string;
-      };
-      TIL: {
-        href: string;
-        labelDesktop: string;
-        labelMobile: string;
-      };
-    };
-  };
-  themeIcons: {
-    sun: React.ReactElement;
-    moon: React.ReactElement;
-    search: React.ReactElement;
-  };
+  onToggleTheme: () => void;
   onSearchClick: () => void;
 }
 
 export default function HeaderDesktop({
   isVisible,
-  theme,
-  setTheme,
-  config,
-  themeIcons,
+  onToggleTheme,
   onSearchClick,
 }: HeaderDesktopProps) {
+  const { logo, siteTitle, navigation } = headerConfig;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50  hidden md:block  bg-background transition-transform duration-400
@@ -60,38 +30,38 @@ export default function HeaderDesktop({
             className={`flex items-center gap-2  hover:bg-background-hover  px-3 py-2 rounded-[8px] bg-background`}
           >
             <Image
-              src={config.logo.light}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
+              src={logo.light}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
               className="block dark:hidden"
             />
             <Image
-              src={config.logo.dark}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
+              src={logo.dark}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
               className="hidden dark:block"
             />
-            <h1 className="body3 text-primary">{config.siteTitle}</h1>
+            <h1 className="body3 text-primary">{siteTitle}</h1>
           </Link>
           <div className="flex items-center gap-6">
             <Link
-              href={config.navigation.about.href}
+              href={navigation.about.href}
               className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:bg-background-hover`}
             >
-              {config.navigation.about.labelDesktop}
+              {navigation.about.label}
             </Link>
 
             <Link
-              href={config.navigation.TIL.href}
+              href={navigation.til.href}
               className={`body3 text-primary px-3 py-2 rounded-[8px] bg-background hover:bg-background-hover`}
             >
-              {config.navigation.TIL.labelDesktop}
+              {navigation.til.label}
             </Link>
 
             <IconWithLabel
-              icon={themeIcons.search}
+              icon={ThemeIcons.search}
               label="Search"
               onClick={onSearchClick}
               ariaLabel="검색"
@@ -99,14 +69,14 @@ export default function HeaderDesktop({
             />
 
             <IconWithLabel
-              icon={
+              icon={ThemeToggleIcon}
+              label={
                 <>
-                  <span className="hidden dark:block">{themeIcons.sun}</span>
-                  <span className="block dark:hidden">{themeIcons.moon}</span>
+                  <span className="hidden dark:inline">Light</span>
+                  <span className="inline dark:hidden">Dark</span>
                 </>
               }
-              label={theme === "dark" ? "Light" : "Dark"}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={onToggleTheme}
               ariaLabel="테마 전환"
               className="rounded-[8px] bg-background hover:bg-background-hover"
             />

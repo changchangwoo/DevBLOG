@@ -3,7 +3,7 @@ import { ReactNode, MouseEventHandler } from "react";
 
 interface IconWithLabelLinkProps {
   icon: ReactNode;
-  label: string;
+  label: ReactNode;
   href: string;
   target?: string;
   rel?: string;
@@ -14,7 +14,7 @@ interface IconWithLabelLinkProps {
 
 interface IconWithLabelButtonProps {
   icon: ReactNode;
-  label: string;
+  label: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   href?: never;
   target?: never;
@@ -50,7 +50,7 @@ export default function IconWithLabel({
     return (
       <button
         onClick={onClick}
-        aria-label={ariaLabel || label}
+        aria-label={ariaLabel ?? (typeof label === "string" ? label : undefined)}
         className={`group flex flex-col items-center gap-[0.5rem] ${className}`}
       >
         {content}

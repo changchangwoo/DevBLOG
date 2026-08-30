@@ -1,69 +1,32 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import IconWithLabel from "@/components/common/IconWithLabel";
+import { MenuIcons, ThemeIcons, ThemeToggleIcon, headerConfig } from "./config";
 
 interface HeaderMobileProps {
   isScrolled: boolean;
   isVisible: boolean;
-  theme: string | undefined;
-  setTheme: (theme: string) => void;
-  config: {
-    logo: {
-      light: string;
-      dark: string;
-      alt: string;
-      width: number;
-      height: number;
-    };
-    siteTitle: string;
-    navigation: {
-      home: {
-        href: string;
-        labelDesktop: string;
-        labelMobile: string;
-      };
-      about: {
-        href: string;
-        labelDesktop: string;
-        labelMobile: string;
-      };
-      TIL: {
-        href: string;
-        labelDesktop: string;
-        labelMobile: string;
-      };
-    };
-  };
-  themeIcons: {
-    sun: React.ReactElement;
-    moon: React.ReactElement;
-    search: React.ReactElement;
-  };
-  menuIcons: {
-    hamburger: React.ReactElement;
-    close: React.ReactElement;
-  };
+  onToggleTheme: () => void;
   onSearchClick: () => void;
 }
 
 export default function HeaderMobile({
   isScrolled,
   isVisible,
-  theme,
-  setTheme,
-  config,
-  themeIcons,
-  menuIcons,
+  onToggleTheme,
   onSearchClick,
 }: HeaderMobileProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuRequested, setIsMenuRequested] = useState(false);
+  const { logo, siteTitle, navigation } = headerConfig;
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [isVisible]);
+  // 헤더가 숨겨지면 메뉴도 함께 닫힌 것으로 본다.
+  // effect + setState 대신 렌더링 시점에 파생시켜 cascading render를 피한다.
+  const isMenuOpen = isMenuRequested && isVisible;
+
+  const navLinks = [navigation.home, navigation.about, navigation.til];
 
   return (
     <header
@@ -80,46 +43,46 @@ export default function HeaderMobile({
             }`}
           >
             <Image
-              src={config.logo.light}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
+              src={logo.light}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
               className="block dark:hidden"
             />
             <Image
-              src={config.logo.dark}
-              alt={config.logo.alt}
-              width={config.logo.width}
-              height={config.logo.height}
+              src={logo.dark}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
               className="hidden dark:block"
             />
-            <h1 className="body3 text-primary">{config.siteTitle}</h1>
+            <h1 className="body3 text-primary">{siteTitle}</h1>
           </Link>
 
           <div className="flex items-center gap-4">
             <IconWithLabel
-              icon={themeIcons.search}
+              icon={ThemeIcons.search}
               label="Search"
               onClick={onSearchClick}
               ariaLabel="검색"
               className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110 text-descript"
             />
             <IconWithLabel
-              icon={
+              icon={ThemeToggleIcon}
+              label={
                 <>
-                  <span className="hidden dark:block">{themeIcons.sun}</span>
-                  <span className="block dark:hidden">{themeIcons.moon}</span>
+                  <span className="hidden dark:inline">Light</span>
+                  <span className="inline dark:hidden">Dark</span>
                 </>
               }
-              label={theme === "dark" ? "Light" : "Dark"}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={onToggleTheme}
               ariaLabel="테마 전환"
               className="transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
             />
             <IconWithLabel
-              icon={isMenuOpen ? menuIcons.close : menuIcons.hamburger}
-              label={isMenuOpen ? "Menu" : "Menu"}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              icon={isMenuOpen ? MenuIcons.close : MenuIcons.hamburger}
+              label="Menu"
+              onClick={() => setIsMenuRequested((prev) => !prev)}
               ariaLabel={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
               className="text-zinc-700 dark:text-zinc-300 transition-all duration-200 hover:brightness-90 dark:hover:brightness-110"
             />
@@ -134,27 +97,16 @@ export default function HeaderMobile({
           }`}
         >
           <div className="flex flex-col gap-[2rem]">
-            <Link
-              href={config.navigation.home.href}
-              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {config.navigation.home.labelMobile}
-            </Link>
-            <Link
-              href={config.navigation.about.href}
-              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {config.navigation.about.labelMobile}
-            </Link>
-            <Link
-              href={config.navigation.TIL.href}
-              className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {config.navigation.TIL.labelMobile}
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="body3 text-descript transition-all duration-200 px-3 py-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 w-fit"
+                onClick={() => setIsMenuRequested(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </nav>
       </div>

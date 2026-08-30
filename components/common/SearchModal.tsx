@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Badge from "./Badge";
@@ -10,21 +9,12 @@ import { getCategoryInfo } from "@/lib/category";
 import { filterPosts } from "@/lib/filter";
 import type { PostSummary, Tag, Category } from "@/lib/posts";
 import Divider from "./Divider";
+import type { HeaderConfig } from "./Header/config";
 
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  theme: string | undefined;
-  config: {
-    logo: {
-      light: string;
-      dark: string;
-      alt: string;
-      width: number;
-      height: number;
-    };
-    siteTitle: string;
-  };
+  config: HeaderConfig;
   categories: Category[];
   tags: Tag[];
   posts: PostSummary[];
@@ -33,7 +23,6 @@ interface SearchModalProps {
 export default function SearchModal({
   isOpen,
   onClose,
-  theme,
   config,
   categories,
   tags,
@@ -42,6 +31,7 @@ export default function SearchModal({
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { logo, siteTitle } = config;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,22 +41,13 @@ export default function SearchModal({
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const filteredPosts = useMemo(() => {
-    if (!debouncedSearchQuery.trim()) return [];
-    return filterPosts(posts, { search: debouncedSearchQuery.trim() });
-  }, [posts, debouncedSearchQuery]);
-
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
+    if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
+      if (e.key === "Escape" && isOpen) onClose();
     };
 
     window.addEventListener("keydown", handleEscape);
@@ -74,20 +55,17 @@ export default function SearchModal({
   }, [isOpen, onClose]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  const filteredPosts = useMemo(() => {
+    const query = debouncedSearchQuery.trim();
+    if (!query) return [];
+    return filterPosts(posts, { search: query });
+  }, [posts, debouncedSearchQuery]);
 
   const handleBadgeClick = (value: string) => {
     setSearchQuery(value);
@@ -107,10 +85,18 @@ export default function SearchModal({
             className={`flex items-center gap-2  hover:bg-background-hover rounded-[8px] bg-background`}
           >
             <Image
-              src={theme === "dark" ? config.logo.dark : config.logo.light}
-              alt={config.logo.alt}
+              src={logo.light}
+              alt={siteTitle}
               width={40}
               height={40}
+              className="block dark:hidden"
+            />
+            <Image
+              src={logo.dark}
+              alt={siteTitle}
+              width={40}
+              height={40}
+              className="hidden dark:block"
             />
           </Link>
 
@@ -136,7 +122,7 @@ export default function SearchModal({
         </header>
 
         <div>
-          <form onSubmit={handleSearch} className="relative">
+          <form onSubmit={(e) => e.preventDefault()} className="relative">
             <div className="relative">
               <input
                 ref={inputRef}
@@ -162,6 +148,7 @@ export default function SearchModal({
             </div>
           </form>
         </div>
+
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => {
             const categoryInfo = getCategoryInfo(category.name);
@@ -178,10 +165,13 @@ export default function SearchModal({
           })}
           {tags.map((tag) => (
             <button key={tag.name} onClick={() => handleBadgeClick(tag.name)}>
-              <Badge>{tag.name} ({tag.count})</Badge>
+              <Badge>
+                {tag.name} ({tag.count})
+              </Badge>
             </button>
           ))}
         </div>
+
         {debouncedSearchQuery && (
           <div>
             <Divider spacing="md" />

@@ -2,14 +2,12 @@ interface BadgeProps {
   children: React.ReactNode;
   variant?: "category" | "tag";
   colorClass?: string;
-  active?: boolean;
 }
 
 export default function Badge({
   children,
   variant = "tag",
   colorClass,
-  active = false,
 }: BadgeProps) {
   const baseClass =
     "caption px-4 rounded-[10px] cursor-pointer border border-boundary hover:opacity-70 transition-opacity  ";

@@ -1,6 +1,5 @@
 import MainProfile from "@/components/common/MainProfile";
 import ScrollProgressBar from "../post-detail/ScrollProgressBar";
-import Divider from "../common/Divider";
 import CategoryList from "../common/CategoryList";
 
 interface PageLayoutProps {

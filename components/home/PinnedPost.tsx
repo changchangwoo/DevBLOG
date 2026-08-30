@@ -14,7 +14,7 @@ export default function PinnedPost({
   categoryInfo,
 }: PinnedPostProps) {
   return (
-    <div className="flex flex-col gap-[1rem pt-[2rem]">
+    <div className="flex flex-col gap-[1rem] pt-[2rem]">
       {pinnedPost && (
         <Link href={`/post/${pinnedPost.slug}`}>
           <div className="w-full min-h-[20rem] xl:min-h-[28rem] rounded-[8px] relative overflow-hidden cursor-pointer group hover:opacity-80 border border-boundary transition-opacity duration-300">

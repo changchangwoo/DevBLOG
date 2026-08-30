@@ -1,5 +1,4 @@
-import Divider from "@/components/common/Divider";
-import MainProfile from "../../components/common/MainProfile";
+import MainProfile from "@/components/common/MainProfile";
 
 export const metadata = {
   title: "About | changchangwoo 블로그",

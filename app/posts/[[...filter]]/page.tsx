@@ -5,6 +5,7 @@ import {
   getAllTag,
   getPostsByPage,
   getTotalPages,
+  getCoverBlurMap,
 } from "@/lib/posts";
 import { filterPosts } from "@/lib/filter";
 import { getCategoryInfo } from "@/lib/category";
@@ -165,6 +166,7 @@ export default async function PostsPage({ params }: PostsPageProps) {
   }
 
   const posts = getPostsByPage(filteredPosts, filter.page);
+  const blurMap = await getCoverBlurMap(posts);
   const label = getFilterLabel(filter);
 
   return (
@@ -177,7 +179,11 @@ export default async function PostsPage({ params }: PostsPageProps) {
       />
       <section className="ut-grid">
         {posts.map((post) => (
-          <PostCard key={post.slug} post={post} />
+          <PostCard
+            key={post.slug}
+            post={post}
+            blurDataURL={blurMap.get(post.slug)}
+          />
         ))}
       </section>
       {totalPages > 1 && (

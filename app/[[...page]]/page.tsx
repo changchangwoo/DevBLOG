@@ -4,6 +4,8 @@ import {
   getPinnedPost,
   getTotalPages,
   getPostsByPage,
+  getCoverBlur,
+  getCoverBlurMap,
 } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import { generateWebSiteJsonLd } from "@/lib/jsonld";
@@ -73,6 +75,11 @@ export default async function HomePage({ params }: HomePageProps) {
   const pinnedPost = pageNumber === 1 ? getPinnedPost() : null;
   const categoryInfo = pinnedPost ? getCategoryInfo(pinnedPost.category) : null;
 
+  const [blurMap, pinnedBlur] = await Promise.all([
+    getCoverBlurMap(posts),
+    getCoverBlur(pinnedPost?.coverImage),
+  ]);
+
   return (
     <PageLayout>
       {pageNumber === 1 && (
@@ -84,7 +91,11 @@ export default async function HomePage({ params }: HomePageProps) {
             }}
           />
           <section>
-<PinnedPost pinnedPost={pinnedPost} categoryInfo={categoryInfo} />
+            <PinnedPost
+              pinnedPost={pinnedPost}
+              categoryInfo={categoryInfo}
+              blurDataURL={pinnedBlur}
+            />
           </section>
         </>
       )}
@@ -97,7 +108,13 @@ export default async function HomePage({ params }: HomePageProps) {
         />
         <div className="ut-grid">
           {posts.length > 0 ? (
-posts.map((post) => <PostCard key={post.slug} post={post} />)
+            posts.map((post) => (
+              <PostCard
+                key={post.slug}
+                post={post}
+                blurDataURL={blurMap.get(post.slug)}
+              />
+            ))
           ) : (
             <p
               className="text-center text-primary body1"

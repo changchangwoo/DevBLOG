@@ -3,6 +3,7 @@ import path from "path";
 import { cache } from "react";
 import matter from "gray-matter";
 import { PINNED_POST_SLUG } from "@/constant/const";
+import { getImageMeta } from "./image";
 
 const postsDirectory = path.join(process.cwd(), "_posts");
 
@@ -169,4 +170,31 @@ export function getPostsByPage(
 ): PostSummary[] {
   const start = (page - 1) * POSTS_PER_PAGE;
   return posts.slice(start, start + POSTS_PER_PAGE);
+}
+
+/**
+ * 커버 이미지의 블러 썸네일. 없으면 undefined.
+ * PostSummary에 넣지 않고 별도 조회로 두어, 검색 인덱스 같은 곳에
+ * 불필요하게 실려 페이로드가 늘어나는 것을 막는다.
+ */
+export async function getCoverBlur(
+  coverImage: string | undefined,
+): Promise<string | undefined> {
+  if (!coverImage || !coverImage.startsWith("/")) return undefined;
+  const meta = await getImageMeta(coverImage);
+  return meta?.blurDataURL;
+}
+
+/** 목록 렌더링용 - 슬러그별 커버 블러 */
+export async function getCoverBlurMap(
+  posts: PostSummary[],
+): Promise<Map<string, string>> {
+  const entries = await Promise.all(
+    posts.map(async (post) => {
+      const blur = await getCoverBlur(post.coverImage);
+      return blur ? ([post.slug, blur] as const) : null;
+    }),
+  );
+
+  return new Map(entries.filter((entry) => entry !== null));
 }

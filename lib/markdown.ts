@@ -8,6 +8,7 @@ import { visit } from "unist-util-visit";
 import type { Element, ElementContent, Root } from "hast";
 import rehypeHeadingDivider from "./rehype-heading-divider";
 import rehypeCallout from "./rehype-callout";
+import rehypeImage from "./rehype-image";
 
 export interface TocHeading {
   id: string;
@@ -78,6 +79,7 @@ export async function renderMarkdown(
   const result = await processor
     .use(rehypeCallout, { category })
     .use(rehypeHeadingDivider)
+    .use(rehypeImage)
     .use(rehypeHighlight)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);

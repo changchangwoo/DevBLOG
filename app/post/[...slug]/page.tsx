@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getCoverBlur, getPostBySlug } from "@/lib/posts";
 import { renderMarkdown, type TocHeading } from "@/lib/markdown";
 import { getCategoryInfo, type CategoryInfo } from "@/lib/category";
 import TableOfContents from "@/components/post-detail/TableOfContents";
@@ -255,6 +255,7 @@ export default async function PostPage({ params }: PostPageProps) {
     collectHeadings: true,
   });
   const categoryInfo = getCategoryInfo(post.category);
+  const coverBlur = await getCoverBlur(post.coverImage);
 
   const blogPostingJsonLd = generateBlogPostingJsonLd({
     title: post.title,
@@ -293,6 +294,11 @@ export default async function PostPage({ params }: PostPageProps) {
             alt={post.title}
             width={2400}
             height={180}
+            sizes="(min-width: 800px) 800px, 100vw"
+            priority
+            {...(coverBlur
+              ? { placeholder: "blur" as const, blurDataURL: coverBlur }
+              : {})}
             className="w-full min-h-[18rem] border object-cover"
           />
         )}

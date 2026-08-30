@@ -7,11 +7,13 @@ import { CategoryInfo } from "@/lib/category";
 interface PinnedPostProps {
   pinnedPost: PostSummary | null;
   categoryInfo: CategoryInfo | null;
+  blurDataURL?: string;
 }
 
 export default function PinnedPost({
   pinnedPost,
   categoryInfo,
+  blurDataURL,
 }: PinnedPostProps) {
   return (
     <div className="flex flex-col gap-[1rem] pt-[2rem]">
@@ -22,7 +24,10 @@ export default function PinnedPost({
               src={pinnedPost.coverImage || "/images/common/main_bg.png"}
               alt={pinnedPost.title || "Pinned post cover"}
               fill
-              sizes="(max-width: 1280px) 100vw, 80vw"
+              sizes="(min-width: 1280px) 860px, calc(100vw - 40px)"
+              {...(blurDataURL
+                ? { placeholder: "blur" as const, blurDataURL }
+                : {})}
               className="object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
               priority
             />

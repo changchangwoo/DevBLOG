@@ -7,9 +7,11 @@ import Divider from "./Divider";
 
 interface PostCardProps {
   post: PostSummary;
+  /** 빌드 타임 생성 블러. 서버 렌더 목록에서만 전달된다. */
+  blurDataURL?: string;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, blurDataURL }: PostCardProps) {
   const categoryInfo = getCategoryInfo(post.category);
 
   return (
@@ -22,7 +24,10 @@ export default function PostCard({ post }: PostCardProps) {
                 src={post.coverImage}
                 alt={post.title}
                 fill
-                sizes="(max-width: 1280px) 100vw, 33vw"
+                sizes="(min-width: 1280px) 420px, 50vw"
+                {...(blurDataURL
+                  ? { placeholder: "blur" as const, blurDataURL }
+                  : {})}
                 className="object-cover border border-boundary transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
             ) : (

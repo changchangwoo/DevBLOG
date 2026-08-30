@@ -20,5 +20,13 @@ export async function GET() {
     tags: getAllTag(),
   };
 
-  return Response.json(index);
+  return Response.json(index, {
+    headers: {
+      // Next 기본값은 s-maxage뿐이라 브라우저가 캐시하지 못하고 매번 다시 받는다.
+      // 내용은 배포할 때만 바뀌므로 브라우저에도 짧은 수명을 주고,
+      // 그 뒤에는 stale을 쓰면서 뒤에서 갱신하게 한다.
+      "Cache-Control":
+        "public, max-age=300, s-maxage=31536000, stale-while-revalidate=86400",
+    },
+  });
 }

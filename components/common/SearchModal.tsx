@@ -17,6 +17,26 @@ interface SearchModalProps {
 
 const EMPTY_INDEX: SearchIndex = { posts: [], categories: [], tags: [] };
 
+/**
+ * 모달은 닫힐 때 언마운트되므로, 컴포넌트 안에서 fetch하면 열 때마다 다시 받는다.
+ * 모듈 스코프에 약속을 보관해 페이지당 한 번만 내려받는다.
+ */
+let indexRequest: Promise<SearchIndex> | null = null;
+
+function loadSearchIndex(): Promise<SearchIndex> {
+  indexRequest ??= fetch("/search-index.json")
+    .then((res) => {
+      if (!res.ok) throw new Error(`검색 인덱스 응답 오류: ${res.status}`);
+      return res.json() as Promise<SearchIndex>;
+    })
+    .catch((error) => {
+      indexRequest = null; // 실패는 캐시하지 않는다 (다음 열 때 재시도)
+      throw error;
+    });
+
+  return indexRequest;
+}
+
 export default function SearchModal({ onClose }: SearchModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -25,23 +45,22 @@ export default function SearchModal({ onClose }: SearchModalProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { logo, siteTitle } = headerConfig;
 
-  // 검색 인덱스는 모달이 열린 시점에만 내려받는다.
+  // 검색 인덱스는 모달이 처음 열릴 때 한 번만 내려받는다.
   useEffect(() => {
-    const controller = new AbortController();
+    let active = true;
 
-    fetch("/search-index.json", { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`검색 인덱스 응답 오류: ${res.status}`);
-        return res.json() as Promise<SearchIndex>;
+    loadSearchIndex()
+      .then((data) => {
+        if (active) setIndex(data);
       })
-      .then(setIndex)
       .catch((error) => {
-        if (error.name === "AbortError") return;
         console.error(error);
-        setHasError(true);
+        if (active) setHasError(true);
       });
 
-    return () => controller.abort();
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {

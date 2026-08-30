@@ -1,4 +1,4 @@
-const SITE_URL = "https://www.changchangwoo.com";
+import { SITE_URL } from "@/constant/const";
 
 export function generateWebSiteJsonLd() {
   return {

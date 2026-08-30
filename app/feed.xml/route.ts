@@ -1,8 +1,7 @@
 import { getAllPosts } from "@/lib/posts";
+import { SITE_URL } from "@/constant/const";
 
 export const dynamic = "force-static";
-
-const SITE_URL = "https://www.changchangwoo.com";
 
 function escapeXml(str: string): string {
   return str

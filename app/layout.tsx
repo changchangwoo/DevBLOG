@@ -4,9 +4,10 @@ import "highlight.js/styles/github.css";
 import ThemeProvider from "@/components/context/ThemeProvider";
 import HeaderWrapper from "@/components/common/Header/HeaderWrapper";
 import Footer from "@/components/common/Footer";
+import { SITE_URL, AUTHOR_INFO } from "@/constant/const";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.changchangwoo.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Changchangwoo's blog",
     template: "%s | Changchangwoo 블로그",
@@ -23,11 +24,11 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "이창우",
-      url: "https://www.changchangwoo.com/about",
+      name: AUTHOR_INFO.name,
+      url: `${SITE_URL}/about`,
     },
   ],
-  creator: "이창우",
+  creator: AUTHOR_INFO.name,
   publisher: "changchangwoo",
   icons: {
     icon: "/images/common/fav.png",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      "application/rss+xml": "https://www.changchangwoo.com/feed.xml",
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
     },
   },
   robots: {

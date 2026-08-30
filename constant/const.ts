@@ -1,3 +1,5 @@
+export const SITE_URL = "https://www.changchangwoo.com";
+
 export const PINNED_POST_SLUG = "life/2025-retrospect";
 
 export interface CategoryInfo {

@@ -1,4 +1,6 @@
 import MainProfile from "@/components/common/MainProfile";
+import TimelineSection from "@/components/about/TimelineSection";
+import { ACTIVITIES, CAREERS } from "@/constant/const";
 
 export const metadata = {
   title: "About | changchangwoo 블로그",
@@ -15,9 +17,8 @@ export default function AboutPage() {
       <main>
         <div className="max-w-[120rem] mx-auto flex flex-col justify-center items-center px-[2rem] gap-[2rem]">
           <MainProfile />
-          <div className="bg-secondary p-[2rem] body3 text-primary rounded-[8px]">
-            TBD : 다시 취준ㅠ
-          </div>
+          <TimelineSection label="경력" entries={CAREERS} groupEntries />
+          <TimelineSection label="활동" entries={ACTIVITIES} />
         </div>
       </main>
     </div>

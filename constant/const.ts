@@ -35,3 +35,45 @@ export const AUTHOR_INFO: AuthorInfo = {
     email: "mailto:changchangwoo@naver.com",
   },
 };
+
+/**
+ * 경력·활동 카드 한 장의 데이터.
+ * `logo`가 없으면 `title`의 첫 글자를 이니셜로 그린다 (더미 단계용).
+ */
+export interface TimelineEntry {
+  title: string;
+  role?: string;
+  period: string;
+  description?: string;
+  logo?: string;
+}
+
+// TODO: 더미 데이터 — 실제 이력으로 교체
+export const CAREERS: TimelineEntry[] = [
+  {
+    title: "ZEP",
+    role: "프론트엔드 개발자 · 정규직",
+    period: "2026-08 ~ 재직중",
+    logo: "/images/about/zep.png",
+  },
+  {
+    title: "ZEP",
+    role: "프론트엔드 개발자 · 인턴",
+    period: "2026-02 ~ 2026-08",
+    logo: "/images/about/zep.png",
+  },
+];
+
+// TODO: 더미 데이터 — 실제 활동으로 교체
+export const ACTIVITIES: TimelineEntry[] = [
+  {
+    title: "Mash-Up 16기 · Web",
+    period: "2026.02 ~ 2026.09",
+    logo: "/images/about/매쉬업로고.png",
+  },
+  {
+    title: "프로그래머스 데브코스 · Web",
+    period: "2024.03 ~ 2024.09",
+    logo: "/images/about/devcourse.jpg",
+  },
+];

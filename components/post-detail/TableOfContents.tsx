@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { TocHeading } from "@/lib/toc";
+import type { TocHeading } from "@/lib/markdown";
 import Divider from "../common/Divider";
 
 interface TableOfContentsProps {

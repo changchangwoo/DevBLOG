@@ -4,8 +4,8 @@ import {
   getAvailableYears,
   getCurrentYear,
   getPinnedTILsForYear,
-  markdownToHtml,
 } from "@/lib/til";
+import { markdownToHtml } from "@/lib/markdown";
 import TILPageClient from "./TILPageClient";
 import Divider from "@/components/common/Divider";
 import PageLayout from "@/components/layout/PageLayout";

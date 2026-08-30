@@ -1,12 +1,8 @@
 import fs from "fs";
 import path from "path";
+import { cache } from "react";
 import matter from "gray-matter";
-import { remark } from "remark";
-import remarkGfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeHighlight from "rehype-highlight";
-import rehypeSlug from "rehype-slug";
-import rehypeStringify from "rehype-stringify";
+import { markdownToHtml } from "./markdown";
 
 const tilDirectory = path.join(process.cwd(), "_til");
 
@@ -27,7 +23,7 @@ export interface TILWithHtml {
 /**
  * 특정 연도의 모든 TIL 날짜 목록 가져오기
  */
-export function getTILDates(year: number): string[] {
+export const getTILDates = cache((year: number): string[] => {
   const yearDirectory = path.join(tilDirectory, year.toString());
 
   if (!fs.existsSync(yearDirectory)) {
@@ -40,9 +36,9 @@ export function getTILDates(year: number): string[] {
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => fileName.replace(/\.md$/, ""))
     .sort((a, b) => b.localeCompare(a));
-}
+});
 
-export function getTILByDate(date: string): TILData | null {
+export const getTILByDate = cache((date: string): TILData | null => {
   try {
     const year = date.split("-")[0];
     const fullPath = path.join(tilDirectory, year, `${date}.md`);
@@ -79,21 +75,9 @@ export function getTILByDate(date: string): TILData | null {
     console.error(`Error reading TIL for date ${date}:`, error);
     return null;
   }
-}
+});
 
-export async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await remark()
-    .use(remarkGfm)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeSlug)
-    .use(rehypeHighlight)
-    .use(rehypeStringify, { allowDangerousHtml: true })
-    .process(markdown);
-
-  return result.toString();
-}
-
-export function getAllTILsForYear(year: number): Map<string, string> {
+export const getAllTILsForYear = cache((year: number): Map<string, string> => {
   const dates = getTILDates(year);
   const tilMap = new Map<string, string>();
 
@@ -105,7 +89,7 @@ export function getAllTILsForYear(year: number): Map<string, string> {
   });
 
   return tilMap;
-}
+});
 
 /**
  * 현재 연도 가져오기
@@ -117,7 +101,7 @@ export function getCurrentYear(): number {
 /**
  * 사용 가능한 모든 연도 목록 가져오기
  */
-export function getAvailableYears(): number[] {
+export const getAvailableYears = cache((): number[] => {
   if (!fs.existsSync(tilDirectory)) {
     return [];
   }
@@ -131,7 +115,7 @@ export function getAvailableYears(): number[] {
     })
     .map((year) => parseInt(year, 10))
     .sort((a, b) => b - a); // 최신 연도부터
-}
+});
 
 /**
  * 특정 연도의 모든 TIL 데이터를 HTML로 변환하여 가져오기
@@ -139,24 +123,21 @@ export function getAvailableYears(): number[] {
 export async function getAllTILsWithHtmlForYear(
   year: number,
 ): Promise<Map<string, string>> {
-  const dates = getTILDates(year);
-  const tilMap = new Map<string, string>();
+  const entries = await Promise.all(
+    getTILDates(year).map(async (date) => {
+      const tilData = getTILByDate(date);
+      if (!tilData) return null;
+      return [date, await markdownToHtml(tilData.content)] as const;
+    }),
+  );
 
-  for (const date of dates) {
-    const tilData = getTILByDate(date);
-    if (tilData) {
-      const html = await markdownToHtml(tilData.content);
-      tilMap.set(date, html);
-    }
-  }
-
-  return tilMap;
+  return new Map(entries.filter((entry) => entry !== null));
 }
 
 /**
  * 특정 연도의 Pinned TIL 목록 가져오기
  */
-export function getPinnedTILsForYear(year: number): TILData[] {
+export const getPinnedTILsForYear = cache((year: number): TILData[] => {
   const dates = getTILDates(year);
   const pinnedTILs: TILData[] = [];
 
@@ -168,4 +149,4 @@ export function getPinnedTILsForYear(year: number): TILData[] {
   });
 
   return pinnedTILs;
-}
+});

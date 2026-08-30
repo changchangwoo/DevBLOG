@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import Badge from "../common/Badge";
-import { PostPreview } from "@/lib/posts";
+import type { PostSummary } from "@/lib/posts";
 import { CategoryInfo } from "@/lib/category";
 
 interface PinnedPostProps {
-  pinnedPost: PostPreview | null;
+  pinnedPost: PostSummary | null;
   categoryInfo: CategoryInfo | null;
 }
 
@@ -22,6 +22,7 @@ export default function PinnedPost({
               src={pinnedPost.coverImage || "/images/common/main_bg.png"}
               alt={pinnedPost.title || "Pinned post cover"}
               fill
+              sizes="(max-width: 1280px) 100vw, 80vw"
               className="object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
               priority
             />

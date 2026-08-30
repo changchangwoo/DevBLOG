@@ -1,4 +1,4 @@
-import type { PostPreview } from "./posts";
+import type { PostSummary } from "./posts";
 import { getCategoryInfo } from "./category";
 
 export interface FilterParams {
@@ -7,10 +7,10 @@ export interface FilterParams {
   search?: string;
 }
 
-export function filterPosts(
-  posts: PostPreview[],
-  filters: FilterParams
-): PostPreview[] {
+export function filterPosts<T extends PostSummary>(
+  posts: T[],
+  filters: FilterParams,
+): T[] {
   let filtered = [...posts];
 
   if (filters.category) {

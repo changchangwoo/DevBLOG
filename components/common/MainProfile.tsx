@@ -1,7 +1,7 @@
 import Image from "next/image";
 import IconWithLabel from "@/components/common/IconWithLabel";
 import Divider from "@/components/common/Divider";
-import { AUTHOR_INFO } from "@/lib/author";
+import { AUTHOR_INFO } from "@/constant/const";
 
 export default function MainProfile() {
   const contactList = [

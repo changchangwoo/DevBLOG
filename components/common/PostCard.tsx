@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { PostPreview } from "@/lib/posts";
+import type { PostSummary } from "@/lib/posts";
 import { getCategoryInfo } from "@/lib/category";
 import Badge from "./Badge";
 import Divider from "./Divider";
 
 interface PostCardProps {
-  post: PostPreview;
+  post: PostSummary;
 }
 
 export default function PostCard({ post }: PostCardProps) {
@@ -22,6 +22,7 @@ export default function PostCard({ post }: PostCardProps) {
                 src={post.coverImage}
                 alt={post.title}
                 fill
+                sizes="(max-width: 1280px) 100vw, 33vw"
                 className="object-cover border border-boundary transition-transform duration-300 ease-in-out group-hover:scale-105"
               />
             ) : (

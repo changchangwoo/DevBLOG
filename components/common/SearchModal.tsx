@@ -8,7 +8,7 @@ import Badge from "./Badge";
 import PostCard from "./PostCard";
 import { getCategoryInfo } from "@/lib/category";
 import { filterPosts } from "@/lib/filter";
-import type { PostPreview, Tag, Category } from "@/lib/posts";
+import type { PostSummary, Tag, Category } from "@/lib/posts";
 import Divider from "./Divider";
 
 interface SearchModalProps {
@@ -27,7 +27,7 @@ interface SearchModalProps {
   };
   categories: Category[];
   tags: Tag[];
-  posts: PostPreview[];
+  posts: PostSummary[];
 }
 
 export default function SearchModal({

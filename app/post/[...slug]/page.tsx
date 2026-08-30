@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug, markdownToHtml } from "@/lib/posts";
-import { extractHeadings } from "@/lib/toc";
-import { getCategoryInfo } from "@/lib/category";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { renderMarkdown, type TocHeading } from "@/lib/markdown";
+import { getCategoryInfo, type CategoryInfo } from "@/lib/category";
 import TableOfContents from "@/components/post-detail/TableOfContents";
 import Badge from "@/components/common/Badge";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import Divider from "@/components/common/Divider";
 import Giscus from "@/components/post-detail/Giscus";
 import IconWithLabel from "@/components/common/IconWithLabel";
 import ScrollProgressBar from "@/components/post-detail/ScrollProgressBar";
-import { AUTHOR_INFO } from "@/lib/author";
+import { AUTHOR_INFO } from "@/constant/const";
 import { generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/jsonld";
 import Link from "next/link";
 
@@ -17,17 +17,6 @@ interface PostPageProps {
   params: Promise<{
     slug: string[];
   }>;
-}
-
-interface Heading {
-  level: number;
-  text: string;
-  id: string;
-}
-
-interface CategoryInfo {
-  label: string;
-  colorClass: string;
 }
 
 function renderPostHeader(
@@ -172,7 +161,7 @@ function renderPostFooter() {
   );
 }
 
-function renderTableOfContents(headings: Heading[]) {
+function renderTableOfContents(headings: TocHeading[]) {
   return (
     <aside className="hidden xl:block absolute left-full top-[44rem] min-h-[calc(100%-44rem)]">
       <div className="sticky top-[12rem] w-[32rem]">
@@ -252,15 +241,17 @@ export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
   const slugString = slug.join("/");
 
-  let post;
-  try {
-    post = getPostBySlug(slugString);
-  } catch (error) {
+  const post = getPostBySlug(slugString);
+
+  if (!post) {
     notFound();
   }
 
-  const content = await markdownToHtml(post.content, post.category);
-  const headings = extractHeadings(post.content);
+  // 본문과 목차를 한 번의 파싱에서 함께 얻는다 (heading id가 항상 일치)
+  const { html: content, headings } = await renderMarkdown(post.content, {
+    category: post.category,
+    collectHeadings: true,
+  });
   const categoryInfo = getCategoryInfo(post.category);
 
   const blogPostingJsonLd = generateBlogPostingJsonLd({

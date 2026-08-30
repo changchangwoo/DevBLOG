@@ -79,9 +79,17 @@ export function optimizedSrc(src: string, width: number): string {
   return `/_next/image?${params}`;
 }
 
-/** 원본보다 큰 폭은 낭비이므로 제외한다. */
-export function buildSrcSet(src: string, intrinsicWidth: number): string {
-  const widths = IMAGE_WIDTHS.filter((w) => w <= intrinsicWidth);
+/**
+ * 원본보다 큰 폭은 낭비이므로 제외한다.
+ * maxWidth로 상한을 두면 고DPR 기기가 과도하게 큰 이미지를 고르는 것을 막는다.
+ */
+export function buildSrcSet(
+  src: string,
+  intrinsicWidth: number,
+  maxWidth: number = Number.POSITIVE_INFINITY,
+): string {
+  const limit = Math.min(intrinsicWidth, maxWidth);
+  const widths: number[] = IMAGE_WIDTHS.filter((w) => w <= limit);
   if (widths.length === 0) widths.push(IMAGE_WIDTHS[0]);
 
   return widths.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(", ");

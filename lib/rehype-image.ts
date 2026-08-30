@@ -5,6 +5,8 @@ import { buildSrcSet, getImageMeta, optimizedSrc, snapWidth } from "./image";
 interface RehypeImageOptions {
   /** 본문 이미지가 차지하는 최대 폭 (레이아웃 기준) */
   sizes?: string;
+  /** srcset 상한. 본문 슬롯은 760px이라 1200이면 약 1.6배로 충분하다. */
+  maxWidth?: number;
 }
 
 /**
@@ -18,6 +20,7 @@ interface RehypeImageOptions {
 export default function rehypeImage({
   // 본문 폭: max-w-7xl(800px) - 좌우 패딩 40px = 760px (루트 font-size 62.5%)
   sizes = "(min-width: 800px) 760px, calc(100vw - 40px)",
+  maxWidth = 1200,
 }: RehypeImageOptions = {}) {
   return async (tree: Root) => {
     const targets: Element[] = [];
@@ -39,11 +42,12 @@ export default function rehypeImage({
 
         node.properties = {
           ...node.properties,
-          src: optimizedSrc(src, snapWidth(meta.width)),
-          srcSet: buildSrcSet(src, meta.width),
+          src: optimizedSrc(src, snapWidth(Math.min(meta.width, maxWidth))),
+          srcSet: buildSrcSet(src, meta.width, maxWidth),
           sizes,
           width: meta.width,
           height: meta.height,
+          className: ["md-img"],
           loading: "lazy",
           decoding: "async",
           style: `background-image:url(${meta.blurDataURL});background-size:cover;background-position:center`,

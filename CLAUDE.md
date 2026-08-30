@@ -243,6 +243,10 @@ ESLint `react-hooks/set-state-in-effect`가 에러로 잡는다.
 
 - `fill`을 쓰면 **반드시 `sizes`를 준다** (없으면 원본 크기를 내려받는다)
 - LCP 요소(상단 커버 이미지)에는 `priority`를 준다
+- **`width`/`height`에 임의의 값을 넣지 않는다.** 로드 전 예약 높이가 여기서 나오므로
+  실제 비율과 다르면 이미지가 뜨는 순간 레이아웃이 밀린다.
+  커버는 `getImageMeta()`로 원본 크기를 읽어 그대로 넘긴다
+  (`2400x180`으로 고정돼 있던 시절 상세 페이지 상단이 271px 밀렸다)
 
 **본문 마크다운 이미지는 `next/image`를 쓸 수 없다.** HTML 문자열로 렌더되기 때문이다.
 대신 `lib/rehype-image.ts`가 빌드 타임에 `<img>`를 다시 쓴다.
@@ -256,8 +260,15 @@ ESLint `react-hooks/set-state-in-effect`가 에러로 잡는다.
      style="background-image:url(data:image/webp;base64,…)">  ← 블러
 ```
 
-블러는 `background-image`로 심는다. 이미지가 로드되면 **자기 자신이 배경을 덮으므로**
-`onLoad` 핸들러도 상태 관리도 필요 없다. 12px WebP 썸네일이라 페이지당 약 2KB다.
+블러는 `background-image`로 심는다. 12px WebP 썸네일이라 페이지당 약 2KB다.
+
+다만 배경만으로는 부족하다. 브라우저는 이미지를 **내려받는 대로 위에서부터 그려 넣어서**
+블러 위로 조금씩 채워지는 모습이 보인다. 그래서 `components/post-detail/ImageReveal.tsx`가
+로드 완료 시 `.is-loaded`를 붙이고, CSS가 그때 `opacity`를 올려 한 번에 전환한다.
+JS가 없을 때를 위해 상세 페이지에 `<noscript>` 스타일 폴백을 둔다.
+
+본문 이미지의 srcset은 1200px로 상한을 둔다. 슬롯이 760px이라 약 1.6배면 충분하고,
+상한이 없으면 고DPR 기기가 1920px를 받아 용량이 두 배가 된다.
 
 커버 이미지는 `next/image`의 `placeholder="blur"`를 쓰며,
 `blurDataURL`은 `lib/posts.ts`의 `getCoverBlur()` / `getCoverBlurMap()`으로 빌드 타임에 만든다.

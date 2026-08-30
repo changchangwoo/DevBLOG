@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { getAllPosts, getCoverBlur, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getImageMeta } from "@/lib/image";
 import { renderMarkdown, type TocHeading } from "@/lib/markdown";
 import { getCategoryInfo, type CategoryInfo } from "@/lib/category";
 import TableOfContents from "@/components/post-detail/TableOfContents";
@@ -9,6 +10,7 @@ import Divider from "@/components/common/Divider";
 import Giscus from "@/components/post-detail/Giscus";
 import IconWithLabel from "@/components/common/IconWithLabel";
 import ScrollProgressBar from "@/components/post-detail/ScrollProgressBar";
+import ImageReveal from "@/components/post-detail/ImageReveal";
 import { AUTHOR_INFO } from "@/constant/const";
 import { generateBlogPostingJsonLd, generateBreadcrumbJsonLd } from "@/lib/jsonld";
 import Link from "next/link";
@@ -255,7 +257,11 @@ export default async function PostPage({ params }: PostPageProps) {
     collectHeadings: true,
   });
   const categoryInfo = getCategoryInfo(post.category);
-  const coverBlur = await getCoverBlur(post.coverImage);
+  // 커버의 실제 크기를 읽어 그대로 넘긴다.
+  // 임의의 width/height를 넣으면 로드 전 예약 높이가 어긋나 레이아웃이 밀린다.
+  const coverMeta = post.coverImage
+    ? await getImageMeta(post.coverImage)
+    : null;
 
   const blogPostingJsonLd = generateBlogPostingJsonLd({
     title: post.title,
@@ -286,19 +292,23 @@ export default async function PostPage({ params }: PostPageProps) {
           __html: JSON.stringify(breadcrumbJsonLd),
         }}
       />
+      {/* JS가 동작하지 않으면 페이드인 없이 그대로 보여준다 */}
+      <noscript>
+        <style>{`.prose img.md-img { opacity: 1 !important; }`}</style>
+      </noscript>
       <ScrollProgressBar />
+      <ImageReveal />
       <div className="relative mx-auto max-w-7xl">
-        {post.coverImage && (
+        {post.coverImage && coverMeta && (
           <Image
             src={post.coverImage}
             alt={post.title}
-            width={2400}
-            height={180}
+            width={coverMeta.width}
+            height={coverMeta.height}
             sizes="(min-width: 800px) 800px, 100vw"
             priority
-            {...(coverBlur
-              ? { placeholder: "blur" as const, blurDataURL: coverBlur }
-              : {})}
+            placeholder="blur"
+            blurDataURL={coverMeta.blurDataURL}
             className="w-full min-h-[18rem] border object-cover"
           />
         )}

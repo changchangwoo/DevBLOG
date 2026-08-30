@@ -36,7 +36,7 @@ tag: ["뽀각코", "데브코스"]
 >
 > 함께하면 더 집중할 수 있고, **효율적인 학습 환경을 조성할 수 있는 POGAKCO로 여러분의 집중력을 높여보세요!**
 
-![](https://velog.velcdn.com/images/changwoo/post/f05eda85-5a1b-4b5c-af7e-5ef11f6f4f98/image.gif)
+<video autoplay loop muted playsinline width="2180" height="1394" poster="/images/posts/project/pogakco/clip1-poster.jpg" class="md-video"><source src="/images/posts/project/pogakco/clip1.mp4" type="video/mp4"></video>
 
 ## 담당 기능
 
@@ -48,7 +48,7 @@ tag: ["뽀각코", "데브코스"]
 
 ### 공유타이머 기능 구현
 
-![](https://velog.velcdn.com/images/changwoo/post/88f004f0-24ea-4f94-a979-0e9118ef4443/image.png)
+![](/images/posts/project/pogakco/img1.png)
 
 - 프로젝트를 진행하면서 가장 고민을 많이 한 부분이다.
 - **초기 기획** 단계에서는 서버에서 클라이언트에게 동일한 타이머 값을 제공하기 위해 서버에서 **타이머를 계산하고 매 초마다 제공하는 방식**이었다.
@@ -127,7 +127,7 @@ const isEndTime = () => {
 
 | 집중시간🤔                                                                                        | 휴식시간😪                                                                                        | 대 휴식시간😴                                                                                     |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| ![](https://velog.velcdn.com/images/changwoo/post/8cf907fd-2ed0-4c05-95b9-03566321aad2/image.gif) | ![](https://velog.velcdn.com/images/changwoo/post/6d2f9788-d2fd-4efa-8ee9-a65faff186ac/image.gif) | ![](https://velog.velcdn.com/images/changwoo/post/3f82f6e7-049f-4131-b1a0-b53dcf4727e4/image.gif) |
+| <video autoplay loop muted playsinline width="2560" height="1440" poster="/images/posts/project/pogakco/clip2-poster.jpg" class="md-video"><source src="/images/posts/project/pogakco/clip2.mp4" type="video/mp4"></video> | <video autoplay loop muted playsinline width="2560" height="1440" poster="/images/posts/project/pogakco/clip3-poster.jpg" class="md-video"><source src="/images/posts/project/pogakco/clip3.mp4" type="video/mp4"></video> | <video autoplay loop muted playsinline width="2560" height="1440" poster="/images/posts/project/pogakco/clip4-poster.jpg" class="md-video"><source src="/images/posts/project/pogakco/clip4.mp4" type="video/mp4"></video> |
 
 > **서버의 역할을 클라이언트에 위임함으로 부하를 줄일 수 있었고 성능적 이점**을 얻을 수 있었다.
 >
@@ -208,4 +208,4 @@ const isEndTime = () => {
 - 열정과 능력있는 동료들이 가진 영향력을 통해 **개발자로서 기술적으로, 기술 외적으로도 크게 성장할 수 있는 시간**이었다.
 - 팀 프로젝트의 첫 단추가 너무나 만족스럽게 끼워졌다. 뽀각코팀 정말 고생하셨고 또 정말 감사합니다😃
 
-  <img src="https://velog.velcdn.com/images/changwoo/post/f419049e-2c36-4bd6-9ee7-c9bafe27984e/image.png" alt="이미지" width="500"/>
+  <img src="/images/posts/project/pogakco/img2.png" alt="이미지" width="500"/>

@@ -17,9 +17,9 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 
 ### 새로운 사람들과 함께 새로운 도전
 
-![](https://velog.velcdn.com/images/changwoo/post/3ed183d9-f495-4336-ab18-c74bab7c7cf0/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img1.png)
 
-![](https://velog.velcdn.com/images/changwoo/post/76f91299-efc4-440f-b06c-738a6d0938ec/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img2.png)
 
 - 팀은 링커리어를 통해 구했다.
 - 수상을 목적으로 하는 모집 공고가 있어 팀에 합류하고 싶다 지원을 했고, 다행히도 승낙해주셨다.
@@ -29,7 +29,7 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 
 ### 낯선 로우코드 툴, 플렉스튜디오
 
-![](https://velog.velcdn.com/images/changwoo/post/6795e092-27f8-4df5-88ef-1b6fd1840697/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img3.png)
 
 - 필수조건이 플렉스튜디오를 활용한 개발이었기에, 플렉스튜디오를 처음 사용해봤다.
 - 사실 로우코드 툴은 아예 처음이었는데, 솔직히 만만하게 봤었다.
@@ -44,7 +44,7 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 
 ### 지역 문제 참여 플랫폼, SSAK
 
-![](https://velog.velcdn.com/images/changwoo/post/8850b10c-b261-4cac-8579-c3d7594174f8/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img4.png)
 
 > 일상속에서 마주치는 불편을 누구나 쉽고 간편하게 제보하고,
 > 또 다른 주민들과 함께 논의하며 지역 의제를 지역주민이 정하는 서비스 **SSAK**
@@ -53,7 +53,7 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 - 나 뿐만이 아닌 모든 팀원분들이 열정적으로 참여해주신 덕분이었다!!
 - 내가 담당한 기능은 챗봇 페이지, 지도페이지, 그리고 AI 이미지 작성이었다.
 
-![](https://velog.velcdn.com/images/changwoo/post/909359ce-5350-4247-9bc2-587433546562/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img5.png)
 
 - 가장 고민했던 기능은 챗봇이다.
 - 기본적으로 **OpenAI API를 기반으로하여 일반적인 민원상식에 관해 자율대화**가 가능하다.
@@ -61,35 +61,35 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 - 초안 작성 모드 트리거가 켜졌을 때, “컬렉션” 이라는 플렉스튜디오 자체적인 데이터 저장소를 활용하며 질문 스텝을 변경해야했는데 이 부분이 조금 까다로웠다.
 - 또 민원 정보에 대한 신뢰성을 올리기 위해 RAG 구조의 도입이나 파인튜닝 모델을 고려했지만 공모전 기간이 짧아 기술적인 도전은 하지 못했다. 살짝 아쉽다.
 
-![](https://velog.velcdn.com/images/changwoo/post/10e9c0d2-db86-49f0-ae67-79d9c3dcc2c0/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img6.png)
 
 - AI 이미지 분석 후 이슈 자동 작성 등 다양한 기능도 구현했다.
 - **전반적으로 AI 기능은 대부분 시스템 프롬프트를 통해서 제어했기에, 오차를 최소화하는 프롬프트 작성에 많은 신경을 썼다**
 
 ### 본선 진출
 
-![](https://velog.velcdn.com/images/changwoo/post/c406846c-eb67-4b5e-8c71-d09aaf479682/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img7.png)
 
 - 사실 결과물이 참 잘 나왔다는 느낌을 받았다! 그래서 본선 진출에 어느정도 자신이 있었다.
 - 보통 이런생각하면 안되던데 다행히도, **상위 9팀안에 포함되어 본선에 진출하게 되었다!**
 - 후에 말씀해주시기로, 500여명의 지원이 있었으며 50여팀만이 제출을 했다고 들었다.
   - 개발툴 진입장벽이 있어 제출팀이 적을거라고 예상은 했지만.. 그래도 생각보다 훨씬 적어서 놀랐다.
 
-![](https://velog.velcdn.com/images/changwoo/post/0786ead9-4fd7-4b97-8aab-f5917f8fd472/image.jpg)
+![](/images/posts/activities/2025-flextudio-row-code/img8.jpg)
 
 - 본선 대회는 광화문에 있는 멋쟁이 사자처럼 사옥에서 진행되었다.
 - 팀원분들도 당일날 처음 뵈었다. 항상 목소리로 뵙다가 실제로 뵈니 많이 어색했지만 또 반갑기도 했다.
 - 발표는 팀장역할도 겸임하신 혜은님께서 진행하셨고 첫번째 순서임에도 실수 없이 잘 해주셨다 bb!
 - 동일한 주제임에도 다양한 시각에서 제시되는 다른팀들의 솔루션들을 보니 정말 시간 가는 줄 몰랐다.
 
-![](https://velog.velcdn.com/images/changwoo/post/dc0e42a8-f9d7-4746-8931-139ffd9d8880/image.jpg)
+![](/images/posts/activities/2025-flextudio-row-code/img9.jpg)
 
 - 대회측에서 케이터링 박스를 준비해주셔서 발표 전후 쉬는시간마다 맛있게 먹었다.
 - 행사가 끝나고 남은 박스를 한 두 개씩 더 챙겨주셨는데 감사하기도 했지만 생각보다 꽤 부피가 커서 곤란했다…ㅋㅋㅋ
 
 ### 결과와 수상✨
 
-![](https://velog.velcdn.com/images/changwoo/post/e9d7dc5a-7243-4d25-87dc-ca2bbe2056e9/image.jpg)
+![](/images/posts/activities/2025-flextudio-row-code/img10.jpg)
 
 - **결과는 최우수상을 수상했다!**
 - 팀원 모두 정말 열정적으로 임했기에 수상을 하게 된다면 그 의미가 더욱 클 것이라고 생각했다.
@@ -118,4 +118,4 @@ tag: ["공모전", "플렉스튜디오", "회고"]
 - 그리고 이 코어타임은 역시 열정적인 팀원분들과 함께 했기에 가능했다.
 - 혜은님, 민주님, 신비님 다들 정말 너무 고생하셨습니다. 상금으로 맛있는거 먹으로 가요!!!
 
-![](https://velog.velcdn.com/images/changwoo/post/d456fd54-8a0e-457c-8726-a5de04592f50/image.png)
+![](/images/posts/activities/2025-flextudio-row-code/img11.png)

@@ -37,7 +37,7 @@ tag: ["귀멸의 칼날 호흡 테스트", "토이"]
 
 ### 기획 및 설계
 
-![](https://velog.velcdn.com/images/changwoo/post/fe191eb3-e1e5-44c6-bc38-86322c1755fe/image.png)
+![](/images/posts/project/kimetsu-breath-test/img1.png)
 
 - Figma를 통해 UI 디자인을 우선적으로 설계하였다.
 - 모바일 해상도를 기준으로 하였고, 데스크탑 디자인을 따로 두지 않고, 비율상 깨지지 않는 선에서의 확장을 제공하도록 하였다.
@@ -141,13 +141,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   <tbody>
     <tr>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/382b3853-3e72-4e0c-baae-52a481142428/image.png" width="100%" /><br />
+        <img src="/images/posts/project/kimetsu-breath-test/img2.png" width="100%" /><br />
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/f01fe603-dc85-46ab-bdf4-afc70527765c/image.png" width="100%" /><br />
+        <img src="/images/posts/project/kimetsu-breath-test/img3.png" width="100%" /><br />
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/e585cc39-d54e-4e3f-a3c2-d3e593737c24/image.png" width="100%" /><br />
+        <img src="/images/posts/project/kimetsu-breath-test/img4.png" width="100%" /><br />
       </td>
     </tr>
   </tbody>
@@ -253,7 +253,7 @@ export default function PageTransition({
 ### 퀴즈 페이지
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/1ea62031-63d8-4852-9e11-da09e1e4791d/image.gif" width="50%" style="margin: auto;">
+<video autoplay loop muted playsinline width="554" height="1000" poster="/images/posts/project/kimetsu-breath-test/clip1-poster.jpg" class="md-video"><source src="/images/posts/project/kimetsu-breath-test/clip1.mp4" type="video/mp4"></video>
 </p>
 
 - 퀴즈는 총 13문항으로, JSON을 파일을 통해 정의된 데이터를, **아이디 값 매핑을 통해 렌더하도록 구성했다**.
@@ -369,7 +369,7 @@ export default function PageTransition({
 ### 결과 페이지
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/0049082f-26c6-4a53-9a19-96235a1c617d/image.gif" width="50%" style="margin: auto;">
+<video autoplay loop muted playsinline width="554" height="1000" poster="/images/posts/project/kimetsu-breath-test/clip2-poster.jpg" class="md-video"><source src="/images/posts/project/kimetsu-breath-test/clip2.mp4" type="video/mp4"></video>
 </p>
 
 ```jsx

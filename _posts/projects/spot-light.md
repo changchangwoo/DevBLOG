@@ -34,7 +34,7 @@ tag: ["스포트라이트", "데브코스"]
 >
 > **스포트라이트와 함께 일상 속의 최애 장소를 기록하고, 공유하며, 새로운 경험을 해보세요!**
 
-![](https://velog.velcdn.com/images/changwoo/post/c3469e13-2972-47d4-91d1-836604eb196b/image.gif)
+<video autoplay loop muted playsinline width="1280" height="720" poster="/images/posts/project/spot-light/clip1-poster.jpg" class="md-video"><source src="/images/posts/project/spot-light/clip1.mp4" type="video/mp4"></video>
 
 ## 담당 기능
 
@@ -45,7 +45,7 @@ tag: ["스포트라이트", "데브코스"]
 
 ### 검색 페이지
 
-![](https://velog.velcdn.com/images/changwoo/post/b5f8dc70-c62f-4790-9f18-4098cfb680b5/image.gif)
+<video autoplay loop muted playsinline width="1280" height="720" poster="/images/posts/project/spot-light/clip2-poster.jpg" class="md-video"><source src="/images/posts/project/spot-light/clip2.mp4" type="video/mp4"></video>
 
 - 스포트라이트의 검색 페이지에서는 카테고리, 해시태그, 지역, 정렬에 따른 **다양한 필터 기능을 제공하기에 특히 설계에 많은 시간을 할애**해야 했다.
 - 유틸리티 함수를 만들어 **쿼리스트링을 활용해 모든 필터데이터들을 처리**하도록 하였고, **검색 페이지 쿼리문에 필터 데이터 여부에 따라 조건부 조회**를 하여 받도록 하였다.
@@ -109,7 +109,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
 ### 메인 페이지
 
-![](https://velog.velcdn.com/images/changwoo/post/f87e4b80-0311-467d-8d17-f72806986a4b/image.gif)
+<video autoplay loop muted playsinline width="1280" height="720" poster="/images/posts/project/spot-light/clip3-poster.jpg" class="md-video"><source src="/images/posts/project/spot-light/clip3.mp4" type="video/mp4"></video>
 
 - 메인페이지는 **섹션별로 추천하는 셀렉션 (인기, 사용자 태그 맞춤, 서비스 추천 ) 리스트를 제공**한다.
 - 북마크와 같은 즉각적인 상호작용이 없는 셀렉션들의 경우, **서버사이드 렌더를 활용할 수 있을 것 같아 적용**해 보았다.

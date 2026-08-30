@@ -444,3 +444,13 @@ body {
     transition: none;
   }
 }
+
+/* ===== 본문 영상 (애니메이션 GIF를 MP4로 대체한 것) =====
+   GIF는 next/image가 정지 이미지로 만들고, 원본을 그대로 내보내면
+   수십 MB가 전송된다. MP4로 두고 poster로 첫 프레임을 미리 보여준다. */
+.prose video.md-video {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid var(--color-boundary);
+}

@@ -26,10 +26,10 @@ tag: ["Next"]
 ### Parallel Routes
 * **병렬 라우팅(=Parallel Routes)은 하나의 레이아웃에서 여러 페이지를 렌더링할 수 있는 방식**이다.
 
-![](https://velog.velcdn.com/images/changwoo/post/f87d1875-6d17-4693-8740-e62d4ae6dcb8/image.png)
+![](/images/posts/tech/next-parallel-routes/img1.png)
 * 폴더명에 '@[folderName]'과 같은 NameSpace를 적용하여 슬롯을 생성할 수 있으며 각 슬롯은 공통된 부모 layout의 props로 전달되어진다
 
-![](https://velog.velcdn.com/images/changwoo/post/0419e840-a9c6-4f63-a366-8ea52ef063aa/image.png)
+![](/images/posts/tech/next-parallel-routes/img2.png)
 
 * 다음과 같이 layout에서 props로서 슬롯을 호출함으로 여러 페이지의 렌더링이 병렬적으로 가능하다
 * 이를 통해 **프로젝트를 클릭하면 기존 페이지와 동일한 레이아웃에서 프로젝트 상세 페이지가 렌더링** 되어지도록 한다. 
@@ -42,7 +42,7 @@ tag: ["Next"]
 * **기존 브라우저 URL을 마스킹 하면서 새 경로를 현재 레이아웃에 라우팅 하는 경우**에 유용하게 사용한다.
 * 해당 기능으로 프로젝트 상세 모달창을 띄우면서 프로젝트 ID로 URL을 변경하더라도 페이지 전환 없이 콘텐츠를 제공할 수 있다.
 
-![](https://velog.velcdn.com/images/changwoo/post/502613ec-1da8-4304-9ee5-80ba93234338/image.png)
+![](/images/posts/tech/next-parallel-routes/img3.png)
 
 - 라우트 가로채기는 다음과 같은 컨벤션이 있으며, 이는 세그먼트를 기준으로 정의한다
 	- (.) 동일한 레벨의 세그먼트를 일치
@@ -50,13 +50,13 @@ tag: ["Next"]
 	- (..)(..) 두 단계 위의 세그먼트와 일치
 	- (...) 루트 디렉토리의 세그먼트와 일치
 
-![](https://velog.velcdn.com/images/changwoo/post/18e4d3a3-1740-4797-9c3d-ddb101fa9791/image.png)
+![](/images/posts/tech/next-parallel-routes/img4.png)
 
 ## 구현
 * 제시한 두 기능을 활용하여 라우트 모달을 구현할 수 있다.
 * 공식문서에서도 구현방법이 아주 자세히 설명되어있으니, 이를 참고하여 프로젝트에 적용 시켜보자
 
-![](https://velog.velcdn.com/images/changwoo/post/7376000f-5d5f-4104-839d-712ad9dde38f/image.png)
+![](/images/posts/tech/next-parallel-routes/img5.png)
 
 * 다음과 같이 폴더구조를 설계하였다. 
 * 전체적인 동작흐름은 다음과 같다
@@ -180,7 +180,7 @@ export default ProjectDetailPage;
 * 모달창을 전체화면으로 보여주는 것이 일반적이지만, 나는 우선 메인페이지로 반환하는식으로 처리하였다. 
 
 ### 결과
-![](https://velog.velcdn.com/images/changwoo/post/4ba91aa4-f2bf-4625-8acc-417375e8df16/image.gif)
+<video autoplay loop muted playsinline width="1280" height="720" poster="/images/posts/tech/next-parallel-routes/clip1-poster.jpg" class="md-video"><source src="/images/posts/tech/next-parallel-routes/clip1.mp4" type="video/mp4"></video>
 * 상세 페이지 모달이 등장할때 URL이 변경되고 정상적으로 뒤로가기도 동작한다!
 
 ## 마치며

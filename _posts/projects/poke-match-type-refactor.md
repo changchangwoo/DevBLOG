@@ -76,7 +76,7 @@ const TypeCheckwithCharacter = ({ types, selectedAbility, setSelectedAbility}: T
 
 ### 1. 상성 퀴즈 페이지 추가
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/e3002700-6bc3-4955-8d8f-5f77208924e1/image.gif" width="50%" style="display:block; margin:auto;">
+<video autoplay loop muted playsinline width="606" height="1022" poster="/images/posts/project/poke-match-type-refactor/clip1-poster.jpg" class="md-video"><source src="/images/posts/project/poke-match-type-refactor/clip1.mp4" type="video/mp4"></video>
 </p>
 
 - 단순 ‘약점 계산‘ 을 도와주는 서비스가 아닌, **초보자를 위한 포켓몬 상성 이해를 도와주는 서비스로의 확장**을 희망하며 퀴즈페이지를 추가했다.
@@ -102,15 +102,15 @@ const TypeCheckwithCharacter = ({ types, selectedAbility, setSelectedAbility}: T
   <tbody>
     <tr>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/665c216a-f586-4f69-96be-a32b6dca5bae/image.png" width="100%" /><br />
+        <img src="/images/posts/project/poke-match-type-refactor/img1.png" width="100%" /><br />
         <strong>주어진 포켓몬의 특정 배수에<br />데미지를 가하는 공격 타입 고르기</strong>
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/cb03d68e-e354-4fed-a593-0d0d5a001bca/image.png" width="100%" /><br />
+        <img src="/images/posts/project/poke-match-type-refactor/img2.png" width="100%" /><br />
         <strong>부등호 방향에 적합한<br />blank 안에 들어갈 타입 고르기</strong>
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/ae8c9a04-d623-44df-92ee-67fe775b2bfd/image.png" width="100%" /><br />
+        <img src="/images/posts/project/poke-match-type-refactor/img3.png" width="100%" /><br />
         <strong>타입 공격에 대해 방어 타입을 가진<br /> 포켓몬의 피해량 고르기</strong>
       </td>
     </tr>
@@ -216,10 +216,10 @@ const TypeCheckwithCharacter = ({ types, selectedAbility, setSelectedAbility}: T
   <tbody>
     <tr>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/92c5d9e1-4998-45ff-8ded-4e05d2b63dfb/image.gif" width="100%">
+        <video autoplay loop muted playsinline width="602" height="1030" poster="/images/posts/project/poke-match-type-refactor/clip2-poster.jpg" class="md-video"><source src="/images/posts/project/poke-match-type-refactor/clip2.mp4" type="video/mp4"></video>
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/f73a43e2-ee66-413e-a24d-1de7483a865b/image.gif" width="100%">
+        <video autoplay loop muted playsinline width="602" height="1030" poster="/images/posts/project/poke-match-type-refactor/clip3-poster.jpg" class="md-video"><source src="/images/posts/project/poke-match-type-refactor/clip3.mp4" type="video/mp4"></video>
       </td>
     </tr>
   </tbody>
@@ -284,7 +284,7 @@ export const globalStyles = (themeMode: keyof typeof themes = "light") => {
 
 ### 3. 포켓몬 폼 별 데이터
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/05ef4275-e5ec-4735-a056-8956fdbcebd9/image.gif" width="50%" style="margin: auto;">
+<video autoplay loop muted playsinline width="566" height="1030" poster="/images/posts/project/poke-match-type-refactor/clip4-poster.jpg" class="md-video"><source src="/images/posts/project/poke-match-type-refactor/clip4.mp4" type="video/mp4"></video>
 </p>
 
 - 특정 포켓몬은 폼에 따라 타입을 달리하기에, 폼 별 약점 계산을 제공하는 것은 필수적이다.
@@ -414,7 +414,7 @@ export const getFilterFixVarieties = (
 > - 사실 AI가 있기에 1000개 가량의 데이터는 정적으로 채우는것이 훨~씬 빨랐을텐데 굳이 코드로 접근해야했을까?
 
 ## 마치며
-![](https://velog.velcdn.com/images/changwoo/post/bd9b031b-a34d-410e-8930-18b638cb7328/image.png)
+![](/images/posts/project/poke-match-type-refactor/img4.png)
 
 - 그래도 버전 업 이후, **방문객 수가 10배 넘게 늘었다**. 
 (일평균 5명에서 70명 된거지만 어그로 죄송합니다ㅠㅠㅎ) 

@@ -4,6 +4,7 @@ import remarkRehype from "remark-rehype";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
+import rehypeRaw from "rehype-raw";
 import { visit } from "unist-util-visit";
 import type { Element, ElementContent, Root } from "hast";
 import rehypeHeadingDivider from "./rehype-heading-divider";
@@ -70,6 +71,10 @@ export async function renderMarkdown(
   const processor = remark()
     .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
+    // 본문에 직접 쓴 HTML(<img>, <table>, <video>)을 실제 노드로 파싱한다.
+    // 이게 없으면 raw 문자열로 남아 rehypeImage 같은 플러그인이 보지 못하고,
+    // 이미지 최적화를 그대로 지나친다.
+    .use(rehypeRaw)
     .use(rehypeSlug);
 
   if (collectHeadings) {

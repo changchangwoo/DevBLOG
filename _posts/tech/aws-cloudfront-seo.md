@@ -44,35 +44,35 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 
 ### S3 버킷 생성
 
-![](https://velog.velcdn.com/images/changwoo/post/f0484a9f-cb81-424e-8b1e-3fec7e1a11f8/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img1.png)
 - 버킷에 사용할 이름을 작성한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/e4311bd3-334b-47cd-b386-edf06aafc489/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img2.png)
 - 버킷을 AWS를 통해서 관리를 할 것이므로 **ACL을 비활성화** 한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/8da59061-7b05-477e-ae98-56710a4039ea/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img3.png)
 
 - CloudFront를 통해 버킷에 접근하기에 **퍼블릭 액세스는 차단**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/b4bd6cb2-1734-4b6d-9995-8391bd623628/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img4.png)
 
-![](https://velog.velcdn.com/images/changwoo/post/1db399a1-cf9e-4821-9996-ff032292e39f/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img5.png)
 
 
 ### CloudFront 배포 생성
 
-![](https://velog.velcdn.com/images/changwoo/post/b8c013a5-4ba6-436f-809b-8373e3b4d659/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img6.png)
 - 배포에 사용할 이름을 정의한다.
 - 나는 도메인명으로 작성했지만 이와는 상관없으며 단순 CloudFront 배포의 구분이다.
 - 도메인의 경우, 추후 연결하기에 비워두었다.
 
-![](https://velog.velcdn.com/images/changwoo/post/8517caac-e0dd-4662-a05b-eade024493f8/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img7.png)
 
 - 방금전 생성한 **s3 버킷의 원본 주소를 찾아 연결**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/ecc125d9-75a4-483b-90fd-67b47bdffca6/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img8.png)
 
-![](https://velog.velcdn.com/images/changwoo/post/ef51574d-a711-4d1a-9096-1ba9d63ce96c/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img9.png)
 
 - AWS WAF는 AWS에서 제공하는 **유료 방화벽 서비스**이다.
 - WAF의 설정은 **추가 요금을 생각보다 요구**하기에 고민이 필요하다.
@@ -80,28 +80,28 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 - 나는 프리티어 크레딧이 꽤 많이 남아 있어 활성화 하기는 했는데..
 - 현재 청구되는 요금의 대부분이 WAF 비용이다.
 
-![](https://velog.velcdn.com/images/changwoo/post/0ad198c9-187b-448c-b8b8-43a710535fe3/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img10.png)
 
 
 - 이후 (—-.cloudfront.net)형식의 도메인이 생성되었지만 아직은 해당 도메인 접근시 Access Denied가 출력된다.
 - 현재는 S3버킷이 CloudFront 액세스를 허용하고 있지 않기때문이다.
 
-![](https://velog.velcdn.com/images/changwoo/post/99085653-b8b9-467b-943b-fe0688771c5e/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img11.png)
 
 - 배포상세 페이지에서 원본탭으로 이동 후, 원본 도메인 편집에 접근한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/45d76cc0-1b4e-4950-af86-8842943a10a5/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img12.png)
 
 - OAC를 생성한다. 
 - **OAC는 CloudFront가 S3 버킷에 접근할 때 인증 역할을 수행**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/080eec2c-44b5-4403-aab1-3da1a6cca89a/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img13.png)
 
 - 정책 복사 버튼을 통해 정책을 복사한다.
 - 이후 다시 원본 S3버킷으로 이동한다 ( 하단 S3 버킷 권한으로 이동 하이퍼링크 )
 - S3 버킷 ⇒ 권한 탭 ⇒ 버킷 정책을 편집하여, 복사한 CloudFront 정책을 붙여넣는다.
 
-![](https://velog.velcdn.com/images/changwoo/post/12603234-5520-4759-a599-4074abaa6b7b/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img14.png)
 
 - 이후 cloudFront 도메인을 통한 배포가 완료되었으며 접근이 가능하다!
 
@@ -109,11 +109,11 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 >
 > 배포 도메인의 루트 객체로 접근했는지 확인이 필요하다. (—.cloudfront.net**/index.html**)
 
-![](https://velog.velcdn.com/images/changwoo/post/a16a6651-8d68-4202-a68e-40f617911c70/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img15.png)
 
 - 배포 상세페이지 **일반 탭 설정에서 루트 오브젝트의 편집**이 가능하다.
 
-![](https://velog.velcdn.com/images/changwoo/post/607fc551-bcb7-49de-98ae-d0ab5070dde2/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img16.png)
 
 
 ## Route 53 통한 외부 도메인 연결
@@ -122,11 +122,11 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 
 - AWS Route 53에서, 도메인 이름을 입력 후, **호스팅 영역을 생성**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/f51d4139-4465-47e8-be00-1d312f93c3fd/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img17.png)
 - 생성한 호스팅 영역 상세페이지 ⇒ 레코드 탭을 확인한다.
 - 현재 도메인을 CloudFront로 라우팅 하기 위해 **레코드를 생성**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/fa46cfa6-db20-4bf7-a8d4-c931c6e8a3e9/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img18.png)
 - **루트 도메인 처리를 위해 레코드 이름을 비워두고, 레코드 유형은 A, 별칭에 대한 라우팅으로 배포한 CloudFront 별칭 값을 연결**한다.
 - 이후 레코드를 생성하면 해당 도메인으로 접속 시, CloudFront 주소로 라우팅하여 접속한다.
 
@@ -136,7 +136,7 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 - 이는 조금 지저분하기에.. *서비스로서 배포하기위해서는 도메인 변경이 필요**하다.
 - route53에서 구매해도 되는데 가비아에서 할인하는 도메인이 더 저렴해서 가비아에서 구매했다.
 
-![](https://velog.velcdn.com/images/changwoo/post/7283caf8-ea24-4dfa-b13c-715f23aba527/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img19.png)
 
 - 나는 2500원을 주고 [poke-match-type.site](http://poke-match-type.site) 도메인을 구매했다!
 
@@ -151,14 +151,14 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 - 레코드를 확인해보면 NS 유형의 값이 4개 있다.
 - 해당 값이 Route53의 호스팅영역 네임서버이다. 이 값들을 전부 복사한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/cfce42a5-e6fc-4e47-8885-acd703c40712/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img20.png)
 
 - 이후 가비아로 돌아와 마이페이지 ⇒구매한 도메인 상세페이지 ⇒ 네임서버 설정에 들어간다.
 - Route 53에서 복사한 4개의 NS 레코드 값을 등록한다.
     - 이때, 복사한 네임서버의 값은 끝에 .(dot)이 있을텐데 지워 준 후 등록한다.
     - 저장 후, 적용을 기다린다
 
-![](https://velog.velcdn.com/images/changwoo/post/42b93797-65c6-4ea5-8180-77bced48db45/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img21.png)
 
 > **도메인 소유권은 가비아가 유지하되, DNS 관리만 Route53으로 이전하였다**
 >
@@ -168,11 +168,11 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 
 - 다시 CloduFront 배포 페이지의 일반 탭으로 넘어와 Add domain버튼으로 대체 도메인을 연결한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/91c09d79-fbc9-4f86-982b-40fc0e1fa691/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img22.png)
 
 - 도메인 이름을 입력한다
 
-![](https://velog.velcdn.com/images/changwoo/post/300a4e47-f3ad-4d3a-bc42-684023aac3c0/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img23.png)
 
 - 기존 **CloudFront는 AWS가 SSL을 적용해 이미 HTTPS가 가능**하다.
 - 하지만 **구매한 도메인을 CloudFront와 연결하기 위해서는 해당 도메인에 대한 SSL 인증서가 필요**하다.
@@ -180,7 +180,7 @@ tag: ["AWS S3", "AWS CloudFront", "SEO"]
 - 만약 Route53 호스팅 영역에 입력한 도메인이 정상적으로 등록되어있다면, 
 Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지에서 바로 인증서를 생성**할 수 있다.
 
-![](https://velog.velcdn.com/images/changwoo/post/f552f701-e3fa-4053-9209-d49340a63dd5/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img24.png)
 
 - 성공적으로 도메인이 연결되었다!
 
@@ -217,7 +217,7 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
 - 그 다음으로 **Google Search Cosnole에 새 도메인을 등록하고, 인증**하였다.
 - 설정 ⇒ 주소 변경 기능을 사용하여  이전할 새 사이트를 입력함으로 **구글에게 사이트 이전을 알렸다.**
 
-![](https://velog.velcdn.com/images/changwoo/post/68c06cc0-ead4-4f2e-a41b-272e905db746/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img25.png)
 
 > 사이트 이전하기 전, 해당 도메인에 대한 모든 요청이 정상적으로 수행되는지 **꼼꼼히 확인 후 신중하게 수행해야한다.**
 > 
@@ -226,7 +226,7 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
 
 - 사이트를 성공적으로 이전한 후 야금야금 이전 트래픽을 복구하나 싶더니..!
 
-![](https://velog.velcdn.com/images/changwoo/post/1c839876-33ac-4b67-bad8-043369b48570/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img26.png)
 
 - 코끼리를 삼킨 보아뱀이 되어버렸다…
 - SEO점수가 급감한 이유는 정확히 알 수 없었다.
@@ -243,14 +243,14 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
  
 
 
-![](https://velog.velcdn.com/images/changwoo/post/0cd134ed-3a4e-4d1e-91c1-c7bd9ccfd8fa/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img27.png)
 
-![](https://velog.velcdn.com/images/changwoo/post/64c7364f-d0b8-4714-9a8e-f9f98c14d150/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img28.png)
 - **AWS s3 버킷을 앞서 원본 배포와 동일한 방법으로 생성**한다.
 - 버킷 상세페이지에 속성 탭 ⇒ **정적 웹 사이트 호스팅 편집 ⇒ 다음과 같이 호스팅할 도메인을 입력**한다.
 - S3 접근에 대해 반드시 **정적 웹 사이트 호스팅을 활성화**해야한다
 
-![](https://velog.velcdn.com/images/changwoo/post/203c1c84-8597-4f86-ae37-4bcf45d55166/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img29.png)
 
 - 이제, 해당 버킷 엔드포인트로 접근하면 호스팅한 사이트로 연결 되어진다.
 - 이 버킷 역시 CloudFront를 통해서 배포하면 된다.
@@ -266,27 +266,27 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
   
 - 앞선 원본 배포와 **동일한 방법으로 CloudFront 배포를 생성**한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/2276e296-f566-47b2-9321-2239939514b2/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img30.png)
 
 - 대체 도메인은 www 사이트 주소를 입력한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/844ea3dc-fc50-4e09-b7af-5b47c4829cdc/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img31.png)
 
 - 리다이렉트 버킷을 오리진으로 하면 정적 웹 사이트 설정때문에 다음같은 경고문이 출력되는데, **웹 사이트 엔드포인트 사용 버튼을 클릭**한다
 - 이 외에는 원본과 동일한 방법으로 ACM 연결 한 후, 배포를 생성한다.
 
-![](https://velog.velcdn.com/images/changwoo/post/97d7149f-261e-4495-a6e4-161789597af6/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img32.png)
 
 - 성공적으로 배포가 생성되었으면, **배포 도메인 접근시 원본 도메인(non-www)으로 리다이렉트**한다.
 - 이제 www 서브 도메인과 cloudFront를 연결하기 위해, route53 호스팅 영역으로 다시 돌아간다.
 
-![](https://velog.velcdn.com/images/changwoo/post/1d6a16f4-18c4-439e-adcf-f513be10a1b8/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img33.png)
 
 - 해당 도메인 호스팅영역에서 레코드를 생성 한다.
 - **레코드 이름은 www, 유형은 A, 라우팅 대상은 별칭 ⇒ CloudFront 배포에 대한 별칭 ⇒ 배포한 www CloudFront 배포 주소를 연결**하면 된다.
 - 이후 **www 접근에도 원본 도메인으로 리다이렉트**가 바로 되어진다
 
-![](https://velog.velcdn.com/images/changwoo/post/5da0758f-2f12-46d2-8089-8147353482b1/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img34.png)
 
 - curl을 통해 확인하면, www로 접근시 301 상태코드를 반환하는것을 확인할 수 있다.
 
@@ -325,7 +325,7 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
 
 ### 타겟 키워드 재정의
 
-![](https://velog.velcdn.com/images/changwoo/post/70246a88-6b48-4f88-b7a8-9f8574469021/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img35.png)
 
 - 하락세가 시작될 당시, 인기 검색어는 다음과 같았다.
 - ‘포켓몬 약점 계산기’ 타이틀을 가지고 있어, 역시 해당 검색어가 노출과 클릭수가 가장 높았고 구글 평균 게재순위 도 최상위였다.
@@ -350,7 +350,7 @@ Create a new certficate ⇒ **Create cerficate 버튼을 통해 현재 페이지
     />
 ```
 
-![](https://velog.velcdn.com/images/changwoo/post/44262840-432a-48a3-9a1c-a346cd7e82da/image.png)
+![](/images/posts/tech/aws-cloudfront-seo/img36.png)
 
 - SEO가 회복과 키워드 변경이 크게 효과가 있었는지, **평균 방문자수가 300명 가까이 치솟았다!**
 

@@ -40,17 +40,30 @@ export default function rehypeImage({
         const meta = await getImageMeta(src);
         if (!meta) return;
 
+        // 본문에 <img width="70%">처럼 직접 크기를 지정한 경우가 있다.
+        // 그건 저자의 의도이므로 실제 픽셀 크기로 덮어쓰지 않는다.
+        const authored = node.properties ?? {};
+        const hasAuthoredSize =
+          authored.width !== undefined || authored.height !== undefined;
+
+        const blur =
+          `background-image:url(${meta.blurDataURL});` +
+          `background-size:cover;background-position:center`;
+        const authoredStyle =
+          typeof authored.style === "string" ? `${authored.style};` : "";
+
         node.properties = {
-          ...node.properties,
+          ...authored,
           src: optimizedSrc(src, snapWidth(Math.min(meta.width, maxWidth))),
           srcSet: buildSrcSet(src, meta.width, maxWidth),
           sizes,
-          width: meta.width,
-          height: meta.height,
+          ...(hasAuthoredSize
+            ? {}
+            : { width: meta.width, height: meta.height }),
           className: ["md-img"],
           loading: "lazy",
           decoding: "async",
-          style: `background-image:url(${meta.blurDataURL});background-size:cover;background-position:center`,
+          style: `${authoredStyle}${blur}`,
         };
       }),
     );

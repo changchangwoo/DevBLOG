@@ -55,7 +55,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 ### 합격과 걱정
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/8832b298-5100-4536-9a38-cbc54d49c5ad/image.png" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img1.png" width="70%" style="margin: auto;">
 </p>
 
 - 퇴사 후 라이프에 정신이 없는 도중, 문자가 한 통 왔다.
@@ -69,7 +69,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 - 공항을 가는건 언제나 설레고, 하늘을 나는건 항상 두근거린다.
 - 근심이 절반 이상인 떨림이었지만, 그래도 나름의 기대를 가득 안고 제주에 도착했다.
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/d7c94626-ceb0-4820-865d-b551bb43c049/image.png" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img2.png" width="70%" style="margin: auto;">
 </p>
 
 - 화요일 오전부터 시작되는 구름톤이었기에, 월요일 오후에 미리 도착했다.
@@ -77,7 +77,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
   - 올해는 많이 바빴구나.. 새삼 느끼게 되었다.
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/7308b749-3139-4569-8512-7e0b48da6e84/image.png" width="50%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img3.png" width="50%" style="margin: auto;">
 </p>
 
 - 첫째날은 교육 위주고, 둘째날 오전에 팀이 정해지고나서 본격적인 해커톤이 시작된다.
@@ -86,14 +86,14 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 ### 설레는 마음으로, 구름톤 시작
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/e37c2509-47c8-424a-bee8-d60973e1a260/image.jpg" width="50%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img4.jpg" width="50%" style="margin: auto;">
 </p>
 
 - 첫째날과 둘째날 오전은 구름 스퀘어에서 진행됐다.
 
 ### 아쉬웠던 SELF PR, 특강
 
-![](https://velog.velcdn.com/images/changwoo/post/a6f5d8f6-2256-43cd-b009-2111293dfe1e/image.png)
+![](/images/posts/activities/2025-goormthone_jeju/img5.png)
 
 - **팀 빌딩이 현장에서 바로 이루어지는 만큼, SELF PR 시간은 굉장히 중요했다**.
 - 역시나 능력 있는 분들이 정말 많았고 다들 명확하게 자기 어필을 했다.
@@ -130,7 +130,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 > 3. 주제에 부합하며 제주도의 특징이 부각될 수 있는지
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/f08ff0dd-9469-4955-979c-743f3f584427/image.png" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img6.png" width="70%" style="margin: auto;">
 </p>
 
 - 위 기준을 바탕으로 **“안전하게 올레”**라는 아이디어를 기획했다.
@@ -156,7 +156,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 ### 기다리고 기다렸던 비어파티
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/8940e34f-8677-4a2a-8b1f-6970cc7c82aa/image.jpg" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img7.jpg" width="70%" style="margin: auto;">
 </p>
 
 - 후기 중 둘째날 점심으로 제공되는 도시락은 적게 먹어야한다는 후기가 있었다.
@@ -166,7 +166,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
   - 내가 항상 해왔던 고민들을 모두가 하고 있어서 신기했다. 심지어 멘토님들까지
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/0ebaa417-8684-48e8-a676-51f6d5f844de/image.jpg" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img8.jpg" width="70%" style="margin: auto;">
 </p>
 
 - 비어파티중 팀원분이 바다에 가자고 제안하셔서 양손에 맥주 한잔씩 들고 바다로 향했다.
@@ -174,7 +174,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 
 ### 포트홀 맵 제주
 
-![](https://velog.velcdn.com/images/changwoo/post/fe37505d-9dd4-47f1-91f8-6768f85dc329/image.webp)
+![](/images/posts/activities/2025-goormthone_jeju/img9.webp)
 
 > 제주도민이 직접 참여하여 만드는 실시간 도로 안전 지도 **포트홀 맵 제주**  
 > [전시관 구경 가기](https://9oormthon.goorm.io/28d4e699-7fb0-8068-9511-e98796774057) 👀
@@ -191,13 +191,13 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
   <tbody>
     <tr>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/4cad4560-481f-4b50-b09f-d95105372e8c/image.png" width="100%" /><br />
+        <img src="/images/posts/activities/2025-goormthone_jeju/img10.png" width="100%" /><br />
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/3338b491-c596-463d-b6f2-116fa77b053e/image.png" width="100%" /><br />
+        <img src="/images/posts/activities/2025-goormthone_jeju/img11.png" width="100%" /><br />
       </td>
       <td align="center">
-        <img src="https://velog.velcdn.com/images/changwoo/post/034dfd3c-176d-4fb1-9520-64f7b2376a39/image.png" width="100%" /><br />
+        <img src="/images/posts/activities/2025-goormthone_jeju/img12.png" width="100%" /><br />
       </td>
     </tr>
   </tbody>
@@ -209,7 +209,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 - 실제 기능 개발보다 오히려 가상 디바이스 설정과 같은 초기 환경 구축이 더 까다롭게 느껴졌다.
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/cf7a7606-c4c5-4edf-a18f-6970ee53d705/image.jpg" width="100%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img13.jpg" width="100%" style="margin: auto;">
 </p>
 
 - 개발에 정신이 지치고 피곤할 때, 팀원들과 함께 바다를 보러 나왔다.
@@ -218,7 +218,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 ### 결과와 수상✨
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/b7bdfeda-625e-4f9f-a192-c0f356eee84f/image.jpg" width="70%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img14.jpg" width="70%" style="margin: auto;">
 </p>
 
 - 결과는 **최우수상을 수상**하게되었다!
@@ -245,7 +245,7 @@ tag: ["해커톤", "구름톤 inJEJU", "회고"]
 ### 마치며
 
 <p align="center">
-<img src="https://velog.velcdn.com/images/changwoo/post/b9a4c33b-f1e4-4f1b-9cda-62d4d75f6d39/image.jpg" width="50%" style="margin: auto;">
+<img src="/images/posts/activities/2025-goormthone_jeju/img15.jpg" width="50%" style="margin: auto;">
 </p>
 
 - ‘시작해서 힘들 바에 시작하지 않는 것이 낫다’는 생각을 하다보니 어느새 수동적인 태도를 가진 사람이 되어있었다.

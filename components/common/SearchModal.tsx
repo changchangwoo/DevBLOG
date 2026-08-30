@@ -221,7 +221,7 @@ export default function SearchModal({ onClose }: SearchModalProps) {
             <section className="ut-grid">
               {filteredPosts.map((post) => (
                 <div key={post.slug} onClick={onClose}>
-                  <PostCard post={post} />
+                  <PostCard post={post} blurDataURL={post.blurDataURL} />
                 </div>
               ))}
             </section>

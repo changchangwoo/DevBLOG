@@ -1,10 +1,20 @@
-import { getAllCategories, getAllPosts, getAllTag } from "@/lib/posts";
+import {
+  getAllCategories,
+  getAllPosts,
+  getAllTag,
+  getCoverBlurMap,
+} from "@/lib/posts";
 import type { Category, PostSummary, Tag } from "@/lib/posts";
 
 export const dynamic = "force-static";
 
+/** 검색 결과 카드도 블러 플레이스홀더를 쓰므로 커버 블러를 함께 싣는다. */
+export interface SearchIndexPost extends PostSummary {
+  blurDataURL?: string;
+}
+
 export interface SearchIndex {
-  posts: PostSummary[];
+  posts: SearchIndexPost[];
   categories: Category[];
   tags: Tag[];
 }
@@ -14,8 +24,14 @@ export interface SearchIndex {
  * 이 데이터를 헤더 props로 넘기면 모든 페이지의 RSC 페이로드에 중복 포함된다.
  */
 export async function GET() {
+  const posts = getAllPosts();
+  const blurMap = await getCoverBlurMap(posts);
+
   const index: SearchIndex = {
-    posts: getAllPosts(),
+    posts: posts.map((post) => {
+      const blurDataURL = blurMap.get(post.slug);
+      return blurDataURL ? { ...post, blurDataURL } : post;
+    }),
     categories: getAllCategories(),
     tags: getAllTag(),
   };

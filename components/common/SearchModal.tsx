@@ -7,31 +7,42 @@ import Badge from "./Badge";
 import PostCard from "./PostCard";
 import { getCategoryInfo } from "@/lib/category";
 import { filterPosts } from "@/lib/filter";
-import type { PostSummary, Tag, Category } from "@/lib/posts";
+import type { SearchIndex } from "@/app/search-index.json/route";
 import Divider from "./Divider";
-import type { HeaderConfig } from "./Header/config";
+import { headerConfig } from "./Header/config";
 
 interface SearchModalProps {
-  isOpen: boolean;
   onClose: () => void;
-  config: HeaderConfig;
-  categories: Category[];
-  tags: Tag[];
-  posts: PostSummary[];
 }
 
-export default function SearchModal({
-  isOpen,
-  onClose,
-  config,
-  categories,
-  tags,
-  posts,
-}: SearchModalProps) {
+const EMPTY_INDEX: SearchIndex = { posts: [], categories: [], tags: [] };
+
+export default function SearchModal({ onClose }: SearchModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+  const [index, setIndex] = useState<SearchIndex | null>(null);
+  const [hasError, setHasError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { logo, siteTitle } = config;
+  const { logo, siteTitle } = headerConfig;
+
+  // 검색 인덱스는 모달이 열린 시점에만 내려받는다.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/search-index.json", { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error(`검색 인덱스 응답 오류: ${res.status}`);
+        return res.json() as Promise<SearchIndex>;
+      })
+      .then(setIndex)
+      .catch((error) => {
+        if (error.name === "AbortError") return;
+        console.error(error);
+        setHasError(true);
+      });
+
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,24 +53,26 @@ export default function SearchModal({
   }, [searchQuery]);
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
-  }, [isOpen]);
+    inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) onClose();
+      if (e.key === "Escape") onClose();
     };
 
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, []);
+
+  const { posts, categories, tags } = index ?? EMPTY_INDEX;
 
   const filteredPosts = useMemo(() => {
     const query = debouncedSearchQuery.trim();
@@ -70,8 +83,6 @@ export default function SearchModal({
   const handleBadgeClick = (value: string) => {
     setSearchQuery(value);
   };
-
-  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-background w-full h-full z-50 overflow-y-auto">
@@ -148,6 +159,12 @@ export default function SearchModal({
             </div>
           </form>
         </div>
+
+        {hasError && (
+          <p className="body3 text-descript">
+            검색 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.
+          </p>
+        )}
 
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => {

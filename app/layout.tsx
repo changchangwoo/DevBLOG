@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "highlight.js/styles/github.css";
 import ThemeProvider from "@/components/context/ThemeProvider";
-import HeaderWrapper from "@/components/common/Header/HeaderWrapper";
+import Header from "@/components/common/Header/Header";
 import Footer from "@/components/common/Footer";
 import { SITE_URL, AUTHOR_INFO } from "@/constant/const";
 
@@ -81,7 +81,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body className="bg-background">
         <ThemeProvider>
-          <HeaderWrapper />
+          <Header />
           <div className="pt-[5.4rem] pb-[2rem]">{children}</div>
           <Footer />
         </ThemeProvider>

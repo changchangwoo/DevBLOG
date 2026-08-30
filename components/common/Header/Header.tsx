@@ -2,19 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
-import type { PostSummary, Tag, Category } from "@/lib/posts";
+import dynamic from "next/dynamic";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
-import SearchModal from "../SearchModal";
-import { headerConfig } from "./config";
 
-interface HeaderProps {
-  categories: Category[];
-  tags: Tag[];
-  posts: PostSummary[];
-}
+// 검색 모달은 열릴 때 별도 청크로 내려받는다.
+const SearchModal = dynamic(() => import("../SearchModal"));
 
-export default function Header({ categories, tags, posts }: HeaderProps) {
+export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -77,14 +72,7 @@ export default function Header({ categories, tags, posts }: HeaderProps) {
         onToggleTheme={toggleTheme}
         onSearchClick={() => setIsSearchOpen(true)}
       />
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        config={headerConfig}
-        categories={categories}
-        tags={tags}
-        posts={posts}
-      />
+      {isSearchOpen && <SearchModal onClose={() => setIsSearchOpen(false)} />}
     </>
   );
 }

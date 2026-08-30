@@ -1,823 +1,295 @@
-# Next.js Blog Starter 개발 지침서
+# DevBLOG 개발 지침서
 
 ## 목적
 
 - Next.js 기반 개발 블로그 구축
 - Markdown 기반 포스팅 관리
-- 정적 사이트로 빌드하여 S3 + CloudFront 배포
-- 댓글/좋아요 등 인터랙션은 AWS Lambda(API Gateway)로 처리
-- 장기적으로 광고 수익화를 고려한 저비용 아키텍처 유지
+- 정적 생성(SSG)을 전제로 한 저비용 아키텍처 유지
+- 댓글은 Giscus(GitHub Discussions)로 외부 위임
 
 ---
 
 ## 기본 원칙 (중요)
 
-1. **Next.js는 정적 사이트 생성기(SSG)로만 사용한다**
+1. **모든 페이지는 빌드 타임에 정적 생성한다**
 
    - Server Actions, Edge Functions, ISR은 사용하지 않는다
-   - 런타임 서버 의존 기능을 추가하지 않는다
+   - `searchParams`에 의존하는 페이지를 만들지 않는다 (동적 렌더링이 된다)
+   - 필터·페이지네이션은 **URL 경로 세그먼트**로 표현한다
+   - 모든 동적 라우트에 `export const dynamicParams = false`를 선언한다
 
-2. **콘텐츠는 Markdown(md / mdx) 파일로 관리한다**
+2. **콘텐츠는 Markdown 파일로 관리한다**
 
-   - Git 기반 포스팅 관리
-   - Front Matter를 통해 메타데이터를 구조화한다
+   - Git 기반 포스팅 관리, Front Matter로 메타데이터 구조화
 
-3. **백엔드 비즈니스 로직은 플랫폼 독립적으로 설계한다**
-   - Next.js API는 사용하지 않거나 최소한의 어댑터 역할만 수행
-   - 추후 AWS Lambda로 이전/확장이 가능해야 한다
+3. **런타임 서버 의존 기능을 추가하지 않는다**
+   - Next.js API Route는 정적 파일 생성 용도로만 사용한다
+     (`feed.xml`, `search-index.json` — 모두 `dynamic = "force-static"`)
 
 ---
 
 ## 개발 명령어
 
 ```bash
-# 개발 서버 실행 (http://localhost:3000)
-pnpm dev
-
-# 프로덕션 빌드
-pnpm build
-
-# 프로덕션 서버 실행
-pnpm start
-
-# ESLint 실행
-pnpm lint
+pnpm dev      # 개발 서버 (http://localhost:3000)
+pnpm build    # 프로덕션 빌드
+pnpm start    # 프로덕션 서버
+pnpm lint     # ESLint
 ```
+
+빌드 결과의 라우트 표기에서 **`ƒ (Dynamic)`이 하나라도 보이면 원칙 위반**이다.
+현재는 전부 `○ (Static)` / `● (SSG)` 상태를 유지하고 있다.
 
 ---
 
 ## 프로젝트 구조
 
-### 디렉토리 구조
-
 ```
 DevBLOG/
-├── _posts/              # Markdown 블로그 포스트 저장소
-│   ├── hello-world.md
-│   ├── nextjs-blog-architecture.md
-│   └── typescript-tips.md
-├── app/                 # Next.js App Router
-│   ├── posts/[slug]/   # 동적 포스트 페이지
-│   │   └── page.tsx
-│   ├── layout.tsx      # 루트 레이아웃
-│   ├── page.tsx        # 홈페이지 (포스트 목록)
-│   └── globals.css     # 전역 스타일 + prose 스타일
-├── lib/                # 유틸리티 함수
-│   └── posts.ts        # Markdown 파싱 및 포스트 관리
-└── public/             # 정적 파일 (이미지, SVG 등)
+├── _posts/{category}/{slug}.md      # 블로그 포스트
+├── _til/{year}/{YYYY-MM-DD}.md      # TIL
+├── app/
+│   ├── layout.tsx                   # 루트 레이아웃 (metadata, ThemeProvider, Header, Footer)
+│   ├── [[...page]]/page.tsx         # 홈 + 페이지네이션 (/, /2, /3 …)
+│   ├── posts/[[...filter]]/page.tsx # 필터 목록 (아래 URL 규칙 참고)
+│   ├── post/[...slug]/page.tsx      # 포스트 상세
+│   ├── til/[[...year]]/             # TIL (page.tsx, TILPageClient.tsx, TILDetail.tsx)
+│   ├── about/page.tsx
+│   ├── not-found.tsx / error.tsx
+│   ├── sitemap.ts / robots.ts
+│   ├── feed.xml/route.ts            # RSS (force-static)
+│   ├── search-index.json/route.ts   # 검색 인덱스 (force-static)
+│   └── globals.css
+├── components/
+│   ├── common/                      # Badge, CategoryList, Divider, Footer, IconWithLabel,
+│   │   │                            # MainProfile, PostCard, SearchModal
+│   │   └── Header/                  # Header, HeaderDesktop, HeaderMobile, config.tsx
+│   ├── context/ThemeProvider.tsx
+│   ├── home/PinnedPost.tsx
+│   ├── layout/PageLayout.tsx
+│   ├── post-detail/                 # Giscus, ScrollProgressBar, TableOfContents
+│   ├── posts/Pagination.tsx
+│   └── til/TILCalendar.tsx
+├── lib/
+│   ├── markdown.ts                  # 마크다운 → HTML + 목차 수집 (단일 파이프라인)
+│   ├── posts.ts                     # 포스트 조회/집계/페이지네이션
+│   ├── til.ts                       # TIL 조회
+│   ├── filter.ts / category.ts / jsonld.ts / utils.ts
+│   └── rehype-callout.ts / rehype-heading-divider.ts
+└── constant/const.ts                # SITE_URL, PINNED_POST_SLUG, CATEGORY_MAP, AUTHOR_INFO
 ```
 
 ### 기술 스택
 
-- **Next.js 16.1.0** (App Router, SSG)
-- **React 19.2.3** (Server Components 기본)
-- **TypeScript 5** (strict mode)
-- **Tailwind CSS 4** (`@tailwindcss/postcss`)
-- **pnpm** (패키지 매니저)
-- **gray-matter** (Front Matter 파싱)
-- **Markdown 처리**:
-  - `remark` - Markdown 파서
-  - `remark-gfm` - GitHub Flavored Markdown (테이블, 체크박스, 취소선)
-  - `remark-rehype` - Markdown → HTML AST 변환
-  - `rehype-highlight` - 코드 신택스 하이라이팅
-  - `rehype-slug` - 헤딩 자동 ID 생성
-  - `rehype-autolink-headings` - 헤딩 자동 링크
-  - `highlight.js` - 코드 하이라이팅 테마
+Next.js 16.1 (App Router) · React 19.2 · TypeScript 5 (strict) · Tailwind CSS 4 · pnpm
+
+마크다운: `gray-matter`, `remark`, `remark-gfm`, `remark-rehype`,
+`rehype-slug`, `rehype-highlight`, `rehype-stringify`, `unist-util-visit`
+
+테마: `next-themes` (`attribute="class"`, `defaultTheme="dark"`, `enableSystem={false}`)
 
 ---
 
-## 블로그 시스템 아키텍처
+## URL 규칙
 
-### 포스트 작성 흐름
+| URL | 의미 |
+| --- | --- |
+| `/`, `/2`, `/3` | 홈 (전체 포스트, 6개씩) |
+| `/post/{category}/{slug}` | 포스트 상세 |
+| `/posts` | 전체 목록 |
+| `/posts/2` | 전체 목록 2페이지 |
+| `/posts/category/{category}` | 카테고리 필터 |
+| `/posts/category/{category}/2` | 카테고리 필터 2페이지 |
+| `/posts/tag/{tag}` | 태그 필터 |
+| `/til` | TIL (가장 최근 기록이 있는 연도) |
+| `/til/{year}` | 특정 연도 TIL |
 
-1. `_posts/` 디렉토리에 `.md` 파일 생성
-2. Front Matter로 메타데이터 정의 (title, description, date, author)
-3. Markdown으로 본문 작성
-4. 빌드 시 `generateStaticParams()`로 모든 포스트 페이지를 정적 생성
+**1페이지는 접미사 없는 정규 URL만 사용한다.** `/posts/1`은 404다 (중복 콘텐츠 방지).
 
-### Front Matter 형식
+`/til`과 `/til/{기본연도}`는 같은 내용이며, 후자의 canonical은 `/til`을 가리킨다.
+
+이전에 쓰이던 쿼리 기반 URL(`/posts?category=`, `/posts?tag=`, `/posts?page=`, `/til?year=`)은
+**`proxy.ts`**에서 308로 새 경로에 연결된다.
+`next.config.ts`의 `redirects()`를 쓰면 안 된다 — Next가 매칭된 쿼리 값을
+**디코딩한 채 `Location` 헤더에 넣어** 한글·공백이 든 태그에서
+`ERR_INVALID_CHAR`로 500이 난다. `URL` 객체는 인코딩을 알아서 처리한다.
+
+### 한글·공백이 들어간 세그먼트 주의
+
+`generateStaticParams`는 **원본 문자열을 그대로** 반환해야 한다.
+미리 `encodeURIComponent`를 적용하면 정적 경로 매칭이 깨져 404가 된다.
+반대로 런타임 세그먼트는 인코딩된 채로 들어올 수 있으므로,
+페이지 쪽에서 `decodeURIComponent`를 방어적으로 적용한다
+(`app/posts/[[...filter]]/page.tsx`의 `safeDecode` 참고).
+
+---
+
+## 데이터 계층
+
+### `lib/posts.ts`
+
+모든 조회 함수는 **React `cache()`로 감싸져 있다.** 이는 선택이 아니라 필수다.
+헤더·사이드바·페이지가 각각 조회하므로, 캐시가 없으면 페이지 한 장을 그리는 데
+`_posts` 전체를 대여섯 번 다시 읽는다.
+
+```ts
+getPostSlugs()        // 슬러그 목록
+getPostBySlug(slug)   // Post | null  (없으면 throw가 아니라 null)
+getAllPosts()         // PostSummary[] (날짜 내림차순)
+getAllTag()           // Tag[]      (빈도순)
+getAllCategories()    // Category[] (빈도순)
+getPinnedPost()       // PostSummary | null
+getTotalPages(n) / getPostsByPage(posts, page)   // POSTS_PER_PAGE = 6
+```
+
+타입은 두 가지다.
+
+- `PostSummary` — 목록/카드/검색용 최소 메타데이터
+- `Post extends PostSummary` — `content` 포함 (상세 페이지 전용)
+
+Node.js `fs`를 쓰므로 **Server Component에서만 호출 가능**하다.
+
+### `lib/markdown.ts`
+
+마크다운 파이프라인은 **이 파일 하나뿐이다.** posts와 til이 함께 쓴다.
+
+```ts
+renderMarkdown(md, { category, collectHeadings })  // → { html, headings }
+markdownToHtml(md, category)                       // → html (목차 불필요할 때)
+```
+
+목차(`headings`)는 `rehype-slug`가 부여한 id를 파이프라인 안에서 수집한다.
+**별도 정규식으로 heading을 다시 파싱하지 말 것** — id 생성 규칙이 어긋나
+목차 링크가 조용히 깨진다(실제로 그런 버그가 있었다).
+
+### `lib/til.ts`
+
+`posts.ts`와 같은 패턴. 조회 함수는 `cache()`로 감싸고,
+HTML 변환은 `Promise.all`로 병렬 처리한다.
+
+---
+
+## Front Matter
+
+**포스트** (`_posts/{category}/{slug}.md`)
 
 ```markdown
 ---
 title: "포스트 제목"
 description: "짧은 요약"
-date: "2024-01-15"
-author:
-  name: "작성자 이름"
-coverImage: ""
+date: "2026-01-15"
+tag: ["Next", "SEO"]
+coverImage: "/images/posts/tech/slug/cover.png"
 ---
-
-# 본문 내용...
 ```
 
-### 핵심 파일 설명
+- `category`는 생략 시 디렉터리명에서 자동 추론된다
+- `tag`는 URL 세그먼트가 되므로 신중히 정한다
 
-#### `lib/posts.ts`
+**TIL** (`_til/{year}/{YYYY-MM-DD}.md`)
 
-Markdown 파일 읽기 및 파싱을 담당하는 유틸리티 모듈:
+```markdown
+---
+date: 2026-01-15
+title: "제목"
+pinned: false
+---
 
-- `getPostSlugs()` - 모든 포스트의 슬러그 목록 반환
-- `getPostBySlug(slug)` - 특정 포스트의 메타데이터 + 콘텐츠 반환
-- `getAllPosts()` - 모든 포스트의 메타데이터 반환 (날짜 내림차순 정렬)
-- `markdownToHtml(markdown)` - 향상된 Markdown → HTML 변환
-  - GitHub Flavored Markdown 지원 (테이블, 체크박스, 취소선)
-  - 코드 블록 자동 신택스 하이라이팅
-  - 헤딩에 자동 ID 및 앵커 링크 생성
+- bullet point 형식의 짧은 학습 메모
+```
 
-**중요**: 이 파일은 Node.js 파일 시스템 API(`fs`, `path`)를 사용하므로 Server Component에서만 호출 가능.
+파일명은 반드시 `YYYY-MM-DD.md` (0 패딩 필수), 연도 디렉터리 아래에 둔다.
 
-#### `app/page.tsx`
+---
 
-홈페이지 - 모든 블로그 포스트 목록 표시:
+## 성능 관련 규칙
 
-- `getAllPosts()`로 포스트 목록 가져오기
-- 각 포스트 카드에 제목, 발췌, 날짜, 작성자 표시
-- 클릭 시 `/posts/[slug]`로 이동
+### 1. 블로그 데이터를 클라이언트 컴포넌트에 props로 넘기지 않는다
 
-#### `app/posts/[slug]/page.tsx`
+루트 레이아웃의 `Header`는 클라이언트 컴포넌트다. 여기에 포스트 목록을 넘기면
+**모든 페이지의 RSC 페이로드에 전체 목록이 중복 직렬화된다.**
 
-개별 포스트 페이지:
+검색은 이 문제를 이렇게 피한다.
 
-- `generateStaticParams()` - 빌드 시 모든 포스트 슬러그 생성
-- `generateMetadata()` - 동적 메타데이터 (SEO)
-- `getPostBySlug(slug)` - 포스트 데이터 로드
-- `markdownToHtml()` - Markdown → HTML 변환
-- `.prose` 클래스로 커스텀 타이포그래피 스타일 적용
+```
+app/search-index.json/route.ts  (force-static, 빌드 시 1회 생성)
+        ↓ 모달을 처음 열 때만 fetch
+components/common/SearchModal.tsx  (next/dynamic 으로 지연 로드)
+```
+
+### 2. 스크롤 핸들러에서 state를 쓰지 않는다
+
+스크롤 위치는 렌더링에 쓰이지 않으므로 `useRef`에 담고 `requestAnimationFrame`으로
+스로틀한다. state로 두면 프레임마다 리렌더 + 리스너 재등록이 일어난다.
+`Header.tsx`, `ScrollProgressBar.tsx`가 이 패턴을 따른다.
+
+### 3. `useEffect` 안에서 `setState`를 호출하지 않는다
+
+ESLint `react-hooks/set-state-in-effect`가 에러로 잡는다.
+파생 가능한 값은 렌더링 시점에 계산한다
+(예: `HeaderMobile`의 `isMenuOpen = isMenuRequested && isVisible`).
+
+### 4. 이미지
+
+**루트 `font-size: 62.5%`이므로 1rem = 10px다.** `max-w-7xl`은 1280px이 아니라 **800px**이다.
+`sizes`를 쓸 때 이걸 잊으면 실제 필요량의 2배를 내려받는다.
+
+| 위치 | 실제 폭 | `sizes` |
+| --- | --- | --- |
+| 포스트 본문 | 760px | `(min-width: 800px) 760px, calc(100vw - 40px)` |
+| 상세 커버 | 800px | `(min-width: 800px) 800px, 100vw` |
+| PostCard | ~420px (2단) | `(min-width: 1280px) 420px, 50vw` |
+| PinnedPost | ~860px | `(min-width: 1280px) 860px, calc(100vw - 40px)` |
+
+- `fill`을 쓰면 **반드시 `sizes`를 준다** (없으면 원본 크기를 내려받는다)
+- LCP 요소(상단 커버 이미지)에는 `priority`를 준다
+
+**본문 마크다운 이미지는 `next/image`를 쓸 수 없다.** HTML 문자열로 렌더되기 때문이다.
+대신 `lib/rehype-image.ts`가 빌드 타임에 `<img>`를 다시 쓴다.
+
+```
+<img src="/images/…">
+  ↓
+<img src="/_next/image?…" srcset="…" sizes="…"
+     width height              ← 원본에서 읽어 CLS 제거
+     loading="lazy" decoding="async"
+     style="background-image:url(data:image/webp;base64,…)">  ← 블러
+```
+
+블러는 `background-image`로 심는다. 이미지가 로드되면 **자기 자신이 배경을 덮으므로**
+`onLoad` 핸들러도 상태 관리도 필요 없다. 12px WebP 썸네일이라 페이지당 약 2KB다.
+
+커버 이미지는 `next/image`의 `placeholder="blur"`를 쓰며,
+`blurDataURL`은 `lib/posts.ts`의 `getCoverBlur()` / `getCoverBlurMap()`으로 빌드 타임에 만든다.
+**`PostSummary`에는 넣지 않는다** — `search-index.json`에 실려 페이로드가 커진다.
+
+`/_next/image`가 허용하는 폭은 `next.config.ts`의 `deviceSizes`에 있는 값뿐이다.
+임의의 폭을 넘기면 **400**이 나므로 `lib/image.ts`의 `snapWidth()`로 스냅한다.
+
+`sharp`는 devDependency이며 빌드 타임에만 쓴다.
+**버전을 Next 내장본과 맞춰야 한다** — 어긋나면 libvips가 이중 로드되어
+"mysterious crashes" 경고가 뜬다.
 
 ---
 
 ## 스타일링
 
-### Tailwind CSS 4 + 커스텀 Prose
+- Tailwind CSS 4 + `@tailwindcss/typography` (`app/globals.css`에서 `@plugin`으로 로드)
+- 커스텀 `.prose` 스타일을 `globals.css`에서 추가로 덮어쓴다
+- 색상은 `:root` / `.dark` CSS 변수 → `@theme`에 매핑해 Tailwind 유틸로 사용
+- 타이포 유틸(`title1~3`, `body1~3`, `caption`)은 `@layer utilities`에 정의
 
-- `app/globals.css`에 커스텀 `.prose` 스타일 정의
-- `@tailwindcss/typography` 플러그인 **사용하지 않음** (Tailwind v4와 호환 문제)
-- 대신 수동으로 prose 스타일을 구현하여 완전한 제어 가능
-
-### CSS 변수 기반 테마
-
-```css
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-```
-
-### Geist 폰트
-
-- `next/font/google`로 Geist Sans / Geist Mono 로드
-- CSS 변수로 전역 적용: `--font-geist-sans`, `--font-geist-mono`
+다크 모드는 `next-themes`의 `class` 전략이다.
+**테마 값에 의존하는 렌더링 대신 CSS `dark:` variant를 우선 사용한다** —
+마운트 전후로 값이 달라져 깜박임이 생기는 것을 막는다.
 
 ---
 
-## 주요 개발 패턴
-
-### 1. Server Components 우선
-
-- App Router는 기본적으로 모든 컴포넌트가 Server Component
-- `"use client"` 지시어는 상태/이벤트/브라우저 API가 필요한 경우에만 사용
-- 파일 시스템 접근(`lib/posts.ts`)은 Server Component에서만 가능
-
-### 2. Static Site Generation (SSG)
-
-- `generateStaticParams()`를 사용해 빌드 타임에 모든 페이지를 미리 생성
-- 런타임 서버 불필요 → S3 + CloudFront로 배포 가능
-- **사용 금지**: Server Actions, ISR, Edge Functions
-
-### 3. 타입 안정성
-
-- TypeScript strict mode 활성화
-- Props는 `Readonly<>` 타입 사용
-- 인터페이스로 Post 메타데이터 구조 정의 (`lib/posts.ts` 참조)
-
-### 4. 새 포스트 추가 방법
-
-1. `_posts/new-post.md` 파일 생성
-2. Front Matter 작성 (title, description, date, author)
-3. Markdown 본문 작성
-4. `pnpm build` 실행 → 자동으로 정적 페이지 생성됨
-5. Git commit 후 배포
-
-### 5. 마크다운 작성 가이드
-
-이 블로그는 **GitHub Flavored Markdown (GFM)**을 완전히 지원합니다.
-
-#### 지원하는 기능
-
-**코드 블록 (자동 신택스 하이라이팅)**
-
-````markdown
-```javascript
-const hello = "world";
-```
-````
-
-````
-
-**테이블**
-```markdown
-| 헤더1 | 헤더2 |
-|------|------|
-| 내용1 | 내용2 |
-````
-
-**체크박스**
-
-```markdown
-- [x] 완료된 작업
-- [ ] 진행 중인 작업
-```
-
-**취소선**
-
-```markdown
-~~삭제된 텍스트~~
-```
-
-**헤딩 자동 링크**
-
-- 모든 헤딩(`#`, `##`, `###`)에 자동으로 ID와 앵커 링크가 생성됨
-- 헤딩을 클릭하면 해당 섹션으로 직접 링크 가능
-
-**인라인 코드**
-
-```markdown
-`코드`는 백틱으로 감싸서 표시
-```
-
----
-
-## 참고사항
-
-- **경로 별칭**: `@/*`는 프로젝트 루트를 가리킴 (`tsconfig.json`)
-- **ESLint**: Next.js의 `core-web-vitals` + `typescript` 설정 사용
-- **이미지**: `next/image` 컴포넌트 사용, `public/` 디렉토리에 저장
-- **다크 모드**: `prefers-color-scheme` 미디어 쿼리로 자동 전환
-- **코드 하이라이팅**:
-  - `highlight.js`의 GitHub 테마 사용 (라이트 모드)
-  - 다크 모드에서는 VS Code 스타일로 자동 전환
-  - JavaScript, TypeScript, Python, Bash, Go, Rust 등 주요 언어 지원
-- **커스텀 Prose 스타일**: `app/globals.css`에 수동으로 정의
-  - Tailwind CSS 4와의 호환성을 위해 `@tailwindcss/typography` 미사용
-
----
-
-## TIL (Today I Learned) 시스템
-
-### 개요
-
-TIL은 매일의 학습 기록을 GitHub 잔디 스타일의 캘린더로 시각화하는 기능입니다. 블로그 포스트와 달리 짧고 러프한 bullet point 형식의 학습 메모를 관리하며, **"꾸준히 기록하는 개발자"를 증명하는 시각적 대시보드** 역할을 합니다.
-
-### 핵심 설계 원칙
-
-1. **DB 사용 없음** - Markdown 파일로 관리
-2. **빌드 타임 데이터 로드** - 모든 TIL을 빌드 시 HTML로 변환
-3. **API 없는 정적 사이트** - 런타임 서버 의존성 제로
-4. **포스트 시스템과 동일한 패턴** - `_posts`와 같은 아키텍처
-
----
-
-### 디렉토리 구조
-
-```
-DevBLOG/
-├── _til/                    # TIL Markdown 파일 저장소
-│   └── 2025/               # 연도별 디렉토리
-│       ├── 2025-12-25.md
-│       ├── 2025-12-24.md
-│       └── 2025-12-20.md
-├── app/
-│   └── til/
-│       ├── page.tsx        # TIL 메인 페이지 (Server Component)
-│       └── TILPageClient.tsx  # 클라이언트 로직
-├── components/
-│   ├── TILCalendar.tsx     # GitHub 잔디 스타일 캘린더
-│   └── TILModal.tsx        # TIL 내용 표시 모달
-└── lib/
-    └── til.ts              # TIL 데이터 파싱 유틸리티
-```
-
----
-
-### TIL Markdown 파일 형식
-
-#### 파일명 규칙
-
-- **형식**: `YYYY-MM-DD.md`
-- **예시**: `2025-12-25.md`
-- **위치**: `_til/{연도}/` 디렉토리
-
-#### Front Matter 형식
-
-```markdown
----
-date: 2025-12-25
----
-
-- Next.js SSG vs ISR 정리
-- TOC 구현 방식 복기
-- TypeScript 제네릭 활용법
-```
-
-**특징**:
-
-- Front Matter에는 `date` 필드만 존재
-- 본문은 간단한 bullet point 형식
-- SEO나 완성도보다 꾸준한 기록이 목적
-
----
-
-### 데이터 흐름 아키텍처
-
-#### 빌드 타임 (SSG)
-
-```
-1. 빌드 시작
-   ↓
-2. lib/til.ts의 getAllTILsWithHtmlForYear() 실행
-   ↓
-3. _til/2025/ 디렉토리의 모든 .md 파일 읽기
-   ↓
-4. 각 파일의 Markdown을 HTML로 변환
-   ↓
-5. Map<date, html> 생성
-   ↓
-6. Server Component (app/til/page.tsx)에서 데이터 로드
-   ↓
-7. 직렬화하여 Client Component에 props로 전달
-```
-
-#### 런타임 (클라이언트)
-
-```
-1. 페이지 로드 시 모든 TIL 데이터가 이미 포함됨
-   ↓
-2. 캘린더에서 날짜 클릭
-   ↓
-3. 로컬 Map에서 해당 날짜의 HTML 즉시 조회
-   ↓
-4. 모달에 내용 표시 (API 호출 없음)
-```
-
-**핵심**: API 호출 없이 빌드 시 모든 데이터를 미리 로드하여 즉각적인 사용자 경험 제공
-
----
-
-### 핵심 파일 설명
-
-#### `lib/til.ts`
-
-TIL 데이터 파싱 및 관리 유틸리티 모듈:
-
-**주요 함수**:
-
-```typescript
-// 특정 연도의 모든 TIL 날짜 목록 (파일명 기반)
-getTILDates(year: number): string[]
-
-// 특정 날짜의 TIL 원본 데이터
-getTILByDate(date: string): TILData | null
-
-// Markdown을 HTML로 변환
-markdownToHtml(markdown: string): Promise<string>
-
-// 캘린더 표시용 - 날짜별 TIL 존재 여부
-getAllTILsForYear(year: number): Map<string, boolean>
-
-// 빌드타임 로드용 - 모든 TIL을 HTML로 변환
-getAllTILsWithHtmlForYear(year: number): Promise<Map<string, string>>
-
-// 사용 가능한 연도 목록
-getAvailableYears(): number[]
-```
-
-**중요 포인트**:
-
-- `lib/posts.ts`와 동일한 패턴 사용
-- Node.js 파일 시스템 API 사용 → Server Component에서만 호출 가능
-- `remark` + `remark-gfm`으로 Markdown 파싱 (블로그 포스트와 동일)
-
----
-
-#### `app/til/page.tsx`
-
-TIL 메인 페이지 - **Server Component**
-
-**역할**:
-
-1. URL 쿼리 파라미터로 연도 선택 처리 (`?year=2025`)
-2. 빌드 시 모든 TIL 데이터 로드:
-   - `getAllTILsForYear()` → 날짜별 존재 여부 Map
-   - `getAllTILsWithHtmlForYear()` → 날짜별 HTML 컨텐츠 Map
-3. 두 개의 Map을 직렬화하여 Client Component에 전달
-
-**코드 흐름**:
-
-```typescript
-export default async function TILPage({ searchParams }) {
-  const selectedYear = searchParams.year || getCurrentYear();
-
-  // 1. TIL 존재 여부 로드
-  const tilData = getAllTILsForYear(selectedYear);
-
-  // 2. 모든 TIL 내용을 HTML로 변환하여 로드 (빌드 시)
-  const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
-
-  // 3. Map을 객체로 변환 (직렬화)
-  const tilDataObject = Object.fromEntries(tilData);
-  const tilContentObject = Object.fromEntries(tilContentMap);
-
-  return (
-    <TILPageClient
-      tilData={new Map(Object.entries(tilDataObject))}
-      tilContentMap={new Map(Object.entries(tilContentObject))}
-      availableYears={availableYears}
-    />
-  );
-}
-```
-
----
-
-#### `app/til/TILPageClient.tsx`
-
-TIL 클라이언트 로직 - **Client Component**
-
-**역할**:
-
-1. 캘린더 인터랙션 관리
-2. 모달 상태 관리
-3. 날짜 클릭 시 로컬 Map에서 데이터 즉시 조회
-
-**핵심 로직**:
-
-```typescript
-export default function TILPageClient({
-  tilData, // Map<date, boolean> - 존재 여부
-  tilContentMap, // Map<date, html> - HTML 컨텐츠
-}) {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
-  // 날짜 클릭 핸들러 (API 호출 없음!)
-  const handleDateClick = (date: string) => {
-    setSelectedDate(date); // 모달 오픈만 처리
-  };
-
-  // 선택된 날짜의 컨텐츠 즉시 조회
-  const selectedContent = selectedDate
-    ? tilContentMap.get(selectedDate) || "TIL 내용이 없습니다."
-    : "";
-
-  return (
-    <>
-      <TILCalendar tilData={tilData} onDateClick={handleDateClick} />
-      <TILModal date={selectedDate} content={selectedContent} />
-    </>
-  );
-}
-```
-
-**중요**:
-
-- **API 호출 없음** - 모든 데이터는 이미 props로 전달됨
-- **즉각적인 응답** - 로컬 Map 조회만으로 모달 표시
-- **오프라인 작동** - 한 번 로드되면 네트워크 불필요
-
----
-
-#### `components/TILCalendar.tsx`
-
-GitHub 잔디 스타일의 연간 캘린더 컴포넌트
-
-**기능**:
-
-1. 1년(365일)을 주 단위(7일)로 그리드 표시
-2. TIL이 있는 날짜는 초록색 (`.bg-green-500`)
-3. TIL이 없는 날짜는 회색 (`.bg-zinc-100`)
-4. 날짜 클릭 시 `onDateClick` 콜백 호출
-
-**주요 로직**:
-
-```typescript
-// 1년 전체 날짜 생성 (1월 1일 ~ 12월 31일)
-const generateYearDates = () => { ... }
-
-// 주 단위로 그룹화 (일요일 시작)
-const groupByWeeks = (dates: Date[]) => { ... }
-
-// 날짜별 TIL 존재 여부 확인
-const hasTIL = tilData.get(dateStr) || false;
-```
-
-**시각화**:
-
-- 월 라벨 (Jan, Feb, ..., Dec)
-- 요일 라벨 (Sun, Mon, ..., Sat)
-- 반응형 디자인 (모바일: 작게 / 데스크톱: 크게)
-- 호버 효과 및 툴팁
-
----
-
-#### `components/TILModal.tsx`
-
-TIL 내용을 표시하는 모달 컴포넌트
-
-**기능**:
-
-1. 날짜 + HTML 컨텐츠 표시
-2. ESC 키 / 배경 클릭으로 닫기
-3. 모달 열림 시 body 스크롤 방지
-4. 다크 모드 지원
-
-**Props**:
-
-```typescript
-interface TILModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  date: string; // YYYY-MM-DD
-  content: string; // HTML string
-}
-```
-
-**UI 구조**:
-
-- 헤더: 날짜 (한글 포맷 "YYYY년 MM월 DD일") + 닫기 버튼
-- 컨텐츠: `dangerouslySetInnerHTML`로 HTML 렌더링
-- 푸터: 닫기 버튼
-
----
-
-### 새 TIL 추가 방법
-
-#### 1. Markdown 파일 생성
-
-```bash
-# 경로: _til/2025/2025-12-26.md
-```
-
-#### 2. Front Matter 작성
-
-```markdown
----
-date: 2025-12-26
----
-
-- React Server Components 동작 원리
-- CSS Grid vs Flexbox 비교
-- Git rebase 실전 활용법
-```
-
-#### 3. 빌드 및 확인
-
-```bash
-pnpm build
-# → _til/2025/2025-12-26.md가 자동으로 HTML로 변환됨
-# → 캘린더에 12월 26일이 초록색으로 표시됨
-```
-
-#### 4. Git commit 후 배포
-
-```bash
-git add _til/2025/2025-12-26.md
-git commit -m "TIL: React Server Components 학습"
-git push
-```
-
----
-
-### 통계 및 시각화
-
-TIL 페이지는 다음 통계를 자동으로 계산하여 표시합니다:
-
-1. **총 학습 일수**: `tilData.size`
-2. **현재 연도**: `year`
-3. **학습 달성률**: `(tilData.size / 365) * 100`
-
-**예시**:
-
-```
-┌─────────────────┬─────────────────┬─────────────────┐
-│ 총 학습 일수     │ 현재 연도        │ 학습 달성률      │
-├─────────────────┼─────────────────┼─────────────────┤
-│ 127일           │ 2025년          │ 34.8%          │
-└─────────────────┴─────────────────┴─────────────────┘
-```
-
----
-
-### 성능 최적화
-
-#### 빌드 타임 최적화
-
-```typescript
-// ✅ 병렬 처리로 최적화된 HTML 변환
-export async function getAllTILsWithHtmlForYear(year: number) {
-  const dates = getTILDates(year);
-  const tilMap = new Map<string, string>();
-
-  // 모든 Markdown을 병렬로 HTML 변환
-  for (const date of dates) {
-    const tilData = getTILByDate(date);
-    if (tilData) {
-      const html = await markdownToHtml(tilData.content);
-      tilMap.set(date, html);
-    }
-  }
-
-  return tilMap;
-}
-```
-
-**효과**:
-
-- 빌드 시 한 번만 변환
-- 런타임 오버헤드 제로
-- S3 + CloudFront 배포에 최적화
-
-#### 런타임 최적화
-
-```typescript
-// ✅ 로컬 Map 조회 - O(1) 시간 복잡도
-const selectedContent = tilContentMap.get(selectedDate);
-
-// ❌ API 호출 (이전 방식) - 네트워크 지연 발생
-// const response = await fetch(`/api/til?date=${date}`);
-```
-
-**효과**:
-
-- 즉각적인 모달 표시
-- 네트워크 요청 제로
-- 오프라인 작동 가능
-
----
-
-### 연도별 필터링
-
-TIL은 URL 쿼리 파라미터로 연도 선택을 지원합니다:
-
-**URL 형식**:
-
-- 기본: `/til` → 현재 연도 표시
-- 연도 지정: `/til?year=2024` → 2024년 TIL 표시
-
-**구현**:
-
-```typescript
-// Server Component에서 쿼리 파라미터 처리
-export default async function TILPage({ searchParams }) {
-  const yearParam = searchParams.year;
-  const currentYear = getCurrentYear();
-  const selectedYear = yearParam ? parseInt(yearParam, 10) : currentYear;
-
-  // 선택된 연도의 데이터만 로드
-  const tilData = getAllTILsForYear(selectedYear);
-  const tilContentMap = await getAllTILsWithHtmlForYear(selectedYear);
-
-  // ...
-}
-```
-
-**UI**:
-
-- 연도 선택 버튼 자동 생성
-- 현재 선택된 연도는 primary 색상으로 강조
-
----
-
-### TIL vs 블로그 포스트 비교
-
-| 항목             | TIL                     | 블로그 포스트                                 |
-| ---------------- | ----------------------- | --------------------------------------------- |
-| **목적**         | 매일의 러프한 학습 메모 | 완성도 있는 기술 글                           |
-| **형식**         | Bullet point            | 구조화된 문서                                 |
-| **길이**         | 짧음 (3-5줄)            | 김 (500+ 단어)                                |
-| **작성 시간**    | 1-2분                   | 30분 ~ 수 시간                                |
-| **SEO**          | 중요하지 않음           | 매우 중요                                     |
-| **시각화**       | GitHub 잔디 캘린더      | 포스트 목록/카드                              |
-| **디렉토리**     | `_til/YYYY/`            | `_posts/category/`                            |
-| **Front Matter** | `date`만                | `title`, `description`, `author`, `tag`, etc. |
-| **URL**          | `/til?year=2025`        | `/post/category/slug`                         |
-
----
-
-### 주의사항
-
-1. **파일명 규칙 준수**
-
-   - 반드시 `YYYY-MM-DD.md` 형식 사용
-   - 잘못된 예: `2025-1-5.md` (❌ 0 패딩 누락)
-   - 올바른 예: `2025-01-05.md` (✅)
-
-2. **연도 디렉토리 필수**
-
-   - `_til/2025-12-25.md` (❌)
-   - `_til/2025/2025-12-25.md` (✅)
-
-3. **Front Matter 필수**
-
-   ```markdown
-   ---
-   date: 2025-12-25
-   ---
-   ```
-
-   - `date` 필드 누락 시 파싱 오류 발생
-
-4. **빌드 시점 데이터 로드**
-
-   - TIL 추가/수정 후 반드시 `pnpm build` 실행
-   - 개발 서버(`pnpm dev`)에서는 hot reload 작동
-
-5. **대용량 TIL 관리**
-   - 1년에 365개 TIL 생성 가능
-   - 수년치 누적 시 빌드 시간 증가 가능
-   - 필요 시 연도별 lazy loading 고려
-
----
-
-### 확장 가능성
-
-향후 TIL 시스템 확장 시 고려사항:
-
-1. **태그 시스템**
-
-   ```markdown
-   ---
-   date: 2025-12-25
-   tags: [react, typescript, nextjs]
-   ---
-   ```
-
-   - 태그별 필터링
-   - 태그 클라우드 시각화
-
-2. **월별 뷰**
-
-   - 연간 캘린더 외에 월별 상세 뷰 추가
-   - 해당 월의 모든 TIL 목록 표시
-
-3. **검색 기능**
-
-   - TIL 내용 전체 텍스트 검색
-   - 빌드 시 검색 인덱스 생성
-
-4. **통계 대시보드**
-   - 연속 학습 일수 (streak)
-   - 요일별 학습 패턴 분석
-   - 월별 학습 횟수 차트
-
----
-
-### 문제 해결 (Troubleshooting)
-
-#### TIL이 캘린더에 표시되지 않는 경우
-
-1. **파일명 확인**
-
-   ```bash
-   # 올바른 형식인지 확인
-   ls _til/2025/
-   # 출력 예: 2025-12-25.md
-   ```
-
-2. **Front Matter 확인**
-
-   ```markdown
-   ---
-   date: 2025-12-25 # 파일명과 동일해야 함
-   ---
-   ```
-
-3. **빌드 재실행**
-
-   ```bash
-   pnpm build
-   ```
-
-4. **캐시 삭제**
-   ```bash
-   rm -rf .next
-   pnpm build
-   ```
-
-#### 모달에 내용이 표시되지 않는 경우
-
-1. **HTML 변환 확인**
-
-   - `lib/til.ts`의 `markdownToHtml()` 함수가 정상 작동하는지 확인
-   - 콘솔에 에러 메시지 확인
-
-2. **Props 전달 확인**
-   - `TILPageClient`의 `tilContentMap`에 데이터가 있는지 확인
-   - React DevTools로 props 검사
-
----
+## 알려진 제약
+
+- `output: "export"`는 아직 적용하지 않았다. `next.config.ts`의 `redirects()`와
+  `proxy.ts`가 Node 런타임을 필요로 하므로, 완전한 정적 배포로 가려면
+  둘 다 CDN(CloudFront Function 등) 쪽으로 옮겨야 한다.
+  페이지 자체는 전부 정적이므로 이 둘만 옮기면 된다.
+- `app/about/page.tsx`는 아직 내용이 채워지지 않았다.
+- 테스트 코드가 없다.
